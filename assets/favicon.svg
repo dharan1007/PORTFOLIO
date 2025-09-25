@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="black"/>
+  <!-- Stylized P -->
+  <path d="M18 16h10c6 0 12 5 12 12s-6 12-12 12H18V16z" fill="white"/>
+  <!-- Stylized R leg -->
+  <path d="M28 40l14 16h-8l-6-8v-8z" fill="white"/>
+</svg>
