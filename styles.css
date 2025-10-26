@@ -215,8 +215,6 @@ body::before {
   transform: translateY(0);
 }
 
-
-
 /* ===========================
    FOOTER
 =========================== */
@@ -282,4 +280,48 @@ body::before {
 }
 
 /* Make sure no full-width element covers the contact area */
-canvas#grain { z-index: -1 !important; }   /* stays behind everything */
+canvas#grain { z-index: -1 !important; }
+
+/* ===========================
+   Resume Download Button Styles
+   (kept minimal to match your theme)
+=========================== */
+.btn-download {
+  display: inline-block;
+  padding: 0.65rem 1.05rem;
+  font-weight: 700;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 2px solid currentColor;
+  color: var(--accent);
+  background: transparent;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  margin-top: 0.8rem;
+}
+
+.btn-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.small-note {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+}
+
+/* ripple effect element */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.45;
+  transform: scale(0);
+  animation: ripple 600ms linear;
+  background: rgba(255,255,255,0.35);
+}
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}

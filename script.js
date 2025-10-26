@@ -62,6 +62,13 @@ window.addEventListener('scroll', () => {
 // ===================================================
 const projects = [
   {
+    title: "Fuy",
+    subtitle: "Healthcare AI Assistant",
+    img: "assets/proj-fuy-bw.jpg",
+    url: "https://fuy-ysil.onrender.com/",
+    bullets: ["NLP chatbot", "Medical record analysis", "https://fuy-ysil.onrender.com/"]
+  },
+  {
     title: "Stenius",
     subtitle: "Stock Market Analyzer • AI-driven",
     img: "assets/proj-stenius-bw.jpg",
@@ -145,12 +152,6 @@ const projects = [
     bullets: ["Interactive dashboards", "Custom chart library", "Faster pipelines"]
   },
   {
-    title: "Project Gamma",
-    subtitle: "Healthcare AI Assistant",
-    img: "assets/dummy3.jpg",
-    bullets: ["NLP chatbot", "Medical record analysis", "HIPAA compliance"]
-  },
-  {
     title: "Project Delta",
     subtitle: "Smart IoT Monitoring",
     img: "assets/dummy4.jpg",
@@ -188,6 +189,23 @@ function renderProjects() {
     const card = document.createElement("article");
     card.className = "project-card fade-up";
     card.style.transitionDelay = `${i * 0.1}s`; // staggered
+
+    // Make card keyboard-focusable and clickable if project has a url
+    if (p.url) {
+      card.style.cursor = 'pointer';
+      card.tabIndex = 0;
+      card.setAttribute('role', 'link');
+      card.setAttribute('aria-label', `${p.title} - opens in a new tab`);
+      card.addEventListener('click', () => {
+        window.open(p.url, '_blank');
+      });
+      card.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          window.open(p.url, '_blank');
+        }
+      });
+    }
+
     card.innerHTML = `
       <div class="project-media">
         <img src="${p.img}" alt="${p.title}">
@@ -364,3 +382,82 @@ const skillsObserver = new IntersectionObserver(entries => {
 if (skillItems.length) {
   skillsObserver.observe(skillItems[0]);
 }
+
+
+// ===================================================
+// NAV TOGGLE (added for mobile)
+// ===================================================
+(function () {
+  const navToggle = document.getElementById('navToggle');
+  const navList = document.getElementById('navList');
+
+  if (navToggle && navList) {
+    navToggle.addEventListener('click', () => {
+      navList.classList.toggle('open');
+      navToggle.classList.toggle('open');
+    });
+  }
+
+  // Close the nav when a link is clicked (mobile)
+  document.querySelectorAll('#navList a').forEach(a => {
+    a.addEventListener('click', () => {
+      if (navList) {
+        navList.classList.remove('open');
+      }
+      if (navToggle) {
+        navToggle.classList.remove('open');
+      }
+    });
+  });
+})();
+
+
+// ===================================================
+// Resume download fallback (non-intrusive)
+// If a user holds SHIFT while clicking the anchor, we fetch the PDF and force a programmatic download.
+// This preserves native download behavior while providing a tested fallback for environments where PDF viewers intercept the link.
+// ===================================================
+(function () {
+  const resumeLink = document.querySelector('a.btn-download');
+  if (!resumeLink) return;
+
+  resumeLink.addEventListener('click', function (e) {
+    const href = resumeLink.getAttribute('href');
+    const downloadAttr = resumeLink.getAttribute('download');
+
+    if (!href) return;
+
+    // Force programmatic download when Shift is held (optional testing/debug)
+    if (e.shiftKey) {
+      e.preventDefault();
+      if (!navigator.onLine) {
+        alert('You appear to be offline. Please ensure you are connected to download the resume.');
+        return;
+      }
+      fetch(href, { method: 'GET' })
+        .then(resp => {
+          if (!resp.ok) throw new Error('Network response was not ok');
+          return resp.blob();
+        })
+        .then(blob => {
+          const blobUrl = window.URL.createObjectURL(blob);
+          const tempA = document.createElement('a');
+          tempA.style.display = 'none';
+          tempA.href = blobUrl;
+          tempA.download = downloadAttr || 'resume.pdf';
+          document.body.appendChild(tempA);
+          tempA.click();
+          setTimeout(() => {
+            document.body.removeChild(tempA);
+            window.URL.revokeObjectURL(blobUrl);
+          }, 200);
+        })
+        .catch(err => {
+          console.error('Resume download failed:', err);
+          alert('Unable to download resume automatically. The link will open the PDF — use your browser Save/Download option.');
+          window.open(href, '_blank', 'noopener');
+        });
+    }
+    // otherwise let the anchor's native behavior proceed
+  });
+})();
