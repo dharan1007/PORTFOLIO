@@ -292,3 +292,12 @@ a:focus-visible,button:focus-visible{outline:2px solid currentColor;outline-offs
   .js-motion [data-reveal]{opacity:1;transform:none}
   .project-feature__media img,.project-tile img{transform:none!important}
 }
+
+.project-feature:not(:has(.project-feature__media)){grid-template-columns:1fr;min-height:500px}
+.project-feature:not(:has(.project-feature__media)) .project-feature__copy{max-width:920px}
+.project-hero--text{grid-template-columns:1fr!important;min-height:72vh}
+.project-hero--text .project-hero__copy{max-width:1100px;padding-top:10vh}
+@media(max-width:640px){
+  .project-feature:not(:has(.project-feature__media)){min-height:380px}
+  .project-hero--text{min-height:64vh}
+}
