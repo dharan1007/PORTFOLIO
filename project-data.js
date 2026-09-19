@@ -5,7 +5,7 @@ window.PROJECTS = [
     summary:"RÆDIUS is the current social-product system: identity, contextual profiles, graph, Circles, private Lists, Lines, Planes, Dots, audience-aware publishing, ranked Home, search and discovery, interactions, direct messages, moderation and offline continuity.",
     verified:["Phase 1 social kernel is documented in the repository","Shared data access is routed through @raedius/data-client rather than direct Supabase imports from UI surfaces","Repository verification is run through pnpm verify"],
     stack:["Node 22","pnpm","Expo / React Native","Next.js","Supabase","TypeScript"],
-    live:"https://raedius-production-49lpr6xsk-tejs-projects-70bb4568.vercel.app", source:null, year:"2026", featured:true, layout:0, accent:"#e53935"
+    live:"https://raedius.online", source:null, year:"2026", featured:true, layout:0, accent:"#e53935"
   },
   {
     id:"arkhe", name:"ARKHE 4.6", repo:"arkhe", visibility:"Private", category:"AI runtime", status:"Research runtime",
@@ -13,7 +13,7 @@ window.PROJECTS = [
     summary:"ARKHE organizes runtime intelligence as cells, tissues, organs, systems, organism, environment and development/evolution, with packages for runtime operation, frontier-training infrastructure and repository coding/repair.",
     verified:["Core runtime lives under src/arkhe","Frontier training substrate lives under src/arkhe_frontier","Repository coding organism lives under src/arkhe_coding_frontier","The repository explicitly does not claim independent frontier-model superiority without signed benchmark evidence"],
     stack:["Python","CLI runtime","Training infrastructure","Repository repair","Verification gates"],
-    live:"https://arkhe-live-8glxkhtja-tejs-projects-70bb4568.vercel.app", source:null, year:"2026", featured:true, layout:1, accent:"#f0a23a"
+    live:"https://arkhe-live.vercel.app", source:null, year:"2026", featured:true, layout:1, accent:"#f0a23a"
   },
   {
     id:"axiom", name:"Axiom / Airadise AI World", repo:"axiom", visibility:"Private", category:"AI simulation", status:"Active research",
@@ -53,7 +53,7 @@ window.PROJECTS = [
     summary:"PACT implements CAPTURE, COMPARE, PROVE and CONTROL around production agent releases, plus a transaction engine that binds preview, approval, one-shot commit, canonical verification and receipt generation.",
     verified:["Durable transaction state and canonical state are separate concerns","Approval is bound to the semantic plan and canonical version","HTTP, MCP and WebMCP surfaces share a canonical tool catalog","Release provenance, locks, diffs, drift and gates are represented in the implementation"],
     stack:["Node.js","Vercel Functions","MCP","WebMCP","Durable state","Release integrity"],
-    live:"https://pact-webmcp-1uxd05dbq-tejs-projects-70bb4568.vercel.app", source:null, year:"2026", featured:true, layout:0, accent:"#ff7557"
+    live:"https://pact-webmcp.vercel.app", source:null, year:"2026", featured:true, layout:0, accent:"#ff7557"
   },
   {
     id:"kata", name:"KATA", repo:"kata", visibility:"Private", category:"Research tooling", status:"Live",
@@ -85,7 +85,7 @@ window.PROJECTS = [
     summary:"Zachitan combines provider-backed market data, provenance, experimental empirical forecasts, walk-forward validation, world-state evidence, news clustering, filings research, watchlists and recurring-investment analysis.",
     verified:["Observed, inferred, experimental, degraded, gated and unavailable states are separated","Forecasts expose baseline skill instead of manufacturing fallback confidence","Chronological validation uses later observations only","The project does not execute trades or promise predictive accuracy"],
     stack:["Python","Market data","Empirical forecasting","Walk-forward validation","Research UI"],
-    live:"https://zachitan-fjfxjmpj1-tejs-projects-70bb4568.vercel.app", source:"https://github.com/dharan1007/zachitan-v4", year:"2026", featured:true, layout:4, accent:"#53d6a1"
+    live:"https://zachitan.vercel.app", source:"https://github.com/dharan1007/zachitan-v4", year:"2026", featured:true, layout:4, accent:"#53d6a1"
   },
   {
     id:"daish", name:"DAISH", repo:"daish", visibility:"Private", category:"Music systems", status:"Active",
@@ -93,7 +93,7 @@ window.PROJECTS = [
     summary:"DAISH coordinates live music sessions through a NestJS backend, Next.js PWA, PostgreSQL, Redis, Socket.IO and Spotify integration, with host sessions and realtime orchestration.",
     verified:["Backend is NestJS with TypeORM and Socket.IO","Frontend is a Next.js 14 PWA","PostgreSQL and Redis are explicit production dependencies","Spotify credentials and public API URLs are handled as deployment configuration"],
     stack:["NestJS","Next.js","PostgreSQL","Redis","Socket.IO","Spotify Web API"],
-    live:"https://daish-nmuz546pt-tejs-projects-70bb4568.vercel.app", source:null, year:"2026", featured:true, layout:5, accent:"#76e16b"
+    live:"https://daish.vercel.app", source:null, year:"2026", featured:true, layout:5, accent:"#76e16b"
   },
   {
     id:"maleu", name:"Maleu", repo:"maleu", visibility:"Private", category:"Social platform", status:"Legacy / superseded",
