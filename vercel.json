@@ -1,0 +1,11 @@
+{
+  "buildCommand": "npm run verify-build",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/projects/:path*", "destination": "/index.html" },
+    { "source": "/about/:path*", "destination": "/index.html" },
+    { "source": "/experience/:path*", "destination": "/index.html" },
+    { "source": "/contact/:path*", "destination": "/index.html" }
+  ]
+}
