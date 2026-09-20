@@ -155,3 +155,35 @@ body,button,a{font:inherit}a{color:inherit;text-decoration:none}button{color:inh
   .hero-wave[data-wave-state="running"]:before,
   .hero-wave[data-wave-state="running"]:after{animation:none!important}
 }
+
+/* Final hero-wave behavior: slow, cursor-reactive, black only. */
+.hero-wave[data-wave-state="running"] .hero-wave-fallback{
+  opacity:0!important;
+  animation:none!important;
+}
+.hero-wave[data-wave-state="running"] canvas{
+  display:block!important;
+  opacity:1!important;
+  z-index:4!important;
+  filter:none!important;
+  animation:none!important;
+}
+.hero-wave[data-wave-state="running"]::before,
+.hero-wave[data-wave-state="running"]::after{
+  content:none!important;
+  display:none!important;
+  animation:none!important;
+}
+.hero-wave[data-wave-state="paused"] .hero-wave-fallback,
+.hero-wave[data-wave-state="fallback"] .hero-wave-fallback,
+.hero-wave[data-wave-state="booting"] .hero-wave-fallback{
+  opacity:.28!important;
+  background-image:radial-gradient(circle,rgba(0,0,0,.24) 1.2px,transparent 1.35px)!important;
+  background-size:20px 20px!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-wave[data-wave-state="running"] canvas{
+    display:block!important;
+    opacity:1!important;
+  }
+}

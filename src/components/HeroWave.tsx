@@ -17,17 +17,18 @@ export function HeroWave() {
     }
 
     const finePointer = window.matchMedia('(pointer: fine)');
-    let visible = true;
-    let documentVisible = document.visibilityState !== 'hidden';
+
     let raf = 0;
     let width = 1;
     let height = 1;
     let dpr = 1;
-    let points = createGrid(1, 1, 21);
+    let points = createGrid(1, 1, 20);
     let pointerTarget: WavePointer = null;
     let pointer: WavePointer = null;
-    let frame = 0;
+    let visible = true;
+    let documentVisible = document.visibilityState !== 'hidden';
     let startedAt = performance.now();
+    let frame = 0;
 
     const draw = (time: number) => {
       const elapsed = time - startedAt;
@@ -41,20 +42,17 @@ export function HeroWave() {
 
       if (pointerTarget && finePointer.matches) {
         if (!pointer) pointer = { ...pointerTarget };
-        pointer.x += (pointerTarget.x - pointer.x) * 0.2;
-        pointer.y += (pointerTarget.y - pointer.y) * 0.2;
-      } else if (pointer) {
-        pointer.x += (width * 0.72 - pointer.x) * 0.025;
-        pointer.y += (height * 0.46 - pointer.y) * 0.025;
+        pointer.x += (pointerTarget.x - pointer.x) * 0.1;
+        pointer.y += (pointerTarget.y - pointer.y) * 0.1;
+      } else {
+        pointer = null;
       }
 
       for (const point of points) {
         const sample = sampleWave(point, elapsed, pointer);
         ctx.beginPath();
         ctx.arc(sample.x, sample.y, sample.radius, 0, Math.PI * 2);
-        ctx.fillStyle = sample.accent
-          ? 'rgba(170, 184, 20,' + Math.min(0.98, sample.alpha) + ')'
-          : 'rgba(12, 13, 11,' + sample.alpha + ')';
+        ctx.fillStyle = `rgba(0, 0, 0, ${sample.alpha})`;
         ctx.fill();
       }
     };
@@ -69,6 +67,7 @@ export function HeroWave() {
     const start = () => {
       cancelAnimationFrame(raf);
       draw(performance.now());
+
       if (visible && documentVisible) {
         host.dataset.waveState = 'running';
         raf = requestAnimationFrame(tick);
@@ -89,7 +88,7 @@ export function HeroWave() {
       canvas.style.height = height + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const spacing = width < 520 ? 25 : width < 760 ? 22 : 19;
+      const spacing = width < 520 ? 26 : width < 760 ? 23 : 20;
       points = createGrid(width, height, spacing);
       draw(performance.now());
     };
@@ -97,6 +96,7 @@ export function HeroWave() {
     const onPointerMove = (event: PointerEvent) => {
       if (!finePointer.matches) return;
       const rect = host.getBoundingClientRect();
+
       pointerTarget = {
         x: event.clientX - rect.left,
         y: event.clientY - rect.top
@@ -112,9 +112,8 @@ export function HeroWave() {
       start();
     };
 
-    const resizeObserver = typeof ResizeObserver !== 'undefined'
-      ? new ResizeObserver(resize)
-      : null;
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null;
 
     if (resizeObserver) {
       resizeObserver.observe(host);
@@ -122,12 +121,16 @@ export function HeroWave() {
       window.addEventListener('resize', resize, { passive: true });
     }
 
-    const intersectionObserver = typeof IntersectionObserver !== 'undefined'
-      ? new IntersectionObserver((entries) => {
-          visible = entries[0]?.isIntersecting ?? true;
-          start();
-        }, { threshold: 0.01 })
-      : null;
+    const intersectionObserver =
+      typeof IntersectionObserver !== 'undefined'
+        ? new IntersectionObserver(
+            (entries) => {
+              visible = entries[0]?.isIntersecting ?? true;
+              start();
+            },
+            { threshold: 0.01 }
+          )
+        : null;
 
     intersectionObserver?.observe(host);
 
@@ -144,7 +147,11 @@ export function HeroWave() {
       cancelAnimationFrame(raf);
       resizeObserver?.disconnect();
       intersectionObserver?.disconnect();
-      if (!resizeObserver) window.removeEventListener('resize', resize);
+
+      if (!resizeObserver) {
+        window.removeEventListener('resize', resize);
+      }
+
       window.removeEventListener('pointermove', onPointerMove);
       document.removeEventListener('pointerleave', onPointerLeave);
       document.removeEventListener('visibilitychange', onVisibility);
