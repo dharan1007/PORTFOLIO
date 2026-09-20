@@ -51,7 +51,8 @@ PORTFOLIO/
 ├── vite.config.ts
 ├── vitest.setup.ts
 ├── playwright.config.ts
-├── lighthouserc.cjs
+├── lighthouserc.mobile.cjs
+├── lighthouserc.desktop.cjs
 ├── vercel.json
 ├── public/
 │   ├── assets/
@@ -60,7 +61,7 @@ PORTFOLIO/
 │   └── media/
 │       └── projects/
 ├── scripts/
-│   └── capture-project-media.mjs
+│   └── capture-project-media.ts
 ├── src/
 │   ├── main.tsx
 │   ├── app/
@@ -160,7 +161,7 @@ Run:
 
 ```bash
 npm install react@latest react-dom@latest react-router-dom@latest motion@latest @fontsource-variable/space-grotesk@latest
-npm install -D vite@latest typescript@latest @vitejs/plugin-react@latest vitest@latest jsdom@latest @testing-library/react@latest @testing-library/jest-dom@latest @testing-library/user-event@latest @playwright/test@latest @axe-core/playwright@latest @lhci/cli@latest
+npm install -D vite@latest typescript@latest @vitejs/plugin-react@latest vitest@latest jsdom@latest @testing-library/react@latest @testing-library/jest-dom@latest @testing-library/user-event@latest @playwright/test@latest @axe-core/playwright@latest @lhci/cli@latest tsx@latest
 ```
 
 Expected: `package.json` and `package-lock.json` exist and all commands exit 0.
@@ -205,6 +206,65 @@ export function App() {
 }
 ```
 
+Create `vite.config.ts`:
+
+```ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: "jsdom",
+    setupFiles: "./vitest.setup.ts",
+    globals: true,
+    css: true,
+  },
+});
+```
+
+Create `vitest.setup.ts`:
+
+```ts
+import "@testing-library/jest-dom/vitest";
+```
+
+Create `tsconfig.json`:
+
+```json
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" }
+  ]
+}
+```
+
+Create `tsconfig.app.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src", "tests", "vite.config.ts", "playwright.config.ts"]
+}
+```
+
 Create `src/main.tsx`:
 
 ```tsx
@@ -220,7 +280,25 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 );
 ```
 
-Replace `index.html` with a Vite entry containing `<div id="root"></div>` and `<script type="module" src="/src/main.tsx"></script>`.
+Replace `index.html` with:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f8f8f4" />
+    <meta name="description" content="Dharantej Reddy — founder, product engineer and AI systems builder." />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <title>Dharantej Reddy — Systems, Products, Infrastructure</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+```
 
 Add scripts to `package.json`:
 
@@ -590,7 +668,7 @@ git commit -m "feat: establish design tokens and modular navigation"
 **Interfaces:**
 - Produces:
   - `usePrefersReducedMotion(): boolean`.
-  - `Reveal` wrapper with finite opacity/translate entrance.
+  - `Reveal` wrapper with finite opacity/translate entrance and `data-motion-state="entered"` after completion.
   - `MotionRule` finite line/field transition.
   - `RouteTransition` keyed by pathname.
 
@@ -625,7 +703,7 @@ Expected: FAIL because `Reveal` does not exist.
 
 - [ ] **Step 3: Implement finite motion primitives using `motion/react`**
 
-`Reveal` uses `whileInView` once, with 16–24px Y displacement and opacity transition; reduced motion uses opacity-only or immediate rendering. It must never apply `display:none`, visibility hiding, or a persistent zero-opacity initial state when JavaScript motion initialization fails.
+`Reveal` uses `whileInView` once, with 16–24px Y displacement and opacity transition; reduced motion uses opacity-only or immediate rendering. It must never apply `display:none`, visibility hiding, or a persistent zero-opacity initial state when JavaScript motion initialization fails. Set `data-motion-state="entered"` from the animation completion callback; reduced-motion mode sets it on mount so browser tests can verify that visible motion/fallback behavior actually completed.
 
 - [ ] **Step 4: Add route transition**
 
@@ -730,6 +808,16 @@ test("renders an accessible-hidden canvas plus static fallback", () => {
   expect(screen.getByTestId("hero-wave-fallback")).toBeInTheDocument();
 });
 
+test("keeps the static fallback visible if the canvas renderer cannot initialize", async () => {
+  vi.resetModules();
+  vi.doMock("../../src/components/hero/waveRenderer", () => ({
+    createWaveRenderer: () => { throw new Error("canvas unavailable"); },
+  }));
+  const { HeroWave: FailingHeroWave } = await import("../../src/components/hero/HeroWave");
+  render(<FailingHeroWave />);
+  expect(screen.getByTestId("hero-wave-fallback")).toBeVisible();
+});
+
 test("does not require pointer support to show the field", () => {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
@@ -773,7 +861,7 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 9: Commit**
 
 ```bash
 git add src/components/hero tests/unit/HeroWave.test.tsx tests/unit/waveMath.test.ts
@@ -932,7 +1020,7 @@ git commit -m "feat: build project catalogue and card system"
 
 **Files:**
 - Create: `src/lib/media.ts`
-- Create: `scripts/capture-project-media.mjs`
+- Create: `scripts/capture-project-media.ts`
 - Modify: `src/components/projects/ProjectMedia.tsx`
 - Modify: `src/content/projects.ts`
 - Test: `tests/unit/ProjectMedia.test.tsx`
@@ -973,7 +1061,7 @@ The wrapper always owns its aspect ratio. On image error, replace the failed ima
 
 - [ ] **Step 4: Add controlled screenshot capture script**
 
-`scripts/capture-project-media.mjs` must use Playwright Chromium, wait for `networkidle`, set a 1440×900 viewport and save screenshots only for project-owned live URLs supplied explicitly by `src/content/projects.ts`. It must never scrape authenticated/private pages. Commit captured images under `public/media/projects/`.
+`scripts/capture-project-media.ts` must import the typed `projects` array directly and use Playwright Chromium, wait for `networkidle`, set a 1440×900 viewport and save screenshots only for project-owned live URLs supplied explicitly by `src/content/projects.ts`. It must never scrape authenticated/private pages. Commit captured images under `public/media/projects/`.
 
 Use it for the public/live priority systems where the rendered page is meaningful; leave private/no-live projects on intentional brand visuals.
 
@@ -1247,7 +1335,19 @@ For 1440×1000, 1280×800, 1024×768, 768×1024, 430×932 and 390×844:
 
 Use `AxeBuilder` and fail on serious/critical violations for all primary routes.
 
-- [ ] **Step 6: Add visual snapshots**
+- [ ] **Step 6: Generate and inspect the first complete visual proposal**
+
+Run the visual suite once with snapshot updates to create candidate baselines:
+
+```bash
+npx playwright test tests/visual --update-snapshots
+```
+
+Inspect every generated image at the required viewport, compare it against the approved design specification, and classify mismatches as match, repairable drift, direction decision required, or runtime proof. Do not freeze a baseline merely because Playwright generated it.
+
+This is the Design Arc Visual Proposal Gate. Present the inspected renders and verdict to the user. Implementation may continue to release verification only after the user approves the visual proposal; repairable drift is corrected before asking.
+
+- [ ] **Step 7: Re-run approved visual snapshots without update mode**
 
 Capture:
 - desktop hero resting state,
@@ -1263,7 +1363,7 @@ at the six required viewports.
 
 For stable snapshots, emulate reduced motion for non-pointer snapshots; the reduced-motion hero must still visibly contain the static dot field.
 
-- [ ] **Step 7: Run the complete browser suite**
+- [ ] **Step 8: Run the complete browser suite**
 
 ```bash
 npx playwright install chromium
@@ -1272,7 +1372,7 @@ npm run test:e2e
 npm run test:visual
 ```
 
-Expected: all functional and approved visual baselines PASS with no unexplained diff.
+Expected: all functional tests and the user-approved visual baselines PASS with no unexplained diff.
 
 - [ ] **Step 8: Commit**
 
@@ -1286,7 +1386,8 @@ git commit -m "test: add portfolio browser and visual gates"
 ### Task 14: Add performance budgets, remove the legacy runtime, and prove the clean build
 
 **Files:**
-- Create: `lighthouserc.cjs`
+- Create: `lighthouserc.mobile.cjs`
+- Create: `lighthouserc.desktop.cjs`
 - Modify: `package.json`
 - Delete after parity proof:
   - `styles.css`
@@ -1306,15 +1407,35 @@ git commit -m "test: add portfolio browser and visual gates"
 
 - [ ] **Step 1: Add Lighthouse CI budgets**
 
-Configure `lighthouserc.cjs` to run against local production preview and assert:
-- performance desktop >=0.95,
+Configure `lighthouserc.mobile.cjs` with mobile emulation and assertions:
+- performance >=0.90,
 - accessibility >=0.95,
 - best-practices >=0.95,
 - seo >=0.95,
 - CLS <=0.1,
 - LCP <=2500ms.
 
-Add `"test:lighthouse": "lhci autorun"` and `"verify": "npm test && npm run build && npm run test:e2e && npm run test:visual && npm run test:lighthouse"`.
+Configure `lighthouserc.desktop.cjs` with `preset: "desktop"` and assertions:
+- performance >=0.95,
+- accessibility >=0.95,
+- best-practices >=0.95,
+- seo >=0.95,
+- CLS <=0.1.
+
+Add these scripts:
+
+```json
+{
+  "scripts": {
+    "test:lighthouse:mobile": "lhci autorun --config=./lighthouserc.mobile.cjs",
+    "test:lighthouse:desktop": "lhci autorun --config=./lighthouserc.desktop.cjs",
+    "test:lighthouse": "npm run test:lighthouse:mobile && npm run test:lighthouse:desktop",
+    "verify": "npm test && npm run build && npm run test:e2e && npm run test:visual && npm run test:lighthouse"
+  }
+}
+```
+
+Record INP from the production/browser run when the audit environment exposes it; do not fabricate an INP value when the lab run cannot measure it.
 
 - [ ] **Step 2: Run parity verification before deleting legacy files**
 
