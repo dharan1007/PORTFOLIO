@@ -141,3 +141,17 @@ body,button,a{font:inherit}a{color:inherit;text-decoration:none}button{color:inh
 .hero-wave[data-wave-state="booting"] .hero-wave-fallback{opacity:.52}
 .hero-wave[data-wave-state="running"]:before{content:"";position:absolute;z-index:2;left:8%;top:50%;width:86%;height:34%;border-radius:50%;border-top:1px solid rgba(175,189,28,.28);border-bottom:1px solid rgba(16,17,14,.09);transform:translateY(-50%) skewY(-6deg);animation:waveContour 2.8s ease-in-out infinite alternate;pointer-events:none}
 @keyframes waveContour{0%{transform:translate3d(-3%,-62%,0) skewY(-8deg) scaleY(.82);opacity:.35}50%{transform:translate3d(2%,-42%,0) skewY(4deg) scaleY(1.16);opacity:.7}100%{transform:translate3d(5%,-57%,0) skewY(-2deg) scaleY(.92);opacity:.42}}
+
+/* Hard override: the hero wave must remain animated even when the OS requests reduced motion.
+   This site-level behavior is intentional for the portfolio owner. */
+.hero-wave[data-wave-state="running"] .hero-wave-fallback{opacity:0!important}
+.hero-wave[data-wave-state="running"] canvas{display:block!important;opacity:1!important;z-index:4;filter:contrast(1.2) saturate(1.08)}
+.hero-wave[data-wave-state="paused"] .hero-wave-fallback,
+.hero-wave[data-wave-state="fallback"] .hero-wave-fallback,
+.hero-wave[data-wave-state="booting"] .hero-wave-fallback{opacity:.52!important}
+@media(prefers-reduced-motion:reduce){
+  .hero-wave canvas{animation:none!important;transition:none!important}
+  .hero-wave[data-wave-state="running"] .hero-wave-fallback{opacity:0!important}
+  .hero-wave[data-wave-state="running"]:before,
+  .hero-wave[data-wave-state="running"]:after{animation:none!important}
+}

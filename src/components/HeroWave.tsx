@@ -16,77 +16,82 @@ export function HeroWave() {
       return;
     }
 
-    const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const finePointer = window.matchMedia('(pointer: fine)');
-    let reduceMotion = reduceQuery.matches;
     let visible = true;
     let documentVisible = document.visibilityState !== 'hidden';
     let raf = 0;
     let width = 1;
     let height = 1;
     let dpr = 1;
-    let points = createGrid(1, 1, 24);
+    let points = createGrid(1, 1, 21);
     let pointerTarget: WavePointer = null;
     let pointer: WavePointer = null;
     let frame = 0;
-
-    const resize = () => {
-      const rect = host.getBoundingClientRect();
-      width = Math.max(1, rect.width);
-      height = Math.max(1, rect.height);
-      dpr = Math.min(1.75, window.devicePixelRatio || 1);
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      canvas.style.width = width + 'px';
-      canvas.style.height = height + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const spacing = width < 520 ? 27 : width < 760 ? 24 : 21;
-      points = createGrid(width, height, spacing);
-      draw(performance.now());
-    };
+    let startedAt = performance.now();
 
     const draw = (time: number) => {
+      const elapsed = time - startedAt;
       ctx.clearRect(0, 0, width, height);
       frame += 1;
-      if (frame % 20 === 0) {
+
+      if (frame % 12 === 0) {
         host.dataset.waveFrame = String(frame);
-        host.dataset.waveTime = String(Math.round(time));
+        host.dataset.waveTime = String(Math.round(elapsed));
       }
+
       if (pointerTarget && finePointer.matches) {
         if (!pointer) pointer = { ...pointerTarget };
-        pointer.x += (pointerTarget.x - pointer.x) * 0.16;
-        pointer.y += (pointerTarget.y - pointer.y) * 0.16;
-      } else {
-        pointer = null;
+        pointer.x += (pointerTarget.x - pointer.x) * 0.2;
+        pointer.y += (pointerTarget.y - pointer.y) * 0.2;
+      } else if (pointer) {
+        pointer.x += (width * 0.72 - pointer.x) * 0.025;
+        pointer.y += (height * 0.46 - pointer.y) * 0.025;
       }
 
       for (const point of points) {
-        const sample = sampleWave(point, time, pointer);
+        const sample = sampleWave(point, elapsed, pointer);
         ctx.beginPath();
         ctx.arc(sample.x, sample.y, sample.radius, 0, Math.PI * 2);
         ctx.fillStyle = sample.accent
-          ? 'rgba(175, 189, 28,' + Math.min(0.92, sample.alpha) + ')'
-          : 'rgba(15, 16, 14,' + sample.alpha + ')';
+          ? 'rgba(170, 184, 20,' + Math.min(0.98, sample.alpha) + ')'
+          : 'rgba(12, 13, 11,' + sample.alpha + ')';
         ctx.fill();
       }
     };
 
     const tick = (time: number) => {
       draw(time);
-      if (!reduceMotion && visible && documentVisible) {
+      if (visible && documentVisible) {
         raf = requestAnimationFrame(tick);
       }
     };
 
-    const restart = () => {
+    const start = () => {
       cancelAnimationFrame(raf);
       draw(performance.now());
-      if (!reduceMotion && visible && documentVisible) {
+      if (visible && documentVisible) {
         host.dataset.waveState = 'running';
         raf = requestAnimationFrame(tick);
       } else {
-        host.dataset.waveState = 'static';
+        host.dataset.waveState = 'paused';
       }
+    };
+
+    const resize = () => {
+      const rect = host.getBoundingClientRect();
+      width = Math.max(1, rect.width);
+      height = Math.max(1, rect.height);
+      dpr = Math.min(1.75, window.devicePixelRatio || 1);
+
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const spacing = width < 520 ? 25 : width < 760 ? 22 : 19;
+      points = createGrid(width, height, spacing);
+      draw(performance.now());
     };
 
     const onPointerMove = (event: PointerEvent) => {
@@ -104,45 +109,56 @@ export function HeroWave() {
 
     const onVisibility = () => {
       documentVisible = document.visibilityState !== 'hidden';
-      restart();
+      start();
     };
 
-    const onReducedMotion = () => {
-      reduceMotion = reduceQuery.matches;
-      restart();
-    };
+    const resizeObserver = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(resize)
+      : null;
 
-    const resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(host);
+    if (resizeObserver) {
+      resizeObserver.observe(host);
+    } else {
+      window.addEventListener('resize', resize, { passive: true });
+    }
 
-    const intersectionObserver = new IntersectionObserver((entries) => {
-      visible = entries[0]?.isIntersecting ?? true;
-      restart();
-    }, { threshold: 0.02 });
-    intersectionObserver.observe(host);
+    const intersectionObserver = typeof IntersectionObserver !== 'undefined'
+      ? new IntersectionObserver((entries) => {
+          visible = entries[0]?.isIntersecting ?? true;
+          start();
+        }, { threshold: 0.01 })
+      : null;
+
+    intersectionObserver?.observe(host);
 
     window.addEventListener('pointermove', onPointerMove, { passive: true });
     document.addEventListener('pointerleave', onPointerLeave);
     document.addEventListener('visibilitychange', onVisibility);
-    reduceQuery.addEventListener('change', onReducedMotion);
 
     resize();
-    host.dataset.waveState = reduceMotion ? 'static' : 'running';
-    restart();
+    startedAt = performance.now();
+    host.dataset.waveState = 'running';
+    start();
 
     return () => {
       cancelAnimationFrame(raf);
-      resizeObserver.disconnect();
-      intersectionObserver.disconnect();
+      resizeObserver?.disconnect();
+      intersectionObserver?.disconnect();
+      if (!resizeObserver) window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onPointerMove);
       document.removeEventListener('pointerleave', onPointerLeave);
       document.removeEventListener('visibilitychange', onVisibility);
-      reduceQuery.removeEventListener('change', onReducedMotion);
     };
   }, []);
 
   return (
-    <div className="hero-wave" ref={hostRef} data-testid="hero-wave" data-wave-state="booting" aria-hidden="true">
+    <div
+      className="hero-wave"
+      ref={hostRef}
+      data-testid="hero-wave"
+      data-wave-state="booting"
+      aria-hidden="true"
+    >
       <div className="hero-wave-fallback" data-testid="hero-wave-fallback" />
       <canvas ref={canvasRef} data-hero-wave-canvas />
     </div>
