@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import {
   BrowserRouter, Link, NavLink, Route, Routes, useLocation, useParams
 } from 'react-router-dom';
@@ -75,7 +75,7 @@ function Footer() {
 
 function ProjectVisual({ project, compact = false }: { project: Project; compact?: boolean }) {
   return (
-    <div className={'project-visual ' + (compact ? 'project-visual-compact' : '')} style={{ '--accent': project.accent } as React.CSSProperties}>
+    <div className={'project-visual ' + (compact ? 'project-visual-compact' : '')} style={{ '--accent': project.accent } as CSSProperties}>
       <span className="project-visual-code">{project.priority ? String(project.priority).padStart(2, '0') : project.year}</span>
       <strong>{project.name}</strong>
       <span>{project.category}</span>
@@ -270,8 +270,8 @@ function ProjectsPage() {
 function ProjectDetailPage() {
   const { projectId = '' } = useParams();
   const project = getProjectById(projectId);
+  setTitle((project?.name || 'Project not found') + ' — Dharantej Reddy');
   if (!project) return <NotFoundPage project />;
-  setTitle((project?.name || 'Project') + ' — Dharantej Reddy');
 
   const ordered = orderedProjects();
   const index = ordered.findIndex((item) => item.id === project.id);
