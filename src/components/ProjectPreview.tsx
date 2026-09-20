@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import type { Project } from '../data/projects';
 
 export function ProjectPreview({ project, large = false }: { project: Project; large?: boolean }) {
@@ -8,7 +8,7 @@ export function ProjectPreview({ project, large = false }: { project: Project; l
   if (!canFrame) return null;
 
   return (
-    <div className={'live-preview ' + (large ? 'live-preview-large' : '')} style={{ '--accent': project.accent } as React.CSSProperties}>
+    <div className={'live-preview ' + (large ? 'live-preview-large' : '')} style={{ '--accent': project.accent } as CSSProperties}>
       <div className="live-preview-fallback">
         <span className="mono">LIVE PREVIEW</span>
         <strong>{project.name}</strong>

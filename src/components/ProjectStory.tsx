@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { Project } from '../data/projects';
 
 type VisualMode = 'flow' | 'storyboard' | 'orbit' | 'pipeline' | 'timeline' | 'stackmap' | 'loop' | 'constellation';
@@ -60,14 +61,14 @@ export function ProjectStory({ project }: { project: Project }) {
   const mode = visualMode(project);
 
   return (
-    <div className={'project-story project-story-' + mode} style={{ '--accent': project.accent } as React.CSSProperties} data-visual-mode={mode}>
+    <div className={'project-story project-story-' + mode} style={{ '--accent': project.accent } as CSSProperties} data-visual-mode={mode}>
       <div className="story-head">
         <span className="mono">{mode.replace('stackmap','stack map')}</span>
         <strong>{project.name} / SYSTEM MAP</strong>
       </div>
       <div className="story-canvas">
         {steps.map((step, index) => (
-          <article className="story-node" key={step} style={{ '--i': index } as React.CSSProperties}>
+          <article className="story-node" key={step} style={{ '--i': index } as CSSProperties}>
             <span>{String(index + 1).padStart(2, '0')}</span>
             <p>{step}</p>
           </article>
