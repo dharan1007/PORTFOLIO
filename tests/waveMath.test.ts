@@ -19,7 +19,7 @@ describe('hero wave math', () => {
   it('moves materially over time without pointer input', () => {
     const point = { x: 200, y: 100, col: 7, row: 4 };
     const first = sampleWave(point, 0, null);
-    const later = sampleWave(point, 520, null);
+    const later = sampleWave(point, 200, null);
     const distance = Math.hypot(later.x - first.x, later.y - first.y);
     expect(distance).toBeGreaterThan(8);
   });
