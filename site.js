@@ -17,6 +17,18 @@
 
   const projectHref = project => `/projects/${project.id}/`;
 
+  function orderedProjects() {
+    if (!window.PROJECTS) return [];
+    const priority = window.PRIORITY_PROJECT_IDS || [];
+    const rank = new Map(priority.map((id, index) => [id, index]));
+    return [...PROJECTS].sort((a, b) => {
+      const aRank = rank.has(a.id) ? rank.get(a.id) : Number.MAX_SAFE_INTEGER;
+      const bRank = rank.has(b.id) ? rank.get(b.id) : Number.MAX_SAFE_INTEGER;
+      if (aRank !== bRank) return aRank - bRank;
+      return PROJECTS.indexOf(a) - PROJECTS.indexOf(b);
+    });
+  }
+
   function setActiveNav() {
     const page = document.body.dataset.page || 'home';
     $$('[data-nav]').forEach(link => {
@@ -172,6 +184,17 @@
           }
         });
       }
+
+      document.querySelectorAll('.project-feature, .project-tile, .company-stack article').forEach(element => {
+        element.addEventListener('pointerenter', () => {
+          gsap.to(element, { y: -4, duration: .32, ease: 'power2.out' });
+        });
+        element.addEventListener('pointerleave', () => {
+          gsap.to(element, { y: 0, duration: .42, ease: 'power3.out' });
+        });
+      });
+
+      ScrollTrigger.refresh();
     } else {
       document.documentElement.classList.remove('js-motion');
     }
@@ -220,12 +243,27 @@
   function renderHome() {
     const target = $('#featuredProjects');
     if (!target || !window.PROJECTS) return;
-    const selected = PROJECTS.filter(project => project.featured).slice(0, 9);
+
+    const priorityIds = window.PRIORITY_PROJECT_IDS || [];
+    const selected = priorityIds
+      .map(id => PROJECTS_BY_ID?.[id])
+      .filter(Boolean);
     target.innerHTML = selected.map(featureCard).join('');
+
+    const researchTarget = $('#zachitanHighlight');
+    if (researchTarget) {
+      const researchIds = window.RESEARCH_HIGHLIGHT_IDS || ['zachitan'];
+      const highlights = researchIds.map(id => PROJECTS_BY_ID?.[id]).filter(Boolean);
+      researchTarget.innerHTML = highlights.map(featureCard).join('');
+    }
 
     const reel = $('#projectMarqueeTrack');
     if (reel) {
-      const visuals = PROJECTS.filter(project => visualFor(project)).slice(0, 10);
+      const prioritySet = new Set(priorityIds);
+      const visuals = [
+        ...orderedProjects().filter(project => prioritySet.has(project.id) && visualFor(project)),
+        ...orderedProjects().filter(project => !prioritySet.has(project.id) && visualFor(project))
+      ].slice(0, 12);
       reel.innerHTML = visuals.map(project => `
         <a class="project-marquee__item" href="${projectHref(project)}" aria-label="${esc(project.name)}">
           <img src="${esc(visualFor(project))}" alt="${esc(project.name)} preview" loading="lazy" decoding="async">
@@ -248,7 +286,8 @@
     const list = $('#projectIndex');
     if (!list || !window.PROJECTS) return;
 
-    const visibleForTiles = PROJECTS.filter(project => visualFor(project)).slice(0, 8);
+    const projects = orderedProjects();
+    const visibleForTiles = projects.filter(project => visualFor(project)).slice(0, 8);
     const tiles = $('#projectsFeatureGrid');
     if (tiles) {
       tiles.innerHTML = visibleForTiles.map(project => `
@@ -262,7 +301,7 @@
         </a>`).join('');
     }
 
-    list.innerHTML = PROJECTS.map((project, index) => `
+    list.innerHTML = projects.map((project, index) => `
       <a class="project-row" href="${projectHref(project)}" data-project-row data-index="${index}">
         <span class="project-row__num mono">${String(index + 1).padStart(2,'0')}</span>
         <span class="project-row__name">${esc(project.name)}</span>
@@ -271,11 +310,11 @@
         <span class="project-row__open" aria-hidden="true">↗</span>
       </a>`).join('');
 
-    const buttons = $$('[data-filter]');
+    const buttons = $('[data-filter]');
     const apply = filter => {
       buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === filter)));
-      $$('[data-project-row]', list).forEach(row => {
-        const project = PROJECTS[Number(row.dataset.index)];
+      $('[data-project-row]', list).forEach(row => {
+        const project = projects[Number(row.dataset.index)];
         row.hidden = !filterMatch(project, filter);
       });
     };
@@ -356,8 +395,9 @@
           : 'No public source link is attached to this case page.';
     }
 
-    const index = PROJECTS.findIndex(item => item.id === id);
-    const next = PROJECTS[(index + 1) % PROJECTS.length];
+    const projects = orderedProjects();
+    const index = projects.findIndex(item => item.id === id);
+    const next = projects[(index + 1) % projects.length];
     const nextLink = $('#nextProject');
     if (nextLink) {
       nextLink.href = projectHref(next);
@@ -368,72 +408,140 @@
   function fillMeta() {
     const year = $('#year');
     if (year) year.textContent = String(new Date().getFullYear());
-    $$('[data-email]').forEach(element => element.textContent = PORTFOLIO_META.email);
+    $('[data-email]').forEach(element => element.textContent = PORTFOLIO_META.email);
+    $('[data-project-count]').forEach(element => {
+      element.textContent = String(window.PROJECTS?.length || 0);
+    });
   }
 
 
-  /* === LIGHT HERO PARTICLES 2026 === */
-  function initHeroParticles() {
+  /* === RIGHT-SIDE CURSOR-REACTIVE DOTTED WAVE MATRIX === */
+  function initHeroWave() {
     const host = $('#heroParticles');
-    if (!host || !window.tsParticles) return;
+    const hero = host?.closest('.hero');
+    if (!host || !hero || !window.THREE) return;
 
-    const staticMode = reducedMotion;
-    const particleCount = innerWidth < 640 ? 120 : innerWidth < 1000 ? 230 : 430;
+    const renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setClearColor(0xffffff, 0);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+    renderer.domElement.setAttribute('aria-hidden', 'true');
+    host.replaceChildren(renderer.domElement);
 
-    tsParticles.load({
-      id: 'heroParticles',
-      options: {
-        fullScreen: { enable: false },
-        background: { color: { value: 'transparent' } },
-        fpsLimit: 60,
-        detectRetina: true,
-        particles: {
-          number: {
-            value: particleCount,
-            density: { enable: true, area: 920 }
-          },
-          color: {
-            value: ['#11120f','#2e3029','#c7cf2c','#8f9624']
-          },
-          shape: { type: 'circle' },
-          opacity: {
-            value: { min: 0.18, max: 0.82 },
-            animation: { enable: !staticMode, speed: 0.22, sync: false }
-          },
-          size: {
-            value: { min: 0.65, max: 2.35 }
-          },
-          links: { enable: false },
-          move: {
-            enable: !staticMode,
-            speed: 0.34,
-            direction: 'none',
-            random: true,
-            straight: false,
-            outModes: { default: 'out' }
-          }
-        },
-        interactivity: {
-          detectsOn: 'canvas',
-          events: {
-            onHover: {
-              enable: !staticMode && finePointer,
-              mode: 'repulse'
-            },
-            resize: { enable: true }
-          },
-          modes: {
-            repulse: {
-              distance: 145,
-              duration: 0.42,
-              speed: 0.8
-            }
-          }
-        },
-        pauseOnBlur: true,
-        pauseOnOutsideViewport: true
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+    camera.position.set(0, 0, 12.5);
+
+    const compact = innerWidth < 700;
+    const cols = compact ? 30 : 48;
+    const rows = compact ? 22 : 32;
+    const width = compact ? 10.2 : 12.8;
+    const height = compact ? 8.2 : 8.8;
+    const count = cols * rows;
+    const base = new Float32Array(count * 3);
+    const positions = new Float32Array(count * 3);
+
+    let cursor = 0;
+    for (let row = 0; row < rows; row += 1) {
+      for (let col = 0; col < cols; col += 1) {
+        const x = (col / (cols - 1) - 0.5) * width;
+        const y = (0.5 - row / (rows - 1)) * height;
+        base[cursor] = positions[cursor] = x;
+        base[cursor + 1] = positions[cursor + 1] = y;
+        base[cursor + 2] = positions[cursor + 2] = 0;
+        cursor += 3;
       }
-    }).catch(() => {});
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    const attribute = new THREE.BufferAttribute(positions, 3);
+    geometry.setAttribute('position', attribute);
+
+    const material = new THREE.PointsMaterial({
+      color: 0x161711,
+      size: compact ? 0.07 : 0.062,
+      transparent: true,
+      opacity: 0.5,
+      depthWrite: false,
+      sizeAttenuation: true
+    });
+
+    const points = new THREE.Points(geometry, material);
+    points.rotation.z = -0.055;
+    scene.add(points);
+
+    const pointer = { x: 0.15, y: 0, tx: 0.15, ty: 0 };
+    const onPointerMove = event => {
+      if (reducedMotion || !finePointer) return;
+      const bounds = hero.getBoundingClientRect();
+      const nx = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
+      const ny = Math.max(0, Math.min(1, (event.clientY - bounds.top) / bounds.height));
+      pointer.tx = (nx - 0.5) * 2;
+      pointer.ty = (0.5 - ny) * 2;
+    };
+    hero.addEventListener('pointermove', onPointerMove, { passive: true });
+    hero.addEventListener('pointerleave', () => {
+      pointer.tx = 0.15;
+      pointer.ty = 0;
+    }, { passive: true });
+
+    const resize = () => {
+      const widthPx = Math.max(1, host.clientWidth);
+      const heightPx = Math.max(1, host.clientHeight);
+      renderer.setSize(widthPx, heightPx, false);
+      camera.aspect = widthPx / heightPx;
+      camera.updateProjectionMatrix();
+    };
+    resize();
+    addEventListener('resize', resize, { passive: true });
+
+    const clock = new THREE.Clock();
+    let raf = 0;
+    const draw = () => {
+      const t = reducedMotion ? 0.8 : clock.getElapsedTime();
+      pointer.x += (pointer.tx - pointer.x) * 0.055;
+      pointer.y += (pointer.ty - pointer.y) * 0.055;
+
+      const px = pointer.x * width * 0.48;
+      const py = pointer.y * height * 0.45;
+      for (let i = 0; i < count; i += 1) {
+        const j = i * 3;
+        const x = base[j];
+        const y = base[j + 1];
+        const dx = x - px;
+        const dy = y - py;
+        const distance2 = dx * dx + dy * dy;
+        const cursorLift = Math.exp(-distance2 * 0.34) * (reducedMotion ? 0.34 : 1.15);
+        const wave =
+          Math.sin(x * 0.72 + t * 1.15) * 0.32 +
+          Math.cos(y * 0.86 - t * 0.82) * 0.20 +
+          Math.sin((x + y) * 0.36 + t * 0.52) * 0.12;
+
+        positions[j] = x + (reducedMotion ? 0 : pointer.x * 0.035 * (y / height));
+        positions[j + 1] = y + (reducedMotion ? 0 : pointer.y * 0.025 * (x / width));
+        positions[j + 2] = wave + cursorLift;
+      }
+      attribute.needsUpdate = true;
+
+      if (!reducedMotion) {
+        points.rotation.y += ((pointer.x * 0.09) - points.rotation.y) * 0.04;
+        points.rotation.x += ((-pointer.y * 0.065) - points.rotation.x) * 0.04;
+      }
+
+      renderer.render(scene, camera);
+      if (!reducedMotion) raf = requestAnimationFrame(draw);
+    };
+    draw();
+
+    addEventListener('pagehide', () => {
+      if (raf) cancelAnimationFrame(raf);
+      geometry.dispose();
+      material.dispose();
+      renderer.dispose();
+    }, { once: true });
   }
 
   setActiveNav();
@@ -443,7 +551,7 @@
   renderProjects();
   renderProjectPage();
   fillMeta();
-  initHeroParticles();
+  initHeroWave();
 
   requestAnimationFrame(() => requestAnimationFrame(initMotion));
 })();
