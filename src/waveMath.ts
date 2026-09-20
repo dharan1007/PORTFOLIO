@@ -34,11 +34,14 @@ export function sampleWave(point: WavePoint, time: number, pointer: WavePointer)
     pushY = (dy / dist) * influence * 14;
   }
 
+  const travellingBand = Math.sin(point.col * 0.29 + point.row * 0.08 - time * 0.0065);
+  const bandLift = Math.max(0, travellingBand - 0.72) / 0.28;
+
   return {
-    x: point.x + Math.sin(point.y * 0.013 + time * 0.00115) * 9 + pushX,
-    y: point.y + depth * 27 - influence * 55 + pushY,
-    radius: Math.max(1.25, 1.9 + depth * 0.72 + influence * 1.1),
-    alpha: Math.min(0.94, Math.max(0.38, 0.57 + depth * 0.2 + influence * 0.18)),
-    accent: influence > 0.48 || ((point.col + point.row * 3) % 31 === 0 && depth > 0.35)
+    x: point.x + Math.sin(point.y * 0.013 + time * 0.00165) * 12 + pushX,
+    y: point.y + depth * 34 - bandLift * 18 - influence * 62 + pushY,
+    radius: Math.max(1.35, 2.05 + depth * 0.78 + bandLift * 0.9 + influence * 1.2),
+    alpha: Math.min(0.97, Math.max(0.42, 0.61 + depth * 0.2 + bandLift * 0.15 + influence * 0.18)),
+    accent: influence > 0.43 || bandLift > 0.42
   };
 }

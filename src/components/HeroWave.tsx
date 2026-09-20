@@ -28,6 +28,7 @@ export function HeroWave() {
     let points = createGrid(1, 1, 24);
     let pointerTarget: WavePointer = null;
     let pointer: WavePointer = null;
+    let frame = 0;
 
     const resize = () => {
       const rect = host.getBoundingClientRect();
@@ -46,6 +47,11 @@ export function HeroWave() {
 
     const draw = (time: number) => {
       ctx.clearRect(0, 0, width, height);
+      frame += 1;
+      if (frame % 20 === 0) {
+        host.dataset.waveFrame = String(frame);
+        host.dataset.waveTime = String(Math.round(time));
+      }
       if (pointerTarget && finePointer.matches) {
         if (!pointer) pointer = { ...pointerTarget };
         pointer.x += (pointerTarget.x - pointer.x) * 0.16;
@@ -59,8 +65,8 @@ export function HeroWave() {
         ctx.beginPath();
         ctx.arc(sample.x, sample.y, sample.radius, 0, Math.PI * 2);
         ctx.fillStyle = sample.accent
-          ? 'rgba(185, 196, 42,' + Math.min(0.76, sample.alpha) + ')'
-          : 'rgba(20, 21, 18,' + sample.alpha + ')';
+          ? 'rgba(175, 189, 28,' + Math.min(0.92, sample.alpha) + ')'
+          : 'rgba(15, 16, 14,' + sample.alpha + ')';
         ctx.fill();
       }
     };

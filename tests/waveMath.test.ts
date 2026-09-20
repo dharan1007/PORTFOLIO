@@ -16,6 +16,14 @@ describe('hero wave math', () => {
     expect(sample.radius).toBeGreaterThanOrEqual(1.15);
   });
 
+  it('moves materially over time without pointer input', () => {
+    const point = { x: 200, y: 100, col: 7, row: 4 };
+    const first = sampleWave(point, 0, null);
+    const later = sampleWave(point, 520, null);
+    const distance = Math.hypot(later.x - first.x, later.y - first.y);
+    expect(distance).toBeGreaterThan(8);
+  });
+
   it('reacts more strongly near the pointer', () => {
     const point = { x: 200, y: 100, col: 2, row: 3 };
     const resting = sampleWave(point, 800, null);
