@@ -78,12 +78,12 @@
     if (window.gsap && window.ScrollTrigger) {
       gsap.registerPlugin(ScrollTrigger);
       const revealTargets = new Set([
-        ...$('[data-reveal]'),
-        ...$('.project-row'),
-        ...$('.project-tile'),
-        ...$('.project-feature'),
-        ...$('.fact-card'),
-        ...$('.timeline-row')
+        ...document.querySelectorAll('[data-reveal]'),
+        ...document.querySelectorAll('.project-row'),
+        ...document.querySelectorAll('.project-tile'),
+        ...document.querySelectorAll('.project-feature'),
+        ...document.querySelectorAll('.fact-card'),
+        ...document.querySelectorAll('.timeline-row')
       ]);
 
       revealTargets.forEach((element, index) => {
@@ -106,7 +106,7 @@
         );
       });
 
-      $('main > section, main > header, .timeline-group, .about-details').forEach(element => {
+      document.querySelectorAll('main > section, main > header, .timeline-group, .about-details').forEach(element => {
         element.classList.add('motion-section');
         gsap.fromTo(element,
           { opacity: .45, y: 18 },
@@ -124,7 +124,7 @@
         );
       });
 
-      const textTargets = $('main h1, main h2, main h3, main p, main small, main .kicker, main .mono, .site-footer span')
+      const textTargets = [...document.querySelectorAll('main h1, main h2, main h3, main p, main small, main .kicker, main .mono, .site-footer span')]
         .filter(element => !element.hasAttribute('data-reveal') && !element.closest('.project-tile__copy'));
 
       textTargets.forEach(element => {
@@ -146,7 +146,7 @@
         );
       });
 
-      $('[data-parallax]').forEach(element => {
+      document.querySelectorAll('[data-parallax]').forEach(element => {
         gsap.fromTo(element, {yPercent:-2}, {
           yPercent: 7,
           ease: 'none',
