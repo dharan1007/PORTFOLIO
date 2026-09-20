@@ -77,23 +77,76 @@
 
     if (window.gsap && window.ScrollTrigger) {
       gsap.registerPlugin(ScrollTrigger);
+      const revealTargets = new Set([
+        ...$('[data-reveal]'),
+        ...$('.project-row'),
+        ...$('.project-tile'),
+        ...$('.project-feature'),
+        ...$('.fact-card'),
+        ...$('.timeline-row')
+      ]);
 
-      $$('[data-reveal]').forEach((element, index) => {
-        gsap.to(element, {
-          opacity: 1,
-          y: 0,
-          duration: .8,
-          ease: 'power3.out',
-          delay: Math.min(index * .025, .15),
-          scrollTrigger: {
-            trigger: element,
-            start: 'top 90%',
-            once: true
+      revealTargets.forEach((element, index) => {
+        element.classList.add('motion-up');
+        gsap.fromTo(element,
+          { opacity: 0, y: 28, filter: 'blur(5px)' },
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: .88,
+            ease: 'power3.out',
+            delay: Math.min(index * .012, .10),
+            scrollTrigger: {
+              trigger: element,
+              start: 'top 91%',
+              once: true
+            }
           }
-        });
+        );
       });
 
-      $$('[data-parallax]').forEach(element => {
+      $('main > section, main > header, .timeline-group, .about-details').forEach(element => {
+        element.classList.add('motion-section');
+        gsap.fromTo(element,
+          { opacity: .45, y: 18 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.05,
+            ease: 'power2.inOut',
+            scrollTrigger: {
+              trigger: element,
+              start: 'top 94%',
+              once: true
+            }
+          }
+        );
+      });
+
+      const textTargets = $('main h1, main h2, main h3, main p, main small, main .kicker, main .mono, .site-footer span')
+        .filter(element => !element.hasAttribute('data-reveal') && !element.closest('.project-tile__copy'));
+
+      textTargets.forEach(element => {
+        element.classList.add('motion-text');
+        gsap.fromTo(element,
+          { opacity: 0, y: 12, filter: 'blur(3px)' },
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: .72,
+            ease: 'power2.inOut',
+            scrollTrigger: {
+              trigger: element,
+              start: 'top 93%',
+              once: true
+            }
+          }
+        );
+      });
+
+      $('[data-parallax]').forEach(element => {
         gsap.fromTo(element, {yPercent:-2}, {
           yPercent: 7,
           ease: 'none',
@@ -318,6 +371,71 @@
     $$('[data-email]').forEach(element => element.textContent = PORTFOLIO_META.email);
   }
 
+
+  /* === LIGHT HERO PARTICLES 2026 === */
+  function initHeroParticles() {
+    const host = $('#heroParticles');
+    if (!host || !window.tsParticles) return;
+
+    const staticMode = reducedMotion;
+    const particleCount = innerWidth < 640 ? 120 : innerWidth < 1000 ? 230 : 430;
+
+    tsParticles.load({
+      id: 'heroParticles',
+      options: {
+        fullScreen: { enable: false },
+        background: { color: { value: 'transparent' } },
+        fpsLimit: 60,
+        detectRetina: true,
+        particles: {
+          number: {
+            value: particleCount,
+            density: { enable: true, area: 920 }
+          },
+          color: {
+            value: ['#11120f','#2e3029','#c7cf2c','#8f9624']
+          },
+          shape: { type: 'circle' },
+          opacity: {
+            value: { min: 0.18, max: 0.82 },
+            animation: { enable: !staticMode, speed: 0.22, sync: false }
+          },
+          size: {
+            value: { min: 0.65, max: 2.35 }
+          },
+          links: { enable: false },
+          move: {
+            enable: !staticMode,
+            speed: 0.34,
+            direction: 'none',
+            random: true,
+            straight: false,
+            outModes: { default: 'out' }
+          }
+        },
+        interactivity: {
+          detectsOn: 'canvas',
+          events: {
+            onHover: {
+              enable: !staticMode && finePointer,
+              mode: 'repulse'
+            },
+            resize: { enable: true }
+          },
+          modes: {
+            repulse: {
+              distance: 145,
+              duration: 0.42,
+              speed: 0.8
+            }
+          }
+        },
+        pauseOnBlur: true,
+        pauseOnOutsideViewport: true
+      }
+    }).catch(() => {});
+  }
+
   setActiveNav();
   initMenu();
   initProgress();
@@ -325,6 +443,7 @@
   renderProjects();
   renderProjectPage();
   fillMeta();
+  initHeroParticles();
 
   requestAnimationFrame(() => requestAnimationFrame(initMotion));
 })();
