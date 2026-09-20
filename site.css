@@ -687,7 +687,7 @@ body[data-theme="paper"]::selection{background:#161712;color:#fff}
   position:relative;
   z-index:1;
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-columns:repeat(3,minmax(0,1fr));
   margin-top:90px;
   border-top:1px solid rgba(255,255,255,.16);
   border-bottom:1px solid rgba(255,255,255,.16);
@@ -775,9 +775,11 @@ body[data-theme="paper"]::selection{background:#161712;color:#fff}
   }
   .hero__name{max-width:8.8ch}
   .company-spotlight__lead{grid-template-columns:1fr}
-  .company-stack{grid-template-columns:1fr 1fr}
-  .company-stack article:nth-child(3){border-left:0}
-  .company-stack article:nth-child(n+3){border-top:1px solid rgba(255,255,255,.16)}
+  .company-stack{grid-template-columns:1fr}
+  .company-stack article+article{
+    border-left:0;
+    border-top:1px solid rgba(255,255,255,.16);
+  }
 }
 
 @media (max-width:640px){
