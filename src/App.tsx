@@ -4,6 +4,8 @@ import {
 } from 'react-router-dom';
 import { HeroWave } from './components/HeroWave';
 import { Reveal } from './components/Reveal';
+import { ProjectPreview } from './components/ProjectPreview';
+import { ProjectStory } from './components/ProjectStory';
 import {
   getProjectById, orderedProjects, priorityProjectIds, projects, researchHighlightProject, type Project
 } from './data/projects';
@@ -86,7 +88,7 @@ function ProjectVisual({ project, compact = false }: { project: Project; compact
 function ProjectCard({ project, variant = 'normal' }: { project: Project; variant?: 'normal' | 'flagship' | 'compact' | 'research' }) {
   return (
     <Link to={'/projects/' + project.id} className={'project-card project-card-' + variant} data-project-id={project.id}>
-      <ProjectVisual project={project} compact={variant === 'compact'} />
+      {project.liveUrl ? <ProjectPreview project={project} /> : <ProjectVisual project={project} compact={variant === 'compact'} />}
       <div className="project-card-copy">
         <div className="project-card-meta"><span>{project.category}</span><span>{project.status}</span></div>
         <h3>{project.name}</h3>
@@ -292,19 +294,58 @@ function ProjectDetailPage() {
         <ProjectVisual project={project} />
       </header>
       <section className="project-detail-body">
-        <Reveal><div className="detail-block"><span className="mono">Context</span><p className="detail-big">{project.summary}</p></div></Reveal>
+        <Reveal>
+          <div className="detail-block detail-intro">
+            <span className="mono">Why it exists</span>
+            <div>
+              <p className="detail-big">{project.summary}</p>
+              <div className="detail-meta-grid">
+                <div><span className="mono">Current state</span><strong>{project.status}</strong></div>
+                <div><span className="mono">Visibility</span><strong>{project.visibility}</strong></div>
+                <div><span className="mono">Domain</span><strong>{project.category}</strong></div>
+                <div><span className="mono">Year</span><strong>{project.year}</strong></div>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <div className="detail-block detail-story-block">
+            <span className="mono">How it works</span>
+            <ProjectStory project={project} />
+          </div>
+        </Reveal>
+
+        {project.liveUrl && (
+          <Reveal>
+            <div className="detail-block detail-live-block">
+              <span className="mono">Live surface</span>
+              <div>
+                <ProjectPreview project={project} large />
+                <p className="detail-caption">Interactive preview of the current public surface. The card remains a read-only preview; open the live surface for direct interaction.</p>
+              </div>
+            </div>
+          </Reveal>
+        )}
+
         <Reveal>
           <div className="detail-block">
             <span className="mono">Verified / documented</span>
             <div className="evidence-list">
-              {project.verified.map((item, idx) => <div key={item}><span>{String(idx + 1).padStart(2, '0')}</span><p>{item}</p></div>)}
+              {project.verified.length ? project.verified.map((item, idx) => <div key={item}><span>{String(idx + 1).padStart(2, '0')}</span><p>{item}</p></div>) : <div><span>01</span><p>Repository documentation is limited; this page intentionally avoids inventing unsupported production claims.</p></div>}
             </div>
           </div>
         </Reveal>
+
         <Reveal>
           <div className="detail-block">
-            <span className="mono">Stack</span>
-            <div className="stack-list">{project.stack.map((item) => <span key={item}>{item}</span>)}</div>
+            <span className="mono">Technical anatomy</span>
+            <div>
+              <div className="stack-list">{project.stack.length ? project.stack.map((item) => <span key={item}>{item}</span>) : <span>Repository documentation limited</span>}</div>
+              <div className="architecture-strip">
+                <span>Input / context</span><i>→</i><span>Core system</span><i>→</i><span>Verification / output</span>
+              </div>
+            </div>
           </div>
         </Reveal>
       </section>
