@@ -26,7 +26,10 @@ The rebuild is not considered release-ready until all of the following are true.
 ### Visual quality
 
 - The hero has an unmistakable dotted wave matrix only on the right side.
+- The matrix must be clearly visible in the first painted hero frame before any pointer movement. A production screenshot at 1440 × 1000 must visibly contain the structured dot field; an empty white right half is a release-blocking failure.
 - The matrix has visible ambient movement and clear pointer-reactive deformation without crossing over or reducing readability of the left-side hero copy.
+- Every major route must have at least one immediately perceptible but restrained visual/motion layer. A route that appears completely static in rendered inspection fails the visual gate.
+- Home, Projects, About, Experience and Contact must all demonstrate visible entrance/scroll/interaction motion without requiring the user to guess whether animation exists.
 - Navigation is visually centered and remains stable at all supported viewport widths.
 - There are no clipped headings, ellipsis defects, unintended white gaps, overlapping layers, broken cards, empty content containers, or accidental overflow.
 - Every section has a clear role in the narrative; no duplicate taxonomy or filler section remains.
@@ -216,6 +219,12 @@ It is a structured grid with:
 
 The visual must remain clearly visible against white. Charcoal/graphite dots provide the base contrast; a very restrained Aphelion lime/cherry accent may be used as a secondary depth cue, never as a dominant wash.
 
+First-frame visibility rules:
+- the dot field is rendered immediately on mount and does not wait for pointer movement,
+- the resting state must contain enough contrast and density to be unmistakable against the white hero,
+- the hero must still show a composed static dot field while reduced motion is enabled,
+- a static production screenshot is part of the acceptance test; if the right side reads as plain white, the build fails.
+
 Runtime rules:
 - device-pixel-ratio is capped,
 - density is reduced on smaller/low-power viewports,
@@ -322,6 +331,47 @@ Zachitan has a separate research-highlight flag.
 ## 8. Motion system
 
 Motion is centralized instead of being spread across unrelated scripts.
+
+### Route-wide motion requirement
+
+Motion cannot exist only in code or only in the home hero. The rendered experience must visibly demonstrate motion throughout the site while remaining controlled.
+
+Home:
+- continuous right-side dot-wave motion,
+- hero copy entrance,
+- section reveals,
+- project-card hover/parallax,
+- header state transition.
+
+Projects:
+- animated page-heading entrance,
+- filter/category state transitions,
+- staggered project-card entrance,
+- subtle project-media hover movement,
+- route transition into project detail.
+
+Project detail:
+- title/metadata entrance,
+- media reveal,
+- verified-evidence rows entering in reading order,
+- next-project transition.
+
+About:
+- editorial text reveal,
+- restrained background field or moving rule/grid treatment,
+- section progression motion.
+
+Experience:
+- timeline progression/reveal,
+- row hover/focus response,
+- restrained background motion treatment.
+
+Contact:
+- heading/contact-link entrance,
+- interactive link response,
+- restrained ambient background treatment.
+
+These route-level effects must remain visible enough to be noticed during normal browsing. They must not become constant decorative noise.
 
 ### M1 — hero matrix
 Purpose: distinctive depth and pointer feedback.
@@ -458,8 +508,13 @@ Reference viewports:
 - 390 × 844
 
 Capture:
-- hero default,
+- hero default, with the resting dot field visibly present before pointer movement,
 - hero with pointer deformation on desktop,
+- Home mid-scroll showing visible section-motion state,
+- Projects route after card entrance,
+- About route showing its ambient/reveal treatment,
+- Experience route showing timeline motion state,
+- Contact route showing its ambient/interaction treatment,
 - Aphelion section,
 - flagship systems,
 - priority matrix,
@@ -508,8 +563,10 @@ Release requires fresh evidence for:
 - visual regression pass or approved intentional diffs,
 - production console clean,
 - all primary routes HTTP 200,
+- hero matrix visibly present in a static first-frame rendered production screenshot,
 - hero matrix visible in rendered production,
 - pointer response observed on desktop,
+- visible motion confirmed on Home, Projects, About, Experience, Contact and representative project-detail pages,
 - reduced-motion behavior observed,
 - mobile layout observed,
 - no horizontal overflow,
