@@ -24,12 +24,12 @@ window.PROJECTS = [
     live:null, source:null, year:"2026", featured:true, layout:2, accent:"#8c7cf0"
   },
   {
-    id:"airadise", name:"Airadise Desktop", repo:"airadise", visibility:"Private", category:"Agent platform", status:"Active",
+    id:"airadise", name:"Airadise", repo:"airadise", visibility:"Private", category:"Agent platform", status:"Active",
     tagline:"A local-first desktop agent and automation environment.",
     summary:"A Tauri desktop application plus reusable TypeScript packages for AI providers, prompts, execution, skills and shared runtime contracts. It includes persistent agents, workflows, local state, permissions, secure credentials, MCP integration, scheduling, multi-agent coordination and replay/evaluation infrastructure.",
     verified:["Tauri 2 desktop shell with React and Vite","SQLite local state and Stronghold-backed secret storage","Workflow, scheduling and webhook-trigger paths are represented in the runtime and tests","Provider routing and failover are separate runtime concerns rather than UI-only state"],
     stack:["Tauri 2","React","Vite","TypeScript","SQLite","Stronghold","MCP"],
-    live:null, source:null, year:"2026", featured:false, layout:3, accent:"#50b4a8"
+    live:null, source:null, year:"2026", featured:true, layout:3, accent:"#50b4a8"
   },
   {
     id:"codebase-os", name:"Codebase OS", repo:"codebase--os", visibility:"Public", category:"Developer infrastructure", status:"Production contract",
@@ -149,15 +149,15 @@ window.PROJECTS = [
     summary:"LAYA is a FastAPI-based personal-assistant backend with persistent memory, tool and agent layers, Supabase PostgreSQL, a swappable reasoning-provider path and a Raspberry Pi client.",
     verified:["Backend is Python 3.13+ with FastAPI","Supabase PostgreSQL is the documented database","Voice path uses Faster-Whisper and Piper TTS","A Raspberry Pi client is part of the repository structure"],
     stack:["Python 3.13","FastAPI","Supabase","Gemini","Faster-Whisper","Piper TTS","SQLModel"],
-    live:null, source:null, year:"2026", featured:false, layout:0, accent:"#7ec4ff"
+    live:null, source:null, year:"2026", featured:true, layout:0, accent:"#7ec4ff"
   },
   {
-    id:"nexus", name:"Nexus", repo:"nexus", visibility:"Private", category:"Programming language", status:"Language experiment",
-    tagline:"An English-like programming language and runtime experiment.",
-    summary:"Nexus explores an English-like syntax, browser playground and native bootstrap path, with variables, functions, control flow, loops, string helpers, a REPL and syntax checking.",
-    verified:["The repository documents a browser playground","A CLI path exposes run, repl and check operations","VS Code extension packaging is described for .nx syntax"],
-    stack:["Language runtime","PowerShell bootstrap","Browser playground","VS Code extension"],
-    live:null, source:null, year:"2026", featured:false, layout:1, accent:"#c8a7ff"
+    id:"nexus", name:"Nexus", repo:"nexus", visibility:"Private · Aphelion product", category:"Core computing", status:"Beta · 85%",
+    tagline:"Aphelion's execution architecture for adaptive, recursive intelligence workloads.",
+    summary:"Nexus is the execution foundation in Aphelion's core-computing layer. The public Aphelion architecture describes it as a new execution model for adaptive, recursive intelligence, designed around dynamic workloads rather than a conventional fixed execution path.",
+    verified:["Listed by Aphelion in the Core Computing layer","Public Aphelion roadmap currently marks Nexus at 85% done and in beta","Aphelion states that Nexus's computation model directly informs Dot OS"],
+    stack:["Execution architecture","Adaptive workloads","Recursive intelligence","Aphelion core computing"],
+    live:"https://www.aphelion.life/", source:null, year:"2026", featured:true, layout:1, accent:"#c8a7ff"
   },
   {
     id:"resume-system", name:"Resume Optimization System", repo:"7th-gear", visibility:"Private", category:"Career tooling", status:"Implemented CLI",
@@ -202,14 +202,22 @@ window.PROJECTS = [
     tagline:"A generative-media research repository with insufficient root documentation for stronger public claims.",
     summary:"The repository exists, but its current root documentation does not establish a public product contract. This portfolio therefore lists it without inventing capabilities that cannot be verified from the repository.",
     verified:["Repository exists","Root README is not available in the current branch"], stack:[],
-    live:null, source:null, year:"2026", featured:false, layout:1, accent:"#c1908f"
+    live:null, source:null, year:"2026", featured:true, layout:1, accent:"#c1908f"
   },
   {
-    id:"grelon", name:"Grelon", repo:"grelon", visibility:"Private", category:"Developer experiment", status:"Limited repository documentation",
-    tagline:"A private repository that is intentionally not over-described without verified root documentation.",
-    summary:"Grelon is included because it exists in the GitHub project set. The current repository does not expose a root README, so this page preserves that uncertainty instead of fabricating a product description.",
-    verified:["Repository exists","No authoritative root README was available"], stack:[],
-    live:null, source:null, year:"2026", featured:false, layout:2, accent:"#9bb59b"
+    id:"grelon", name:"GRELION", repo:"grelon", visibility:"Private", category:"Developer system", status:"Private / evolving",
+    tagline:"A developer-system project kept high in the active build portfolio.",
+    summary:"GRELION is a private developer-system project in the active portfolio. Its detailed architecture is not publicly documented, so the portfolio highlights its priority without fabricating implementation claims that are not supported by accessible evidence.",
+    verified:["Private repository exists","Repository-backed implementation details remain private"], stack:[],
+    live:null, source:null, year:"2026", featured:true, layout:2, accent:"#9bb59b"
+  },
+  {
+    id:"dot-os", name:"Dot OS", repo:null, visibility:"Aphelion product", category:"Core computing", status:"In development · 20%",
+    tagline:"The adaptive-intelligence operating layer in Aphelion's core-computing stack.",
+    summary:"Dot OS is the adaptive-intelligence layer above Nexus in Aphelion's vertically integrated architecture. Aphelion's public product map positions Nexus as the execution foundation that informs Dot OS, with Dot OS supporting the higher platform, agentic and experience layers.",
+    verified:["Listed by Aphelion in the Core Computing layer","Public Aphelion roadmap currently marks Dot OS at 20% done","Aphelion positions Nexus directly below Dot OS in the system architecture"],
+    stack:["Adaptive intelligence","Core computing","Nexus integration","Aphelion ecosystem"],
+    live:"https://www.aphelion.life/", source:null, year:"2026", featured:true, layout:3, accent:"#5b6cff"
   },
   {
     id:"raw", name:"RAW", repo:"raw", visibility:"Private", category:"Repository snapshot", status:"Undocumented",
@@ -240,13 +248,6 @@ window.PROJECTS = [
     live:null, source:null, year:"2026", featured:false, layout:0, accent:"#b3a497"
   },
   {
-    id:"aphelion", name:"Aphelion / AnshApp", repo:"aphelion", visibility:"Private", category:"Application repository", status:"Limited documentation",
-    tagline:"A private application repository whose root README currently identifies it only as AnshApp.",
-    summary:"The repository is included in the full project inventory. Because the current root README provides only the AnshApp title, this page avoids asserting unverified product behavior.",
-    verified:["Repository exists","Root README currently identifies the project as AnshApp"], stack:[],
-    live:null, source:null, year:"2026", featured:false, layout:1, accent:"#d3b57f"
-  },
-  {
     id:"agri-farm", name:"Agri Farm", repo:"agri-farm", visibility:"Private", category:"Agriculture repository", status:"Limited documentation",
     tagline:"A private agriculture-named repository with insufficient readable root documentation for a stronger claim.",
     summary:"Agri Farm is listed as an owned project, but the current README content does not establish enough implementation detail to responsibly describe the system.",
@@ -255,11 +256,28 @@ window.PROJECTS = [
   }
 ];
 
+window.PRIORITY_PROJECT_IDS = [
+  "raedius",
+  "airadise",
+  "arkhe",
+  "codebase-os",
+  "spool",
+  "faultline",
+  "laya",
+  "daish",
+  "grelon",
+  "maleu-reel-studio",
+  "nexus",
+  "dot-os"
+];
+
+window.RESEARCH_HIGHLIGHT_IDS = ["zachitan"];
+
 window.PROJECTS_BY_ID = Object.fromEntries(window.PROJECTS.map(project => [project.id, project]));
 window.PORTFOLIO_META = {
   owner:"Poduvu Dharantej Reddy",
   shortName:"Dharantej Reddy",
-  role:"Founder · product engineer · AI systems builder",
+  role:"Founder & sole builder, Aphelion · product engineer · AI systems builder",
   location:"Hyderabad, India",
   email:"dharan.poduvu@gmail.com",
   github:"https://github.com/dharan1007",
