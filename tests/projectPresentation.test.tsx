@@ -8,8 +8,10 @@ describe('project presentation', () => {
   it('renders a real live preview iframe for a public live surface', () => {
     const project = getProjectById('raedius')!;
     render(<ProjectPreview project={project} />);
-    expect(screen.getByTitle('RÆDIUS live preview')).toHaveAttribute('src', project.liveUrl);
-    expect(screen.getByText('LIVE ↗')).toBeVisible();
+    const image = screen.getByRole('img', { name: /RÆDIUS current public project preview/i });
+    expect(image.getAttribute('src')).toContain('image.thum.io/get/width/1200/crop/800/noanimate/');
+    expect(image.getAttribute('src')).toContain(project.liveUrl!);
+    expect(screen.getByText('LIVE SNAPSHOT ↗')).toBeVisible();
   });
 
   it('renders a project-specific how-it-works visualization', () => {

@@ -39,7 +39,7 @@ export function HeroWave() {
       canvas.style.width = width + 'px';
       canvas.style.height = height + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const spacing = width < 520 ? 28 : width < 760 ? 25 : 22;
+      const spacing = width < 520 ? 27 : width < 760 ? 24 : 21;
       points = createGrid(width, height, spacing);
       draw(performance.now());
     };
@@ -48,8 +48,8 @@ export function HeroWave() {
       ctx.clearRect(0, 0, width, height);
       if (pointerTarget && finePointer.matches) {
         if (!pointer) pointer = { ...pointerTarget };
-        pointer.x += (pointerTarget.x - pointer.x) * 0.115;
-        pointer.y += (pointerTarget.y - pointer.y) * 0.115;
+        pointer.x += (pointerTarget.x - pointer.x) * 0.16;
+        pointer.y += (pointerTarget.y - pointer.y) * 0.16;
       } else {
         pointer = null;
       }

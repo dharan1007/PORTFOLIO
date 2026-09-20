@@ -310,6 +310,18 @@ function ProjectDetailPage() {
         </Reveal>
 
         <Reveal>
+          <div className="detail-block detail-case-block">
+            <span className="mono">System profile</span>
+            <div className="case-grid">
+              <article><span className="mono">Core intent</span><h3>{project.tagline}</h3><p>The page describes only the behavior and state that is documented for this project; unsupported production claims are deliberately excluded.</p></article>
+              <article><span className="mono">System surface</span><h3>{project.category}</h3><p>{project.summary}</p></article>
+              <article><span className="mono">Evidence boundary</span><h3>{project.verified.length} documented checks</h3><p>{project.verified[0] ?? 'Repository documentation is intentionally limited.'}</p></article>
+              <article><span className="mono">Implementation surface</span><h3>{project.stack.length ? project.stack.length + ' named technologies' : 'Documentation limited'}</h3><p>{project.stack.length ? project.stack.slice(0, 4).join(' · ') : 'The portfolio does not invent a stack where the repository does not document one.'}</p></article>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal>
           <div className="detail-block detail-story-block">
             <span className="mono">How it works</span>
             <ProjectStory project={project} />

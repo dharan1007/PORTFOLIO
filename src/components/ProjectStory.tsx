@@ -1,9 +1,9 @@
 import type { CSSProperties } from 'react';
 import type { Project } from '../data/projects';
 
-type VisualMode = 'flow' | 'storyboard' | 'orbit' | 'pipeline' | 'timeline' | 'stackmap' | 'loop' | 'constellation';
+type VisualMode = 'flow' | 'storyboard' | 'orbit' | 'pipeline' | 'timeline' | 'stackmap' | 'loop' | 'constellation' | 'decision' | 'swimlane' | 'radial' | 'ladder' | 'network' | 'sequence' | 'funnel' | 'layers';
 
-const modes: VisualMode[] = ['flow','storyboard','orbit','pipeline','timeline','stackmap','loop','constellation'];
+const modes: VisualMode[] = ['flow','storyboard','orbit','pipeline','timeline','stackmap','loop','constellation','decision','swimlane','radial','ladder','network','sequence','funnel','layers'];
 
 const customSteps: Record<string, string[]> = {
   raedius: ['Capture a Line, Plane or Dot', 'Apply Request / Unlock / Offer intent', 'Resolve audience or smart matching', 'Exchange, respond and preserve outcome'],

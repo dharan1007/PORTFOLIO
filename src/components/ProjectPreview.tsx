@@ -1,33 +1,35 @@
 import { useState, type CSSProperties } from 'react';
 import type { Project } from '../data/projects';
 
-export function ProjectPreview({ project, large = false }: { project: Project; large?: boolean }) {
-  const [loaded, setLoaded] = useState(false);
-  const canFrame = Boolean(project.liveUrl && /^https?:\/\//.test(project.liveUrl));
+function previewUrl(url: string) {
+  return 'https://image.thum.io/get/width/1200/crop/800/noanimate/' + url;
+}
 
-  if (!canFrame) return null;
+export function ProjectPreview({ project, large = false }: { project: Project; large?: boolean }) {
+  const [failed, setFailed] = useState(false);
+  if (!project.liveUrl || !/^https?:\/\//.test(project.liveUrl)) return null;
 
   return (
     <div className={'live-preview ' + (large ? 'live-preview-large' : '')} style={{ '--accent': project.accent } as CSSProperties}>
       <div className="live-preview-fallback">
-        <span className="mono">LIVE PREVIEW</span>
+        <span className="mono">LIVE SURFACE</span>
         <strong>{project.name}</strong>
         <small>{project.liveUrl}</small>
       </div>
-      <iframe
-        src={project.liveUrl!}
-        title={project.name + ' live preview'}
-        loading="lazy"
-        sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-        tabIndex={-1}
-        aria-hidden="true"
-        onLoad={() => setLoaded(true)}
-        className={loaded ? 'is-loaded' : ''}
-      />
+      {!failed && (
+        <img
+          src={previewUrl(project.liveUrl)}
+          alt={project.name + ' current public project preview'}
+          loading={large ? 'eager' : 'lazy'}
+          decoding="async"
+          referrerPolicy="no-referrer"
+          onError={() => setFailed(true)}
+        />
+      )}
       <div className="live-preview-topbar">
         <span className="live-dot" />
         <span>{project.name}</span>
-        <span>LIVE ↗</span>
+        <span>{failed ? 'SURFACE ↗' : 'LIVE SNAPSHOT ↗'}</span>
       </div>
     </div>
   );
