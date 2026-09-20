@@ -88,12 +88,12 @@ window.PROJECTS = [
     live:"https://zachitan.vercel.app", source:"https://github.com/dharan1007/zachitan-v4", year:"2026", featured:true, layout:4, accent:"#53d6a1"
   },
   {
-    id:"daish", name:"DAISH", repo:"daish", visibility:"Private", category:"Music systems", status:"Active",
-    tagline:"Real-time music orchestration for live environments.",
-    summary:"DAISH coordinates live music sessions through a NestJS backend, Next.js PWA, PostgreSQL, Redis, Socket.IO and Spotify integration, with host sessions and realtime orchestration.",
-    verified:["Backend is NestJS with TypeORM and Socket.IO","Frontend is a Next.js 14 PWA","PostgreSQL and Redis are explicit production dependencies","Spotify credentials and public API URLs are handled as deployment configuration"],
+    id:"daish", name:"DAISH", repo:"daish", visibility:"Private · Aphelion product", category:"Public audio intelligence", status:"Beta · 75%",
+    tagline:"AI-driven acoustic management for commercial spaces.",
+    summary:"DAISH is Aphelion's public-audio intelligence product for commercial spaces. Patrons can request tracks through transient QR access while an autonomous AI DJ beat-matches requests, manages the venue's sonic-energy flow and integrates localized announcements.",
+    verified:["Listed on Aphelion's current public platform roadmap","Public Aphelion roadmap marks DAISH at 75% done and in beta","Repository implementation uses a NestJS backend, Next.js PWA, PostgreSQL, Redis and realtime orchestration"],
     stack:["NestJS","Next.js","PostgreSQL","Redis","Socket.IO","Spotify Web API"],
-    live:"https://daish.vercel.app", source:null, year:"2026", featured:true, layout:5, accent:"#76e16b"
+    live:"https://www.daish.in", source:null, year:"2026", featured:true, layout:5, accent:"#76e16b"
   },
   {
     id:"maleu", name:"Maleu", repo:"maleu", visibility:"Private", category:"Social platform", status:"Legacy / superseded",
