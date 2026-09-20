@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run verify-build",
+  "buildCommand": "node scripts/vercel-diagnose.mjs",
   "outputDirectory": "dist",
   "cleanUrls": true,
   "rewrites": [
