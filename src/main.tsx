@@ -10,6 +10,7 @@ import './creator-tailwind.css';
 import './creator.css';
 import './portfolio-3d.css';
 import './reactive-experience.css';
+import './gold-motion.css';
 import { App } from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -1,0 +1,268 @@
+/*
+ * Black / antique gold / warm beige palette.
+ * Ambient motion is deliberately implemented with SVG-group and CSS keyframes:
+ * it does not depend on pointer input, scroll state or Framer SVG-path morph support.
+ */
+:root{
+  --portfolio-black:#090806;
+  --portfolio-carbon:#12100C;
+  --portfolio-gold:#C9A05A;
+  --portfolio-gold-light:#F5D998;
+  --portfolio-gold-deep:#795427;
+  --portfolio-beige:#EEE2CC;
+  --portfolio-beige-light:#FAF1E2;
+}
+html,body,#root{background:#090806}
+.creator-page{
+  --gold:#C9A05A;
+  --gold-light:#F5D998;
+  --warm-beige:#EEE2CC;
+  --warm-black:#090806;
+  background:var(--warm-black)!important;
+  color:var(--warm-beige)!important;
+}
+.creator-page .creator-hero{
+  background:radial-gradient(ellipse 75% 68% at 73% 56%,rgba(134,91,32,.22),transparent 71%),
+             linear-gradient(115deg,#080807 3%,#161109 60%,#070606 100%)!important;
+}
+.creator-hero-wave{
+  z-index:1;
+  opacity:1!important;
+  inset:-11% -11% -8% -13%;
+  mask-image:linear-gradient(90deg,transparent 1%,rgba(0,0,0,.92) 21%,#000 57%,#000 100%)!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 1%,rgba(0,0,0,.92) 21%,#000 57%,#000 100%)!important;
+}
+.creator-hero-wave .reactive-wave-svg{
+  opacity:1;
+  filter:drop-shadow(0 0 8px rgba(233,185,101,.58)) drop-shadow(0 0 27px rgba(164,105,38,.37))!important;
+}
+.creator-hero-wave .reactive-wave-aura{
+  right:2%;top:8%;width:84%;height:88%;
+  background:radial-gradient(ellipse at center,rgba(175,121,42,.25),rgba(145,101,36,.09) 44%,transparent 76%)!important;
+  filter:blur(36px)!important;
+}
+.gold-wave-strand{vector-effect:non-scaling-stroke}
+.gold-wave-atmosphere{opacity:.94}
+.gold-wave-glint{stroke-dashoffset:0}
+@keyframes goldRibbonDrift{
+  0%{transform:translate3d(-66px,-20px,0) rotate(-1.4deg)}
+  25%{transform:translate3d(-10px,12px,0) rotate(.35deg)}
+  50%{transform:translate3d(72px,32px,0) rotate(1.5deg)}
+  75%{transform:translate3d(12px,-12px,0) rotate(-.1deg)}
+  100%{transform:translate3d(-66px,-20px,0) rotate(-1.4deg)}
+}
+@keyframes goldRibbonCounterflow{
+  0%{transform:translate3d(98px,20px,0) rotate(1.5deg)}
+  50%{transform:translate3d(-93px,-35px,0) rotate(-1.3deg)}
+  100%{transform:translate3d(98px,20px,0) rotate(1.5deg)}
+}
+@keyframes goldWaveShimmer{
+  0%{stroke-dashoffset:0;opacity:.42}
+  42%{opacity:1}
+  100%{stroke-dashoffset:-850;opacity:.42}
+}
+@keyframes goldFogPulse{
+  0%,100%{opacity:.65}
+  50%{opacity:1}
+}
+@keyframes goldFloatCycle{
+  0%,100%{transform:translate3d(-5px,14px,0) rotate(-5.5deg) scale(.96)}
+  25%{transform:translate3d(9px,-10px,0) rotate(1.5deg) scale(1.02)}
+  55%{transform:translate3d(13px,-36px,0) rotate(6.5deg) scale(1.055)}
+  80%{transform:translate3d(-9px,-9px,0) rotate(-1.5deg) scale(1.015)}
+}
+@keyframes goldHeroHalo{
+  0%,100%{opacity:.53;transform:scale(.9)}
+  50%{opacity:1;transform:scale(1.14)}
+}
+.creator-page.motion-on .gold-wave-bundle-primary{
+  animation:goldRibbonDrift 9s cubic-bezier(.45,.08,.49,.98) infinite;
+  transform-origin:center;
+}
+.creator-page.motion-on .gold-wave-bundle-secondary{
+  animation:goldRibbonCounterflow 12s ease-in-out infinite;
+  transform-origin:center;
+}
+.creator-page.motion-on .gold-wave-bundle-blur{
+  animation:goldRibbonDrift 15s ease-in-out -4s infinite;
+}
+.creator-page.motion-on .gold-wave-glint{
+  animation:goldWaveShimmer 5.5s linear infinite;
+  animation-delay:var(--gold-delay,0s);
+}
+.creator-page.motion-on .gold-wave-atmosphere{animation:goldFogPulse 6.5s ease-in-out infinite}
+.creator-page.motion-on .float-object-inner{
+  animation:goldFloatCycle var(--float-time,5s) ease-in-out infinite;
+  animation-delay:calc(-1 * var(--float-delay,0s));
+  will-change:transform;
+  transform-origin:center;
+}
+.creator-page.motion-on .creator-sculpture-halo{
+  animation:goldHeroHalo 5.5s ease-in-out infinite;
+}
+.creator-page.motion-off .gold-wave-bundle,
+.creator-page.motion-off .gold-wave-glint,
+.creator-page.motion-off .gold-wave-atmosphere,
+.creator-page.motion-off .float-object-inner,
+.creator-page.motion-off .creator-sculpture-halo{
+  animation:none!important;
+  transform:none!important;
+}
+.creator-page.motion-off .gold-reactive-wave{opacity:.62}
+.creator-page .creator-sculpture-halo{
+  background:radial-gradient(ellipse,rgba(219,168,82,.36),rgba(151,101,36,.16) 46%,transparent 74%)!important;
+  filter:blur(50px)!important;
+}
+.creator-page .creator-sculpture-floor{
+  background:radial-gradient(ellipse,rgba(126,93,43,.7),transparent 68%)!important;
+}
+.creator-page .float-object{filter:drop-shadow(0 12px 24px rgba(181,128,52,.26));transform-style:preserve-3d}
+.creator-page .float-object-inner>img{
+  filter:sepia(.83) saturate(1.28) hue-rotate(-10deg) contrast(1.02) brightness(1.07)
+   drop-shadow(0 15px 26px rgba(198,141,56,.41))!important;
+  transition:filter .25s ease;
+}
+.creator-page .float-object:hover .float-object-inner>img{
+  filter:sepia(.92) saturate(1.32) hue-rotate(-9deg) contrast(1.04) brightness(1.19)
+   drop-shadow(0 28px 48px rgba(240,186,79,.67))!important;
+}
+.creator-page .creator-about-orbit .float-object-inner>img{filter:sepia(.83) saturate(1.3) hue-rotate(-10deg) brightness(1.11) drop-shadow(0 13px 23px rgba(158,99,34,.45))!important}
+.creator-page .creator-about-orbit:hover .float-object-inner>img{filter:sepia(1) saturate(1.35) brightness(1.24) drop-shadow(0 24px 35px rgba(202,146,52,.57))!important}
+.creator-page .float-object .float-fallback{color:var(--portfolio-gold-light);filter:drop-shadow(0 0 20px rgba(195,144,68,.6))}
+.creator-page .hero-heading{
+  background:linear-gradient(180deg,#FEF5DC 0%,#F3D99E 42%,#BF8D3C 100%)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+}
+.creator-page .creator-hero-heading .creator-name-intro{
+  -webkit-text-fill-color:var(--portfolio-beige-light)!important;
+  color:var(--portfolio-beige-light)!important;
+}
+.creator-page .creator-hero-heading .creator-name-major{
+  background:linear-gradient(180deg,#FFF6DE 0%,#EDD5A4 38%,#D1AA61 77%,#AB7F39 100%)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  filter:drop-shadow(0 4px 12px #050402);
+}
+.creator-page .creator-hero-heading .creator-name-major i{
+  -webkit-text-fill-color:#EFCB7B!important;color:#EFCB7B!important;
+}
+.creator-page .creator-hero-nameplate .creator-name-caption,
+.creator-page .creator-small-index,
+.creator-page .creator-hero-vertical,
+.creator-page .creator-scroll-cue{color:#DFC8A0!important}
+.creator-page .creator-hero-summary p{color:var(--portfolio-beige-light)}
+.creator-page .creator-nav-inner{background:linear-gradient(180deg,rgba(9,8,6,.95),rgba(9,8,6,.61) 75%,transparent)!important}
+.creator-page .creator-nav-brand span,
+.creator-page .creator-mobile-top>a span{color:#D8AA58!important}
+.creator-page .creator-nav-pages>a{color:var(--portfolio-beige-light)!important}
+.creator-page .creator-nav-jumps>a{color:#D5B778!important}
+.creator-page .creator-nav-pages>a:after,
+.creator-page .creator-nav-jumps>a:after{background:var(--portfolio-gold-light)!important}
+.creator-page .creator-nav-jumps{border-left-color:#A8875278!important}
+.creator-page .creator-mobile-top{background:rgba(12,10,7,.92)!important}
+.creator-page .creator-mobile-top>a{color:var(--portfolio-beige-light)!important}
+.creator-page .creator-mobile-top button{background:#231B11!important;border-color:#AA894F!important;color:#F5E4C8!important}
+.creator-page .creator-mobile-menu{background:#130F09!important}
+.creator-page .creator-mobile-menu>a{color:var(--portfolio-beige);border-bottom-color:#735D3C!important}
+.creator-page .creator-mobile-divider{color:#D2AA66!important}
+.creator-page .creator-contact-pill{
+  color:#1B1308!important;
+  background:linear-gradient(117deg,#8F652D 0%,#DBB36D 28%,#FFF0C8 52%,#D5A04E 80%,#93652B 100%)!important;
+  border-color:#FFF1CB!important;
+  outline-color:#A87936!important;
+  box-shadow:0 8px 30px rgba(160,107,35,.3),inset 2px 3px 12px #fff6ca90!important;
+  font-weight:700;
+}
+.creator-page .creator-contact-pill:hover{box-shadow:0 12px 35px rgba(209,162,81,.42),inset 1px 2px 15px #FFF9C1!important}
+.creator-page .creator-marquee,
+.creator-page .creator-about,
+.creator-page .creator-projects{
+  color:var(--portfolio-beige)!important;
+  background:radial-gradient(circle at 70% 13%,rgba(103,78,38,.1),transparent 49%),#090806!important;
+}
+.creator-page .creator-section-title:not(.creator-services-title){color:#F1D9A9}
+.creator-page .creator-marquee-row-toolbar>span,
+.creator-page .creator-marquee-top,
+.creator-page .creator-marquee-bottom,
+.creator-page .creator-about-more{color:#DEC493!important}
+.creator-page .creator-marquee-tile{border-color:#856C467c!important;background:#1B150C}
+.creator-page .creator-marquee-tile:hover{border-color:#F0D18E!important;box-shadow:0 0 0 1px #DDB36C78,0 10px 24px #DDB36C1c!important}
+.creator-page .creator-marquee-tile:after{background:radial-gradient(ellipse 120px 95px at var(--glint-x,50%) var(--glint-y,50%),rgba(253,224,161,.27),transparent 90%)!important}
+.creator-page .creator-marquee-controls button{color:var(--portfolio-beige)!important;border-color:#967647!important;background:#20170D!important}
+.creator-page .creator-marquee-controls button:hover{background:#64451B!important}
+.creator-page .creator-marquee-progress{background:#534027!important}
+.creator-page .creator-marquee-progress span{background:linear-gradient(90deg,#89602D,#FDE0A6,#CA984A)!important}
+.creator-page .creator-gallery-hint{color:#CAAF82!important}
+.creator-page .creator-animated-copy{color:var(--portfolio-beige-light)!important}
+.creator-page .creator-services{
+  background:linear-gradient(145deg,#F7EBD6 0%,#E9D7B7 57%,#DFC89F 100%)!important;
+  color:#1A140C!important;
+}
+.creator-page .creator-services-title{color:#18120B!important}
+.creator-page .creator-service{border-bottom-color:#80673F45!important}
+.creator-page .creator-service-list{border-top-color:#80673F45!important}
+.creator-page .creator-service:hover{background:#FFF5E1aa!important}
+.creator-page .creator-service-number{color:#19130B!important}
+.creator-page .creator-service:hover .creator-service-number{color:#9C6E2D!important}
+.creator-page .creator-service p{color:#34291A!important;opacity:.8!important}
+.creator-page .creator-services-bottom,
+.creator-page .creator-section-tag{color:#695231!important}
+.creator-page .creator-section-tag-dark{color:#CEB484!important}
+.creator-page .creator-projects-intro{color:#DBC8A8!important}
+.creator-page .creator-sticky-card{background:#110E0A!important;border-color:#AC874D!important;color:#F1E5CC!important}
+.creator-page .creator-sticky-card:hover{border-color:#E9C47D!important;box-shadow:0 -20px 70px #0008,0 0 38px #DAB46B32!important}
+.creator-page .creator-sticky-card:before{background:radial-gradient(circle 300px at var(--card-hover-x,60%) var(--card-hover-y,40%),#E3B45D30,transparent 75%)!important}
+.creator-page .creator-card-title h3{color:#F9E6C4}
+.creator-page .creator-card-number{color:#DAB66F!important}
+.creator-page .creator-live-button{color:#F4D69C;border-color:#D8B168!important}
+.creator-page .creator-live-button:hover{background:#6B4A1E!important;color:#FFF2CF}
+.creator-page .creator-website-actions button,
+.creator-page .creator-website-actions a{background:#261C10dd!important;border-color:#D6B36B!important;color:#FFE7B5!important}
+.creator-page .creator-projects-end strong{
+  background:linear-gradient(180deg,#FFF1CB,#D4A54B 79%,#9D7439)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important
+}
+.creator-page .creator-projects-end>a{color:#F1DAA7;border-bottom-color:#C19B5D!important}
+.creator-page .creator-last-line{color:#CFB386;border-top-color:#73552A!important}
+.creator-page .creator-last-line>a{color:#FFE4B3}
+.creator-motion-switch{
+  position:absolute;top:90px;right:clamp(20px,3vw,56px);
+  z-index:120;display:flex;align-items:center;gap:10px;
+  border-radius:999px;border:1px solid #E0BD7A;
+  background:rgba(27,20,10,.84);color:#FFE5AF;
+  padding:11px 16px;cursor:pointer;backdrop-filter:blur(14px);
+  font:600 10px 'JetBrains Mono Variable',monospace;
+  letter-spacing:.14em;white-space:nowrap;
+  box-shadow:0 5px 22px rgba(0,0,0,.22);
+  transition:background .2s,transform .2s,box-shadow .2s
+}
+.creator-motion-switch:hover{background:rgba(107,76,29,.91);transform:translateY(-2px);box-shadow:0 9px 24px rgba(212,160,69,.23)}
+.creator-motion-switch:focus-visible{outline:2px solid #FFF0BE;outline-offset:4px}
+.creator-motion-indicator{display:inline-block;width:8px;height:8px;border-radius:50%;background:#785C39}
+.creator-motion-indicator.is-live{background:#F9D892;box-shadow:0 0 12px #F5CB79}
+@media(min-width:860px){
+ .creator-motion-switch{top:88px}
+}
+@media(max-width:860px){
+ .creator-motion-switch{top:86px;right:24px;padding:9px 12px}
+}
+@media(max-width:559px){
+ .creator-motion-switch{top:73px;right:16px;font-size:9px;padding:9px 11px}
+ .creator-hero-wave{inset:4% -68% -13% -38%}
+ .creator-page .creator-hero-heading .creator-name-major{font-size:1em}
+}
+/*
+ * The original global base stylesheet uses universal !important reduced-motion
+ * rules. A visitor who explicitly turns motion ON may opt back into this one
+ * region. Automatic mode starts OFF when OS reduced-motion is set.
+ */
+@media(prefers-reduced-motion:reduce){
+ .creator-page.motion-on .gold-wave-bundle-primary{animation:goldRibbonDrift 9s cubic-bezier(.45,.08,.49,.98) infinite!important}
+ .creator-page.motion-on .gold-wave-bundle-secondary{animation:goldRibbonCounterflow 12s ease-in-out infinite!important}
+ .creator-page.motion-on .gold-wave-bundle-blur{animation:goldRibbonDrift 15s ease-in-out -4s infinite!important}
+ .creator-page.motion-on .gold-wave-glint{animation:goldWaveShimmer 5.5s linear infinite!important}
+ .creator-page.motion-on .gold-wave-atmosphere{animation:goldFogPulse 6.5s ease-in-out infinite!important}
+ .creator-page.motion-on .float-object-inner{animation:goldFloatCycle var(--float-time,5s) ease-in-out infinite!important}
+ .creator-page.motion-on .creator-sculpture-halo{animation:goldHeroHalo 5.5s ease-in-out infinite!important}
+}
