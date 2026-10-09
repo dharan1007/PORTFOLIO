@@ -43,7 +43,7 @@ export function ProjectPreview({project,large=false,view='desktop',bare=false}:{
     />}
     {!bare&&<div className="live-preview-topbar">
       <span className="live-dot"/><span>{project.name}</span>
-      <span>{provider===2?'WEBSITE ↗':loaded?'SITE CAPTURE':'CAPTURING'}</span>
+      <span>{provider===2?'SURFACE ↗':'LIVE SNAPSHOT ↗'}</span>
     </div>}
   </div>;
 }
