@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState, type CSSProperties, type PropsWithChildren } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type PropsWithChildren, type PointerEvent as ReactPointerEvent, type MouseEvent as ReactMouseEvent, type KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, MotionConfig, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { ArrowDownRight, ArrowUpRight, ArrowRight, MoveUpRight } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, ArrowRight, MoveUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FloatObject } from './FloatObject';
+import { ReactiveWave } from './ReactiveWave';
 import { ProjectPreview, hasDedicatedWebsite } from './ProjectPreview';
 import { orderedProjects, getProjectById, type Project } from '../data/projects';
 
@@ -66,6 +67,17 @@ function Magnet({children}:PropsWithChildren){
  return <motion.div ref={box} style={reduced?undefined:{x,y}} className="creator-magnet">{children}</motion.div>;
 }
 
+const sitePages = [
+  {path:'/',label:'HOME'},
+  {path:'/projects',label:'PROJECTS'},
+  {path:'/about',label:'ABOUT'},
+  {path:'/experience',label:'EXPERIENCE'},
+  {path:'/contact',label:'CONTACT'}
+] as const;
+const sectionJumps = [
+  {href:'#creator-marquee',label:'LIVE WORK'},
+  {href:'#creator-services',label:'SERVICES'}
+] as const;
 function HeroNav(){
  const [hidden,setHidden]=useState(false);
  const [menuOpen,setMenuOpen]=useState(false);
@@ -75,30 +87,50 @@ function HeroNav(){
    if(menuOpen||value<90)setHidden(false);
    else if(Math.abs(value-prev)>3)setHidden(value>prev);
  });
- useEffect(()=>{if(!menuOpen)return;const escape=(event:KeyboardEvent)=>{if(event.key==='Escape')setMenuOpen(false);};document.addEventListener('keydown',escape);return()=>document.removeEventListener('keydown',escape);},[menuOpen]);
- const links=[['#creator-about','ABOUT'],['#creator-services','SERVICES'],['#creator-projects','PROJECTS'],['/contact','CONTACT']] as const;
- return <header className={'creator-nav '+(hidden&&!menuOpen?'is-hidden':'')} data-creator-nav>
-  <nav aria-label="Home page navigation" className="creator-nav-inner">
-   {links.map(([href,label])=>href.startsWith('#')?
-    <a key={href} href={href} onClick={()=>setMenuOpen(false)}>{label}</a>:
-    <Link key={href} to={href} onClick={()=>setMenuOpen(false)}>{label}</Link>)}
+ useEffect(()=>{
+  if(!menuOpen)return;
+  const escape=(event:KeyboardEvent)=>{if(event.key==='Escape')setMenuOpen(false);};
+  document.addEventListener('keydown',escape);
+  return()=>document.removeEventListener('keydown',escape);
+ },[menuOpen]);
+ return <header className={'creator-nav '+(hidden&&!menuOpen?'is-hidden':'')} data-creator-nav onFocusCapture={()=>setHidden(false)}>
+  <nav aria-label="Portfolio main navigation" className="creator-nav-inner">
+    <Link className="creator-nav-brand" to="/" aria-label="Dharan Tej Reddy P, home">DTR<span>.</span>P</Link>
+    <div className="creator-nav-pages">
+      {sitePages.map(page=><Link key={page.path} to={page.path}
+         aria-current={page.path==='/'?'page':undefined}>{page.label}</Link>)}
+    </div>
+    <div className="creator-nav-jumps">
+      {sectionJumps.map(item=><a key={item.href} href={item.href}>{item.label}<ArrowDownRight size={13}/></a>)}
+    </div>
   </nav>
   <div className="creator-mobile-top">
-   <Link to="/" aria-label="Home">DR / 26</Link>
-   <button type="button" aria-expanded={menuOpen} aria-controls="creator-mobile-menu" onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?'CLOSE':'MENU'} <ArrowUpRight size={19}/></button>
+    <Link to="/" aria-label="Dharan Tej Reddy P, home">DTR<span>.</span>P</Link>
+    <button type="button" aria-expanded={menuOpen} aria-controls="creator-mobile-menu"
+      onClick={()=>{setMenuOpen(!menuOpen);setHidden(false);}}>{menuOpen?'CLOSE':'MENU'} <ArrowUpRight size={19}/></button>
   </div>
-  <nav id="creator-mobile-menu" aria-label="Mobile navigation" className={'creator-mobile-menu '+(menuOpen?'is-open':'')}>
-    {links.map(([href,label])=>href.startsWith('#')?<a key={href} href={href} onClick={()=>setMenuOpen(false)}>{label}</a>:<Link key={href} to={href} onClick={()=>setMenuOpen(false)}>{label}</Link>)}
-   </nav>
+  <nav id="creator-mobile-menu" aria-label="Mobile portfolio navigation" className={'creator-mobile-menu '+(menuOpen?'is-open':'')}>
+    {sitePages.map(page=><Link key={page.path} to={page.path} onClick={()=>setMenuOpen(false)}>{page.label}<ArrowUpRight size={16}/></Link>)}
+    <span className="creator-mobile-divider">ON THIS PAGE</span>
+    {sectionJumps.map(item=><a key={item.href} href={item.href} onClick={()=>setMenuOpen(false)}>{item.label}<ArrowDownRight size={16}/></a>)}
+  </nav>
  </header>;
 }
 
 function HeroSection(){
  return <section className="creator-hero" id="creator-home" aria-labelledby="creator-title">
-   <Fade className="creator-hero-copy" delay={.15} y={40}>
-     <h1 id="creator-title" aria-label={"Hi, I'm Dharantej"} className="hero-heading creator-hero-heading"><span>HI, I'M</span><span>DHARANTEJ</span></h1>
+   <ReactiveWave className="creator-hero-wave"/>
+   <Fade className="creator-hero-copy" delay={.1} y={24}>
+     <div className="creator-hero-nameplate">
+       <h1 id="creator-title" aria-label="Hi, I'm Dharan Tej Reddy .P" className="hero-heading creator-hero-heading">
+         <span className="creator-name-intro">HI, I'M</span>
+         <span className="creator-name-major">DHARAN TEJ</span>
+         <span className="creator-name-major">REDDY <i>.P</i></span>
+       </h1>
+       <p className="creator-name-caption">DESIGNER OF SYSTEMS. BUILDER OF PRODUCTS.</p>
+     </div>
    </Fade>
-   <Fade className="creator-hero-object" delay={.6}>
+   <Fade className="creator-hero-object" delay={.45}>
      <Magnet>
        <div className="creator-sculpture" aria-hidden="true">
          <div className="creator-sculpture-halo"/>
