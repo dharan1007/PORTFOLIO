@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, MotionConfig, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { ArrowDownRight, ArrowUpRight, ArrowRight, MoveUpRight } from 'lucide-react';
 import { FloatObject } from './FloatObject';
-import { ProjectPreview } from './ProjectPreview';
+import { ProjectPreview, hasDedicatedWebsite } from './ProjectPreview';
 import { orderedProjects, getProjectById, type Project } from '../data/projects';
 
 const featured = ['raedius', 'arkhe', 'spool'] as const;
@@ -18,7 +18,7 @@ const skills = [
   ['05','Verification & research','Testing real behavior, diagnosing failures and distinguishing documented evidence from experimental ambition.']
 ] as const;
 
-const gallery = orderedProjects().filter(project=>Boolean(project.liveUrl));
+const gallery = orderedProjects().filter(hasDedicatedWebsite);
 const galleryOne = gallery.filter((_,i)=>i%2===0);
 const galleryTwo = gallery.filter((_,i)=>i%2===1);
 

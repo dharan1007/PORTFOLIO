@@ -7,7 +7,7 @@ import { ScrollNarrative } from './components/ScrollNarrative';
 import { FloatObject } from './components/FloatObject';
 import { domains, groupedProjects } from './data/domains';
 import { Reveal } from './components/Reveal';
-import { ProjectPreview } from './components/ProjectPreview';
+import { ProjectPreview, hasDedicatedWebsite } from './components/ProjectPreview';
 import { ProjectStory } from './components/ProjectStory';
 import {
   getProjectById, orderedProjects, priorityProjectIds, researchHighlightProject, type Project
@@ -119,7 +119,7 @@ function ProjectVisual({ project, compact = false }: { project: Project; compact
 function ProjectCard({ project, variant = 'normal' }: { project: Project; variant?: 'normal' | 'flagship' | 'compact' | 'research' }) {
   return (
     <Link to={'/projects/' + project.id} className={'project-card project-card-' + variant} data-project-id={project.id}>
-      {project.liveUrl ? <ProjectPreview project={project} /> : <ProjectVisual project={project} compact={variant === 'compact'} />}
+      {hasDedicatedWebsite(project) ? <ProjectPreview project={project} /> : <ProjectVisual project={project} compact={variant === 'compact'} />}
       <div className="project-card-copy">
         <div className="project-card-meta"><span>{project.category}</span><span>{project.status}</span></div>
         <h3>{project.name}</h3>
@@ -203,7 +203,7 @@ function ProjectDetailPage() {
             {project.sourceUrl && <a className="button button-ghost" href={project.sourceUrl} target="_blank" rel="noreferrer">Source ↗</a>}
           </div>
         </div>
-        {project.liveUrl ? <ProjectPreview project={project} large/> : <ProjectVisual project={project} />}
+        {hasDedicatedWebsite(project) ? <ProjectPreview project={project} large/> : <ProjectVisual project={project} />}
       </header>
       <section className="project-detail-body"><div className="detail-side-index mono"><span>CONTEXT</span><span>STRUCTURE</span><span>EVIDENCE</span><span>IMPLEMENTATION</span></div>
         <Reveal>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { captureUrl } from '../src/components/ProjectPreview';
+import { captureUrl, hasDedicatedWebsite } from '../src/components/ProjectPreview';
 import { getProjectById, orderedProjects } from '../src/data/projects';
 import { threeDObjects } from '../src/components/FloatObject';
 
@@ -20,6 +20,11 @@ describe('real-site and reference-3D assets',()=>{
     expect(orderedProjects()).toHaveLength(32);
     expect(getProjectById('airadise')?.liveUrl).toBeNull();
     expect(getProjectById('codebase-os')?.sourceUrl).toMatch(/^https:\/\/github.com\//);
+  });
+  it('does not mistake the company homepage for an individual product live preview',()=>{
+    expect(hasDedicatedWebsite(getProjectById('nexus')!)).toBe(false);
+    expect(hasDedicatedWebsite(getProjectById('dot-os')!)).toBe(false);
+    expect(hasDedicatedWebsite(getProjectById('spool')!)).toBe(true);
   });
   it('uses supplied 3D object imagery with independent transparent-object fallback',()=>{
     expect(Object.keys(threeDObjects)).toEqual(['moon','block','smile','pointer']);

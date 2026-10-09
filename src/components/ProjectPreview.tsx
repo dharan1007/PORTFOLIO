@@ -14,13 +14,22 @@ export function captureUrl(url:string, view:PreviewView='desktop', provider:0|1=
  return 'https://s.wordpress.com/mshots/v1/'+encodeURIComponent(url)+'?w='+w+'&h='+h;
 }
 
+/** Shared corporate landing pages are sources, not screenshots of a specific product. */
+export function hasDedicatedWebsite(project:Project){
+ if(!project.liveUrl||!/^https?:\/\//i.test(project.liveUrl))return false;
+ try{
+   const host=new URL(project.liveUrl).hostname.toLowerCase();
+   return !(['nexus','dot-os'].includes(project.id) && (host==='aphelion.life'||host==='www.aphelion.life'));
+ }catch{return false;}
+}
+
 export function ProjectPreview({project,large=false,view='desktop',bare=false}:{
   project:Project;large?:boolean;view?:PreviewView;bare?:boolean
 }){
  const [provider,setProvider]=useState<0|1|2>(0);
  const [loaded,setLoaded]=useState(false);
  useEffect(()=>{setProvider(0);setLoaded(false);},[project.liveUrl,view]);
- if(!project.liveUrl||!/^https?:\/\//i.test(project.liveUrl))return null;
+ if(!hasDedicatedWebsite(project))return null;
  const label=project.liveUrl.replace(/^https?:\/\//,'').replace(/\/$/,'');
  return <div className={'live-preview real-site-preview '+(large?'live-preview-large ':'')+(bare?'bare-site-preview ':'')+(loaded?'is-captured ':'')+(provider===2?'capture-unavailable ':'')} data-site={project.id} data-preview-view={view}
     style={{'--accent':project.accent} as CSSProperties}>
