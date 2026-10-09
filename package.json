@@ -11,10 +11,11 @@
     "verify-build": "npm run test && npm run typecheck && npm run build"
   },
   "dependencies": {
-    "@fontsource-variable/space-grotesk": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-router-dom": "latest"
+    "react-router-dom": "latest",
+    "@fontsource-variable/hanken-grotesk": "latest",
+    "@fontsource-variable/jetbrains-mono": "latest"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "latest",

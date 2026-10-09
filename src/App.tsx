@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import {
   BrowserRouter, Link, NavLink, Route, Routes, useLocation, useParams
 } from 'react-router-dom';
-import { HeroWave } from './components/HeroWave';
+import { CinematicHero } from './components/CinematicHero';
 import { Reveal } from './components/Reveal';
 import { ProjectPreview } from './components/ProjectPreview';
 import { ProjectStory } from './components/ProjectStory';
@@ -33,7 +33,24 @@ function SiteNav() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   useEffect(() => setOpen(false), [location.pathname]);
-
+  useEffect(() => {
+    if (!open) return;
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        document.getElementById('nav-menu-button')?.focus();
+      }
+    };
+    const onOutside = (event: PointerEvent) => {
+      if (event.target instanceof Node && !document.getElementById('siteNavWrap')?.contains(event.target)) setOpen(false);
+    };
+    document.addEventListener('keydown', onEscape);
+    document.addEventListener('pointerdown', onOutside);
+    return () => {
+      document.removeEventListener('keydown', onEscape);
+      document.removeEventListener('pointerdown', onOutside);
+    };
+  }, [open]);
   const links = [
     ['/', 'Home'],
     ['/projects', 'Projects'],
@@ -41,25 +58,27 @@ function SiteNav() {
     ['/experience', 'Experience'],
     ['/contact', 'Contact']
   ];
-
   return (
-    <header className="nav-wrap">
-      <nav className="site-nav" aria-label="Primary">
-        <Link className="nav-brand" to="/">PDR / 26</Link>
+    <header className="nav-wrap" id="siteNavWrap">
+      <nav className="site-nav" aria-label="Primary navigation">
+        <Link className="nav-brand" to="/" aria-label="Dharantej Reddy, home">DR / 26</Link>
         <div className="nav-center">
-          {links.map(([to, label]) => (
-            <NavLink key={to} to={to} end={to === '/'}>{label}</NavLink>
-          ))}
+          <div className="nav-column"><NavLink to="/" end>HOME</NavLink><NavLink to="/projects">PROJECTS</NavLink></div>
+          <div className="nav-column"><NavLink to="/about">ABOUT</NavLink><NavLink to="/experience">EXPERIENCE</NavLink></div>
+          <div className="nav-column"><NavLink to="/contact">CONTACT</NavLink><a href="https://www.aphelion.life/" target="_blank" rel="noreferrer">APHELION ↗</a></div>
         </div>
+        <p className="nav-tagline">DESIGN · ENGINEER · BUILD</p>
         <div className="nav-right">
-          <span className="nav-place">HYD · IST</span>
-          <button className="nav-menu-button" type="button" aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen((value) => !value)}>
-            {open ? 'Close' : 'Menu'}
+          <span className="nav-place">HYDERABAD / INDIA</span>
+          <NavLink className="nav-cta" to="/contact"><span>LET'S CONNECT</span><span aria-hidden="true">↗</span></NavLink>
+          <button id="nav-menu-button" className="nav-menu-button" type="button" aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen(value => !value)}>
+            <span className="menu-lines" aria-hidden="true"><i /><i /></span>{open ? 'CLOSE' : 'MENU'}
           </button>
         </div>
       </nav>
       <div id="mobile-nav" className={'mobile-nav ' + (open ? 'is-open' : '')} aria-hidden={!open}>
-        {links.map(([to, label]) => <NavLink key={to} to={to} end={to === '/'}>{label}</NavLink>)}
+        {links.map(([to, label]) => <NavLink key={to} to={to} end={to === '/'} onClick={() => setOpen(false)}>{label}<span aria-hidden="true">↗</span></NavLink>)}
+        <a href="https://www.aphelion.life/" target="_blank" rel="noreferrer">Aphelion <span aria-hidden="true">↗</span></a>
       </div>
     </header>
   );
@@ -100,34 +119,7 @@ function ProjectCard({ project, variant = 'normal' }: { project: Project; varian
 }
 
 function Hero() {
-  return (
-    <section className="hero" aria-labelledby="hero-title">
-      <HeroWave />
-      <div className="hero-meta mono hero-enter hero-enter-1">
-        <span>Founder / Sole builder</span>
-        <span>Aphelion · Product · AI systems</span>
-        <span>Hyderabad / 2026</span>
-      </div>
-      <div className="hero-copy">
-        <p className="hero-kicker hero-enter hero-enter-1">FOUNDER · ENGINEER · SYSTEMS BUILDER</p>
-        <h1 id="hero-title" className="hero-title hero-enter hero-enter-2">
-          <span>DHARANTEJ</span>
-          <em>REDDY</em>
-        </h1>
-        <p className="hero-lede hero-enter hero-enter-3">
-          I founded Aphelion and build its product stack end to end — alongside independent systems in AI, infrastructure and applied intelligence.
-        </p>
-        <div className="hero-actions hero-enter hero-enter-4">
-          <Link className="button button-dark" to="/projects">Explore projects ↗</Link>
-          <a className="button button-ghost" href="https://www.aphelion.life/" target="_blank" rel="noreferrer">Aphelion ↗</a>
-        </div>
-      </div>
-      <div className="hero-foot mono hero-enter hero-enter-4">
-        <span>33 systems / products catalogued</span>
-        <span>Scroll to enter the work ↓</span>
-      </div>
-    </section>
-  );
+  return <CinematicHero />;
 }
 
 function HomePage() {

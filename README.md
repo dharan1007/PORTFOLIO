@@ -8,7 +8,7 @@ Production portfolio for Dharantej Reddy, founder and sole builder/operator of A
 - TypeScript
 - Vite
 - React Router
-- Canvas 2D hero renderer
+- Cinematic knockout hero with responsive editorial typography and codec-safe visual fallback
 - CSS motion with reduced-motion fallbacks
 - Vitest
 - Vercel
@@ -47,18 +47,12 @@ Current priority order:
 
 Zachitan is represented separately as the research highlight.
 
-## Hero motion
+## Hero design
 
-`src/components/HeroWave.tsx` renders a deterministic right-side dotted wave using Canvas 2D. It:
+The homepage features a cinematic hero with a video-through-letter mask, oversized wordmark, black navigation, lilac action accents, precise responsive layout and reduced-motion support. The supplied reference video is HEVC and cannot be re-encoded in the connected environment; unsupported browsers receive a polished static gradient fallback while all portfolio content stays accessible.
 
-- draws a visible first frame before pointer input;
-- reacts to fine-pointer movement;
-- retains a CSS dot-grid fallback;
-- caps device pixel ratio;
-- reduces density on compact viewports;
-- pauses when hidden/offscreen;
-- renders a static state for reduced motion;
-- cleans up RAF, observers and listeners on unmount.
+The catalogue, routes, detailed evidence, project relationships and existing imagery components remain intact.
+
 
 ## Development
 
