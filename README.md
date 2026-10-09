@@ -49,9 +49,9 @@ Zachitan is represented separately as the research highlight.
 
 ## Hero design
 
-The homepage features a cinematic hero with a video-through-letter mask, oversized wordmark, black navigation, lilac action accents, precise responsive layout and reduced-motion support. The supplied reference video is HEVC and cannot be re-encoded in the connected environment; unsupported browsers receive a polished static gradient fallback while all portfolio content stays accessible.
+The homepage features an original procedural Canvas 2D kinetic sculpture behind knockout typography. It has no third-party film, remote asset or video codec dependency. A visibility-aware renderer pauses offscreen and under reduced motion. The direction-sensitive header hides on downward scroll and returns on upward scroll, route changes, keyboard focus and when the mobile menu is open.
 
-The catalogue, routes, detailed evidence, project relationships and existing imagery components remain intact.
+The catalogue is curated into six explicit, exhaustive categories with a feature project and supporting case-study links for each. Home sections connect through a sticky four-stage scroll narrative. About, Experience, Contact, and detailed case-study layouts use distinct structures while existing evidence, stack records and links remain accessible.
 
 
 ## Development

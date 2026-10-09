@@ -4,6 +4,7 @@ import '@fontsource-variable/hanken-grotesk';
 import '@fontsource-variable/jetbrains-mono';
 import './styles.css';
 import './cinematic.css';
+import './experience.css';
 import { App } from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
