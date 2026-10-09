@@ -30,13 +30,15 @@ afterEach(() => {
 });
 
 describe('portfolio experience', () => {
-  it('uses licensed real footage and photography in the hero', () => {
+  it('shows the five-section creator portfolio with genuine project media', () => {
     const { container } = render(<App />);
-    expect(screen.getByRole('heading', { name:/I BUILD WHAT/i })).toBeTruthy();
-    expect(container.querySelector('.cinematic-hero video')).not.toBeNull();
-    expect(container.querySelector('.cinematic-hero img')).not.toBeNull();
-    expect(container.querySelector('canvas[data-motion-field]')).toBeNull();
-    expect(container.querySelector('.scroll-saga')).not.toBeNull();
+    expect(screen.getByRole('heading', { name:/HI, I'M DHARANTEJ/i })).toBeTruthy();
+    expect(container.querySelector('.creator-hero video')).not.toBeNull();
+    expect(container.querySelector('.creator-marquee')).not.toBeNull();
+    expect(container.querySelector('.creator-about')).not.toBeNull();
+    expect(container.querySelector('.creator-services')).not.toBeNull();
+    expect(container.querySelectorAll('.creator-service')).toHaveLength(5);
+    expect(container.querySelectorAll('.creator-sticky-card')).toHaveLength(3);
   });
 
   it('renders each project in exactly one of six editorial chapters', () => {

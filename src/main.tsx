@@ -6,6 +6,8 @@ import './styles.css';
 import './cinematic.css';
 import './experience.css';
 import './media.css';
+import './creator-tailwind.css';
+import './creator.css';
 import { App } from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

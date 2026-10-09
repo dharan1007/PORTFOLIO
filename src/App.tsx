@@ -2,7 +2,7 @@ import { useEffect, useState, type CSSProperties } from 'react';
 import {
   BrowserRouter, Link, NavLink, Route, Routes, useLocation, useParams
 } from 'react-router-dom';
-import { CinematicHero } from './components/CinematicHero';
+import { CreatorLanding } from './components/CreatorLanding';
 import { ScrollNarrative } from './components/ScrollNarrative';
 import { EditorialImage, EditorialVideo } from './components/EditorialMedia';
 import { licensedMediaCredits, type EditorialKey } from './data/media';
@@ -130,80 +130,9 @@ function ProjectCard({ project, variant = 'normal' }: { project: Project; varian
   );
 }
 
-function Hero() {
-  return <CinematicHero />;
-}
-
 function HomePage() {
-  setTitle('Dharantej Reddy — Systems, Products, Infrastructure');
-  const flagships = flagshipIds.map(id => getProjectById(id)).filter(Boolean) as Project[];
-  const grouped = groupedProjects();
-  return (
-    <>
-      <Hero />
-      <section className="manifesto section-light">
-        <div className="manifesto-index mono"><span>01 / THE POINT OF IT ALL</span><span>IDEAS ARE A START. SYSTEMS ARE THE WORK.</span></div>
-        <Reveal><p className="manifesto-line">An idea is a beginning. <em>Making it real</em> is the interesting part.</p></Reveal>
-        <div className="manifesto-foot"><span className="mono">FOUNDER · ENGINEER · BUILDER</span><p>I build across the boundaries of product design, software, infrastructure and experimental intelligence. Each system is documented for what it actually does — not just what it hopes to become.</p></div>
-      </section>
-      <ScrollNarrative />
-      <section className="feature-exhibition" id="featured">
-        <div className="exhibition-heading">
-          <span className="mono">03 / THREE OPENING CHAPTERS</span>
-          <h2>Different worlds. <em>One obsession.</em></h2>
-          <p>Human connection, autonomous systems and new forms of computation. These are the three directions at the center of the work.</p>
-        </div>
-        <div className="feature-stages">
-          {flagships.map((project,index)=>(
-            <Reveal key={project.id}>
-              <Link to={'/projects/'+project.id} className={'feature-stage feature-stage-'+project.id}>
-                <div className="feature-stage-data"><span className="mono">CHAPTER / 0{index+1}</span><span className="mono">{project.category}</span></div>
-                <div className={'feature-artwork feature-artwork-'+project.id} aria-hidden="true">
-                  <div className="feature-real-media">
-   {project.liveUrl ? <ProjectPreview project={project} large/> : project.id === 'airadise' ? <EditorialVideo asset="airadise"/> : <EditorialImage asset="intelligence"/>}
- </div>
-                  <strong>{project.name}</strong>
-                  <small>{String(index+1).padStart(2,'0')} — {project.year}</small>
-                </div>
-                <div className="feature-stage-copy"><div><span className="mono">{project.status}</span><h3>{project.tagline}</h3><p>{project.summary}</p></div><span className="feature-stage-arrow" aria-hidden="true">↗</span></div>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-      <section className="company-strata">
-        <div className="strata-header"><span className="mono">04 / THE COMPANY</span><a href="https://www.aphelion.life/" target="_blank" rel="noreferrer">APHELION — OFFICIAL SITE ↗</a></div>
-        <div className="strata-main">
-          <div><p className="mono">FOUNDER & BUILDER</p><h2>APHELION<span className="strata-period">.</span></h2><p>An interconnected product company working across experience, computation and platform infrastructure.</p><EditorialImage asset="company" className="company-photo" label/></div>
-          <div className="strata-architecture" aria-label="Aphelion product layers">
-            {[
-              ['01','EXPERIENCE','Dvange · DAISH','Products people interact with'],
-              ['02','COMPUTATION','Nexus · Dot OS','Execution and adaptive intelligence'],
-              ['03','INFRASTRUCTURE','S25 · Suttle · Swud','The platform systems beneath']
-            ].map(([n,name,examples,description])=><div className="strata-layer" key={name}><span>{n}</span><div><strong>{name}</strong><p>{description}</p></div><small>{examples}</small></div>)}
-          </div>
-        </div>
-      </section>
-      <section className="gateway-section">
-        <div className="gateway-intro"><span className="mono">05 / EXPLORE BY DOMAIN</span><h2>A portfolio is not one pile of projects.</h2><p>The work is connected, but not interchangeable. Each field has its own problems, architecture and standards of evidence.</p></div>
-        <div className="gateway-list">
-          {grouped.map((group,index)=>(
-            <Reveal key={group.id}><Link to={'/projects#'+group.id} className={'gateway-row gateway-row-'+(index%2)}>
-              <span className="mono">{group.index} / {String(group.projects.length).padStart(2,'0')} PROJECTS</span>
-              <strong>{group.title}</strong>
-              <span className="gateway-explanation">{group.description}</span>
-              <span className="gateway-arrow" aria-hidden="true">↗</span>
-            </Link></Reveal>
-          ))}
-        </div>
-      </section>
-      {researchHighlightProject && <section className="research-spotlight">
-        <div className="research-eyebrow mono"><span>06 / RESEARCH SPOTLIGHT</span><span>THE QUESTION OF UNCERTAINTY</span></div>
-        <div><h2>What can the evidence <em>actually</em> tell us?</h2><div><EditorialImage asset="research" className="research-photo" label/><p>{researchHighlightProject.summary}</p><Link to="/projects/zachitan">READ THE ZACHITAN CASE ↗</Link></div></div>
-      </section>}
-      <section className="home-finale"><span className="mono">07 / CONTINUE THE STORY</span><h2>Make something <em>that matters.</em></h2><div><Link to="/experience">THE JOURNEY ↗</Link><Link to="/contact">START A CONVERSATION ↗</Link></div></section>
-    </>
-  );
+  setTitle("Dharantej Reddy — Product Engineer & Founder");
+  return <CreatorLanding/>;
 }
 
 function ProjectsPage() {
@@ -483,7 +412,7 @@ function Shell() {
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
-      <SiteNav />
+      {location.pathname === '/' ? null : <SiteNav />}
       <main id="main" className="route-frame" key={location.pathname}>
         <Routes location={location}>
           <Route path="/" element={<HomePage />} />

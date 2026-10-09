@@ -15,7 +15,9 @@
     "react-dom": "latest",
     "react-router-dom": "latest",
     "@fontsource-variable/hanken-grotesk": "latest",
-    "@fontsource-variable/jetbrains-mono": "latest"
+    "@fontsource-variable/jetbrains-mono": "latest",
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^0.468.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "latest",
@@ -26,6 +28,9 @@
     "jsdom": "latest",
     "typescript": "latest",
     "vite": "latest",
-    "vitest": "latest"
+    "vitest": "latest",
+    "tailwindcss": "^3.4.17",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.0"
   }
 }
