@@ -30,12 +30,12 @@ afterEach(() => {
 });
 
 describe('portfolio experience', () => {
-  it('uses generative canvas instead of stock video or image in the hero', () => {
+  it('uses licensed real footage and photography in the hero', () => {
     const { container } = render(<App />);
     expect(screen.getByRole('heading', { name:/I BUILD WHAT/i })).toBeTruthy();
-    expect(container.querySelector('.cinematic-hero video')).toBeNull();
-    expect(container.querySelector('.cinematic-hero img')).toBeNull();
-    expect(container.querySelector('canvas[data-motion-field]')).not.toBeNull();
+    expect(container.querySelector('.cinematic-hero video')).not.toBeNull();
+    expect(container.querySelector('.cinematic-hero img')).not.toBeNull();
+    expect(container.querySelector('canvas[data-motion-field]')).toBeNull();
     expect(container.querySelector('.scroll-saga')).not.toBeNull();
   });
 

@@ -1,7 +1,7 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { orderedProjects } from '../data/projects';
-import { KineticField } from './KineticField';
+import { EditorialVideo } from './EditorialMedia';
 
 export function CinematicHero() {
   const [animate,setAnimate]=useState(false);
@@ -18,12 +18,10 @@ export function CinematicHero() {
 
   return <section className={'cinematic-hero sculpture-hero '+(animate?'cinema-animate':'')} aria-labelledby="hero-title">
     <div className="cinema-photo sculpture-field" aria-hidden="true">
-      <div className="cinema-fallback"/>
-      <KineticField />
+      <EditorialVideo asset="hero" className="hero-licensed-video" priority/>
       <div className="cinema-warmth"/>
       <div className="cinema-vignette"/>
-      <div className="field-crosshair crosshair-a">✦</div>
-      <div className="field-crosshair crosshair-b">+</div>
+      <div className="hero-media-note mono">MICROELECTRONICS / REAL FILM</div>
     </div>
     <div className="cinema-band" aria-hidden="true">
       <svg className="cinema-wordmark" viewBox="0 0 1280 190" preserveAspectRatio="none" focusable="false">
@@ -35,7 +33,7 @@ export function CinematicHero() {
         {Array.from({length:9},(_,index)=><rect key={index} className="cinema-lid" x={index*1280/9} y="5" width={1280/9+1} height="182" style={{'--lid-index':index} as CSSProperties} fill="#000"/>)}
       </svg>
     </div>
-    <div className="cinema-scene-caption mono" aria-hidden="true"><span>01 / AN ORIGINAL KINETIC SYSTEM</span><span>FORM · ENERGY · CONNECTION</span></div>
+    <div className="cinema-scene-caption mono" aria-hidden="true"><span>01 / PHYSICAL SYSTEMS</span><span>ELECTRONICS · SOFTWARE · INTELLIGENCE</span></div>
     <div className="cinema-bottom">
       <div className="cinema-aside mono"><span>PORTFOLIO / 2026</span><span>FOUNDER — APHELION</span><span>HYDERABAD, INDIA</span></div>
       <div className="cinema-intro">
