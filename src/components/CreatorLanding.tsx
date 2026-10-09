@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, MotionConfig, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { ArrowDownRight, ArrowUpRight, ArrowRight, MoveUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FloatObject } from './FloatObject';
-import { PortfolioMotionContext } from './PortfolioMotion';
+import { PortfolioMotionContext, usePortfolioMotion } from './PortfolioMotion';
 import { ProjectPreview, hasDedicatedWebsite } from './ProjectPreview';
 import { orderedProjects, getProjectById, type Project } from '../data/projects';
 
