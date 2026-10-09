@@ -96,7 +96,7 @@ function HeroNav(){
 function HeroSection(){
  return <section className="creator-hero" id="creator-home" aria-labelledby="creator-title">
    <Fade className="creator-hero-copy" delay={.15} y={40}>
-     <h1 id="creator-title" aria-label="Hi, I\u0027m Dharantej" className="hero-heading creator-hero-heading"><span>HI, I'M</span><span>DHARANTEJ</span></h1>
+     <h1 id="creator-title" aria-label={"Hi, I'm Dharantej"} className="hero-heading creator-hero-heading"><span>HI, I'M</span><span>DHARANTEJ</span></h1>
    </Fade>
    <Fade className="creator-hero-object" delay={.6}>
      <Magnet>
