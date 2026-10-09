@@ -8,7 +8,7 @@ export function EditorialImage({ asset, className='', eager=false, label=false }
  const photo=editorialAssets[asset].photo;
  const [failed,setFailed]=useState(false);
  return <figure className={'editorial-media editorial-photo '+className} data-asset={asset} data-kind="photograph">
-  {!failed?<img src={getPhotoUrl(asset,1920)} alt={photo.alt} loading={eager?'eager':'lazy'} decoding="async"
+  {!failed?<img src={getPhotoUrl(asset,1080)} srcSet={[640,1080,1600,1920].map(width=>getPhotoUrl(asset,width)+" "+width+"w").join(", ")} sizes="(max-width: 560px) 100vw, (max-width: 900px) 75vw, 45vw" alt={photo.alt} loading={eager?'eager':'lazy'} decoding="async"
     fetchPriority={eager?'high':undefined} style={{objectPosition:photo.focal??'center'}} onError={()=>setFailed(true)}/>:
     <div className="editorial-media-unavailable" role="img" aria-label={photo.alt}><span>MEDIA CURRENTLY UNAVAILABLE</span></div>}
   {label&&<figcaption>{editorialAssets[asset].label} <span> / PEXELS</span></figcaption>}
@@ -35,7 +35,6 @@ export function EditorialVideo({asset,className='',priority=false}:{
    const sync=()=>{
      if(visible&&allowed()&&!document.hidden){
        if(!video.querySelector('source'))return;
-       setActive(true);
        try{const result=video.play();result?.catch?.(()=>{setActive(false);});}catch{setActive(false);}
      } else {video.pause();setActive(false);}
    };
@@ -49,8 +48,8 @@ export function EditorialVideo({asset,className='',priority=false}:{
  },[asset,priority,record.video]);
  return <div className={'editorial-video editorial-media '+className} ref={hostRef} data-asset={asset} data-kind="licensed-video">
    <EditorialImage asset={asset} eager={priority} className="editorial-poster"/>
-   {record.video&&!failed&&<video ref={videoRef} muted playsInline loop autoPlay={false} preload="metadata" poster={getPhotoUrl(asset,1920)}
-      aria-hidden="true" className={active?'is-playing':''} onError={()=>setFailed(true)}>
+   {record.video&&!failed&&<video ref={videoRef} muted playsInline loop autoPlay={false} preload="metadata" poster={getPhotoUrl(asset,1280)}
+      aria-hidden="true" className={active?'is-playing':''} onPlaying={()=>setActive(true)} onPause={()=>setActive(false)} onError={()=>{setActive(false);setFailed(true);}}>
       <source src={record.video.url} type="video/mp4"/>
    </video>}
    <span className="media-editorial-label" aria-hidden="true">{record.video&&!failed?'LICENSED MOTION FOOTAGE':'EDITORIAL PHOTOGRAPHY'}</span>
