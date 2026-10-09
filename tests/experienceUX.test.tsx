@@ -39,6 +39,11 @@ describe('portfolio experience', () => {
     expect(container.querySelector('.creator-services')).not.toBeNull();
     expect(container.querySelectorAll('.creator-service')).toHaveLength(5);
     expect(container.querySelectorAll('.creator-sticky-card')).toHaveLength(3);
+    expect(Array.from(container.querySelectorAll('.creator-page>section')).map(node=>node.className)).toEqual(['creator-hero','creator-marquee','creator-about','creator-services','creator-projects']);
+    expect(container.querySelectorAll('.creator-marquee-viewport')).toHaveLength(2);
+    expect(container.querySelectorAll('.creator-marquee-tile').length).toBeGreaterThan(20);
+    expect(container.querySelector('.creator-mobile-menu')).not.toBeNull();
+    expect(container.textContent).not.toContain('Nextlevel Studio');
   });
 
   it('renders each project in exactly one of six editorial chapters', () => {

@@ -246,3 +246,6 @@ body{font-family:'Kanit','Hanken Grotesk Variable',sans-serif}
  .creator-marquee-track{will-change:auto}
  .creator-magnet{transform:none!important}
 }
+
+/* Keep Kanit authoritative inside the creator layout; legacy editorial pages retain their own typographic system. */
+.creator-page,.creator-page a,.creator-page button{font-family:'Kanit',sans-serif}

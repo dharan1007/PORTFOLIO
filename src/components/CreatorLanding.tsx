@@ -76,7 +76,7 @@ function HeroNav(){
    else if(Math.abs(value-prev)>3)setHidden(value>prev);
  });
  useEffect(()=>{if(!menuOpen)return;const escape=(event:KeyboardEvent)=>{if(event.key==='Escape')setMenuOpen(false);};document.addEventListener('keydown',escape);return()=>document.removeEventListener('keydown',escape);},[menuOpen]);
- const links=[['#creator-about','ABOUT'],['#creator-services','EXPERTISE'],['#creator-projects','PROJECTS'],['/contact','CONTACT']] as const;
+ const links=[['#creator-about','ABOUT'],['#creator-services','SERVICES'],['#creator-projects','PROJECTS'],['/contact','CONTACT']] as const;
  return <header className={'creator-nav '+(hidden&&!menuOpen?'is-hidden':'')} data-creator-nav>
   <nav aria-label="Home page navigation" className="creator-nav-inner">
    {links.map(([href,label])=>href.startsWith('#')?
@@ -180,7 +180,7 @@ function AboutSection(){
 function ServicesSection(){
  return <section className="creator-services" id="creator-services">
    <div className="creator-section-tag"><span>04 / PRACTICE</span><span>FIVE WAYS I WORK</span></div>
-   <Fade><h2 className="creator-section-title creator-services-title">EXPERTISE</h2></Fade>
+   <Fade><h2 className="creator-section-title creator-services-title">SERVICES</h2></Fade>
    <div className="creator-service-list">
      {skills.map(([number,title,description],index)=><Fade key={number} delay={index*.06} y={35}>
        <article className="creator-service">
@@ -230,7 +230,7 @@ function ProjectsSection(){
  const items=featured.map(id=>getProjectById(id)).filter((project):project is Project=>Boolean(project));
  return <section className="creator-projects" id="creator-projects">
    <div className="creator-section-tag creator-section-tag-dark"><span>05 / THE WORK</span><span>THREE FIRST CHAPTERS</span></div>
-   <Fade><h2 className="hero-heading creator-section-title creator-projects-title">PROJECTS</h2></Fade>
+   <Fade><h2 className="hero-heading creator-section-title creator-projects-title">PROJECT</h2></Fade>
    <p className="creator-projects-intro">Three different problem spaces — human connection, autonomous execution and experimental computation. Each project has a technical case study, not just a visual preview.</p>
    <div className="creator-sticky-deck">{items.map((project,index)=><StickyProjectCard key={project.id} project={project} index={index} total={items.length}/>)}</div>
    <div className="creator-projects-end">
