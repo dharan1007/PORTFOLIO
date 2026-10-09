@@ -15,7 +15,7 @@ export function captureUrl(url:string, view:PreviewView='desktop', provider:0|1=
 }
 
 /** Shared corporate landing pages are sources, not screenshots of a specific product. */
-export function hasDedicatedWebsite(project:Project){
+export function hasDedicatedWebsite(project:Project): project is Project & {liveUrl:string}{
  if(!project.liveUrl||!/^https?:\/\//i.test(project.liveUrl))return false;
  try{
    const host=new URL(project.liveUrl).hostname.toLowerCase();
