@@ -1,5 +1,6 @@
-import { useState, type PointerEvent as ReactPointerEvent } from 'react';
-import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
+import { useState, useRef, useEffect, type CSSProperties } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { usePortfolioMotion } from './PortfolioMotion';
 
 /* Reference 3D renders were explicitly provided by the site owner.
  * CC0 3dicons are the network fallback if the original host is unavailable.
@@ -32,41 +33,68 @@ export type ObjectName = keyof typeof threeDObjects;
 export function FloatObject({name,className='',delay=0,hero=false}:{
  name:ObjectName;className?:string;delay?:number;hero?:boolean
 }){
- const asset=threeDObjects[name],reduced=useReducedMotion();
+ const enabled=usePortfolioMotion();
+ const asset=threeDObjects[name];
  const [failed,setFailed]=useState(false);
  const [sourceFailed,setSourceFailed]=useState(false);
+ const root=useRef<HTMLDivElement>(null);
  const tx=useMotionValue(0),ty=useMotionValue(0),pitch=useMotionValue(0),yaw=useMotionValue(0);
- const x=useSpring(tx,{stiffness:180,damping:17,mass:.6});
- const y=useSpring(ty,{stiffness:180,damping:17,mass:.6});
- const rotateX=useSpring(pitch,{stiffness:170,damping:18});
- const rotateY=useSpring(yaw,{stiffness:170,damping:18});
- const reset=()=>{tx.set(0);ty.set(0);pitch.set(0);yaw.set(0);};
- const reactToPointer=(event:ReactPointerEvent<HTMLDivElement>)=>{
-   if(reduced||event.pointerType==='touch')return;
-   const rect=event.currentTarget.getBoundingClientRect();
-   if(!rect.width||!rect.height)return;
-   const nx=Math.max(-1,Math.min(1,(event.clientX-(rect.left+rect.width*.5))/(rect.width*.5)));
-   const ny=Math.max(-1,Math.min(1,(event.clientY-(rect.top+rect.height*.5))/(rect.height*.5)));
-   tx.set(nx*18);ty.set(ny*17);
-   pitch.set(-ny*16);yaw.set(nx*18);
- };
+ const x=useSpring(tx,{stiffness:105,damping:17,mass:.7});
+ const y=useSpring(ty,{stiffness:105,damping:17,mass:.7});
+ const rotateX=useSpring(pitch,{stiffness:105,damping:18});
+ const rotateY=useSpring(yaw,{stiffness:105,damping:18});
+ useEffect(()=>{
+   const reset=()=>{tx.set(0);ty.set(0);pitch.set(0);yaw.set(0);};
+   if(!enabled||typeof window==='undefined'||window.matchMedia('(pointer: coarse)').matches){reset();return;}
+   let frame=0,mouseX=0,mouseY=0;
+   const update=()=>{
+     frame=0;
+     const rect=root.current?.getBoundingClientRect();
+     if(!rect||rect.height===0||rect.width===0)return;
+     const cx=rect.left+rect.width*.5,cy=rect.top+rect.height*.5;
+     const dx=mouseX-cx,dy=mouseY-cy;
+     const reach=hero?Math.max(500,rect.width*1.65):Math.max(240,rect.width*1.3);
+     const dist=Math.hypot(dx,dy);
+     const falloff=Math.max(0,1-dist/reach);
+     if(falloff<=0){reset();return;}
+     const nx=Math.max(-1,Math.min(1,dx/(rect.width*.5+150)));
+     const ny=Math.max(-1,Math.min(1,dy/(rect.height*.5+150)));
+     tx.set(nx*60*falloff);
+     ty.set(ny*52*falloff);
+     pitch.set(-ny*22*falloff);
+     yaw.set(nx*26*falloff);
+   };
+   const onMove=(event:PointerEvent)=>{
+     if(event.pointerType==='touch')return;
+     mouseX=event.clientX;mouseY=event.clientY;
+     if(!frame)frame=requestAnimationFrame(update);
+   };
+   document.addEventListener('pointermove',onMove,{passive:true});
+   window.addEventListener('blur',reset);
+   return()=>{
+     document.removeEventListener('pointermove',onMove);
+     window.removeEventListener('blur',reset);
+     cancelAnimationFrame(frame);
+     reset();
+   };
+ },[enabled,hero,tx,ty,pitch,yaw]);
+ const resetOnLeave=()=>{if(!enabled){tx.set(0);ty.set(0);pitch.set(0);yaw.set(0);}};
  return <motion.div
+    ref={root}
     aria-hidden="true"
     data-reactive-object={name}
+    data-float-motion={enabled?'on':'off'}
     className={'float-object float-'+name+' '+className}
-    style={reduced?undefined:{x,y,rotateX,rotateY,transformPerspective:900}}
-    onPointerMove={reactToPointer}
-    onPointerLeave={reset}
-    onPointerCancel={reset}
-    whileHover={reduced?undefined:{scale:1.095,filter:'brightness(1.11)'}}
-    transition={{type:'spring',stiffness:230,damping:22}}>
-    <motion.div className="float-object-inner"
-      animate={reduced?undefined:{y:[0,-13,0],rotateZ:[-2,2,-2]}}
-      transition={reduced?undefined:{duration:6+delay,delay:delay*.55,ease:'easeInOut',repeat:Infinity}}>
+    style={enabled?{x,y,rotateX,rotateY,transformPerspective:950}:undefined}
+    onPointerLeave={resetOnLeave}>
+    <div className="float-object-inner" style={{
+      '--float-delay':delay+'s',
+      '--float-time':(hero?4.5+delay:5.1+delay)+'s'
+    } as CSSProperties}>
       {!sourceFailed?<img draggable={false} loading={hero?'eager':'lazy'} decoding="async"
         src={failed?asset.fallback:asset.url} alt=""
         onError={()=>{if(!failed)setFailed(true);else setSourceFailed(true);}}/>:
         <span className="float-fallback" aria-hidden="true">{name==='moon'?'◐':name==='block'?'◇':name==='smile'?'◡':'➚'}</span>}
-    </motion.div>
+    </div>
   </motion.div>;
 }
