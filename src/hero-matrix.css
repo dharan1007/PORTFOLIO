@@ -1,0 +1,119 @@
+/*
+ * Hero-only art direction: absolute-black stage, white lettering,
+ * small stationary dot matrix, and distinct continuous object orbits.
+ * Loaded after gold-motion.css so other routes and homepage sections
+ * retain their established visual identity.
+ */
+.creator-page .creator-hero {
+  background: #000000 !important;
+  background-image: none !important;
+}
+.creator-page .creator-hero .creator-dot-matrix {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-color: transparent;
+  background-image: radial-gradient(circle, rgba(255,255,255,.92) .85px, transparent 1.25px);
+  background-size: 26px 26px;
+  background-position: center center;
+  opacity: .50;
+  -webkit-mask-image: radial-gradient(ellipse 89% 87% at 62% 52%, #000 15%, rgba(0,0,0,.85) 63%, transparent 99%);
+  mask-image: radial-gradient(ellipse 89% 87% at 62% 52%, #000 15%, rgba(0,0,0,.85) 63%, transparent 99%);
+}
+.creator-page .creator-hero .creator-hero-heading,
+.creator-page .creator-hero .creator-hero-heading .creator-name-intro,
+.creator-page .creator-hero .creator-hero-heading .creator-name-major,
+.creator-page .creator-hero .creator-hero-heading .creator-name-major i {
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  filter: none !important;
+}
+.creator-page .creator-hero .creator-name-caption,
+.creator-page .creator-hero .creator-small-index,
+.creator-page .creator-hero .creator-hero-summary p,
+.creator-page .creator-hero .creator-hero-vertical,
+.creator-page .creator-hero .creator-scroll-cue {
+  color: #ffffff !important;
+}
+.creator-page .creator-hero .creator-contact-pill {
+  color: #ffffff !important;
+  background: rgba(0,0,0,.87) !important;
+  border: 1.5px solid #ffffff !important;
+  outline: none !important;
+  box-shadow: 0 9px 36px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.2) !important;
+}
+.creator-page .creator-hero .creator-contact-pill:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 0 12px 36px rgba(255,255,255,.17) !important;
+}
+.creator-page .creator-hero .creator-sculpture-halo,
+.creator-page .creator-hero .creator-sculpture-floor {
+  display: none !important;
+}
+.creator-page .creator-nav-inner {
+  background: linear-gradient(180deg,rgba(0,0,0,.95),rgba(0,0,0,.55) 75%,transparent) !important;
+}
+.creator-page .creator-mobile-top {
+  background: rgba(0,0,0,.95) !important;
+}
+
+/* The wrapper reacts to cursor parallax; the INNER element animates
+ * autonomously, even on phones without hover or pointer movement. */
+@keyframes heroOrbitMoon {
+  0%,100% { transform: translate3d(-11px,14px,0) rotate(-10deg) scale(.95); }
+  50% { transform: translate3d(19px,-27px,0) rotate(9deg) scale(1.06); }
+}
+@keyframes heroOrbitBlock {
+  0%,100% { transform: translate3d(-9px,16px,0) rotate(-8deg) scale(.96); }
+  50% { transform: translate3d(17px,-32px,0) rotate(8deg) scale(1.07); }
+}
+@keyframes heroOrbitPointer {
+  0%,100% { transform: translate3d(14px,-24px,0) rotate(11deg) scale(1.06); }
+  50% { transform: translate3d(-20px,19px,0) rotate(-9deg) scale(.96); }
+}
+@keyframes heroOrbitSmile {
+  0%,100% { transform: translate3d(-14px,13px,0) rotate(-13deg) scale(.93); }
+  50% { transform: translate3d(20px,-22px,0) rotate(12deg) scale(1.08); }
+}
+.creator-page.motion-on .creator-hero .creator-sculpture-moon .float-object-inner {
+  animation: heroOrbitMoon 5.7s ease-in-out -.7s infinite both !important;
+}
+.creator-page.motion-on .creator-hero .creator-sculpture-block .float-object-inner {
+  animation: heroOrbitBlock 6.3s ease-in-out -1.9s infinite both !important;
+}
+.creator-page.motion-on .creator-hero .creator-sculpture-pointer .float-object-inner {
+  animation: heroOrbitPointer 5.2s ease-in-out -2.5s infinite both !important;
+}
+.creator-page.motion-on .creator-hero .creator-sculpture-smile .float-object-inner {
+  animation: heroOrbitSmile 6.8s ease-in-out -3.1s infinite both !important;
+}
+.creator-page.motion-on .creator-hero .float-object-inner {
+  transform-origin: center;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+.creator-page.motion-off .creator-hero .float-object-inner {
+  animation: none !important;
+  transform: none !important;
+  will-change: auto;
+}
+@media (max-width: 559px) {
+  .creator-page .creator-hero .creator-dot-matrix {
+    background-size: 23px 23px;
+    opacity: .39;
+    -webkit-mask-image: radial-gradient(ellipse 102% 78% at 52% 51%,#000 13%,rgba(0,0,0,.82) 66%,transparent 99%);
+    mask-image: radial-gradient(ellipse 102% 78% at 52% 51%,#000 13%,rgba(0,0,0,.82) 66%,transparent 99%);
+  }
+  @keyframes heroOrbitBlock {
+    0%,100% { transform: translate3d(-7px,11px,0) rotate(-7deg) scale(.97); }
+    50% { transform: translate3d(11px,-19px,0) rotate(7deg) scale(1.04); }
+  }
+}
+/* Honor OS preference by starting motion off; the visible Motion control
+ * lets a visitor deliberately opt into these animations. */

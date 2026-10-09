@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { motion, MotionConfig, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { ArrowDownRight, ArrowUpRight, ArrowRight, MoveUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FloatObject } from './FloatObject';
-import { ReactiveWave } from './ReactiveWave';
 import { PortfolioMotionContext } from './PortfolioMotion';
 import { ProjectPreview, hasDedicatedWebsite } from './ProjectPreview';
 import { orderedProjects, getProjectById, type Project } from '../data/projects';
@@ -45,11 +44,12 @@ function ContactPill({label='CONTACT ME',className=''}:{label?:string;className?
 function Magnet({children}:PropsWithChildren){
  const box=useRef<HTMLDivElement>(null);
  const reduced=useReducedMotion();
+ const enabled=usePortfolioMotion();
  const tx=useMotionValue(0),ty=useMotionValue(0);
  const x=useSpring(tx,{stiffness:170,damping:24,mass:.6});
  const y=useSpring(ty,{stiffness:170,damping:24,mass:.6});
  useEffect(()=>{
-   if(reduced || typeof window==='undefined' || window.matchMedia('(pointer:coarse)').matches)return;
+   if(reduced || !enabled || typeof window==='undefined' || window.matchMedia('(pointer:coarse)').matches){tx.set(0);ty.set(0);return;}
    const onMove=(ev:PointerEvent)=>{
      const rect=box.current?.getBoundingClientRect();
      if(!rect)return;
@@ -64,8 +64,8 @@ function Magnet({children}:PropsWithChildren){
    window.addEventListener('pointermove',onMove,{passive:true});
    window.addEventListener('blur',reset);
    return()=>{window.removeEventListener('pointermove',onMove);window.removeEventListener('blur',reset);};
- },[reduced,tx,ty]);
- return <motion.div ref={box} style={reduced?undefined:{x,y}} className="creator-magnet">{children}</motion.div>;
+ },[reduced,enabled,tx,ty]);
+ return <motion.div ref={box} style={reduced||!enabled?undefined:{x,y}} className="creator-magnet">{children}</motion.div>;
 }
 
 const sitePages = [
@@ -120,7 +120,7 @@ function HeroNav(){
 
 function HeroSection(){
  return <section className="creator-hero" id="creator-home" aria-labelledby="creator-title">
-   <ReactiveWave className="creator-hero-wave"/>
+   <div className="creator-dot-matrix" data-dot-matrix aria-hidden="true"/>
    <Fade className="creator-hero-copy" delay={.1} y={24}>
      <div className="creator-hero-nameplate">
        <h1 id="creator-title" aria-label="Hi, I'm Dharan Tej Reddy .P" className="hero-heading creator-hero-heading">
@@ -396,7 +396,7 @@ export function CreatorLanding(){
      <div className={'creator-page '+(motionEnabled?'motion-on':'motion-off')} data-motion-enabled={String(motionEnabled)}>
        <HeroNav/>
        <button className="creator-motion-switch" type="button" data-motion-toggle
-          aria-label={motionEnabled?'Pause background wave and floating objects':'Enable animated gold waves and floating objects'}
+          aria-label={motionEnabled?'Pause the floating 3D objects':'Enable motion for the floating 3D objects'}
           aria-pressed={motionEnabled}
           onClick={()=>setMotionEnabled(value=>!value)}>
           <span className={'creator-motion-indicator '+(motionEnabled?'is-live':'')}/>

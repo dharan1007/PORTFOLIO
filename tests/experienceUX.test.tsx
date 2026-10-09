@@ -39,7 +39,8 @@ describe('portfolio experience', () => {
     expect(container.querySelectorAll('.creator-sticky-card .editorial-photo')).toHaveLength(0);
     expect(container.querySelectorAll('.creator-sticky-card [data-project-snapshot]')).toHaveLength(9);
     expect(Array.from(container.querySelectorAll('.creator-sticky-card')).map(item=>item.querySelector('[data-website-gallery]')?.getAttribute('data-website-gallery'))).toEqual(['raedius','arkhe','spool']);
-    expect(container.querySelector('[data-reactive-wave]')).not.toBeNull();
+    expect(container.querySelector('[data-dot-matrix]')).not.toBeNull();
+    expect(container.querySelector('[data-reactive-wave]')).toBeNull();
     expect(container.querySelectorAll('.creator-hero [data-reactive-object]')).toHaveLength(4);
     expect(container.querySelector('[data-creator-nav]')).not.toBeNull();
     const nav=screen.getByRole('navigation',{name:'Portfolio main navigation'});
@@ -59,20 +60,21 @@ describe('portfolio experience', () => {
     expect(container.textContent).not.toContain('Nextlevel Studio');
   });
 
-  it('starts gold waves and 3D objects with controllable motion',()=>{
+  it('shows a black-and-white dot matrix and independently controlled 3D object motion',()=>{
     const {container}=render(<App/>);
     const root=container.querySelector('.creator-page');
-    const wave=container.querySelector('[data-reactive-wave]');
-    expect(wave?.getAttribute('data-wave-palette')).toBe('black-gold-beige');
+    const matrix=container.querySelector('[data-dot-matrix]');
+    expect(matrix).not.toBeNull();
+    expect(container.querySelector('[data-reactive-wave]')).toBeNull();
     const startOn=root?.getAttribute('data-motion-enabled')==='true';
-    expect(wave?.getAttribute('data-wave-motion')).toBe(startOn?'on':'off');
+    expect(container.querySelectorAll('.creator-hero [data-float-motion]')).toHaveLength(4);
     const control=container.querySelector<HTMLButtonElement>('[data-motion-toggle]');
     expect(control).not.toBeNull();
     expect(control?.getAttribute('aria-pressed')).toBe(String(startOn));
     fireEvent.click(control!);
     expect(container.querySelector('.creator-page')?.getAttribute('data-motion-enabled')).toBe(String(!startOn));
     expect(container.querySelector('[data-reactive-object]')?.getAttribute('data-float-motion')).toBe(!startOn?'on':'off');
-    expect(container.querySelector('[data-reactive-wave]')?.getAttribute('data-wave-motion')).toBe(!startOn?'on':'off');
+    expect(container.querySelector('[data-dot-matrix]')).not.toBeNull();
     fireEvent.click(control!);
     expect(container.querySelector('.creator-page')?.getAttribute('data-motion-enabled')).toBe(String(startOn));
   });
