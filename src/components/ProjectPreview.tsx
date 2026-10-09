@@ -35,7 +35,7 @@ export function ProjectPreview({project,large=false,view='desktop',bare=false}:{
       data-project-snapshot={project.id}
       data-capture-provider={provider===0?'thum':'mshots'}
       src={captureUrl(project.liveUrl,view,provider)}
-      alt={'Screenshot capture of the actual '+project.name+' website at '+label}
+      alt={project.name + ' current public project preview — actual website capture at ' + label}
       loading={large?'eager':'lazy'} decoding="async"
       referrerPolicy="no-referrer"
       onLoad={()=>setLoaded(true)}
