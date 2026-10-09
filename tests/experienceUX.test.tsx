@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from '../src/App';
 
@@ -32,13 +32,21 @@ afterEach(() => {
 describe('portfolio experience', () => {
   it('shows the five-section creator portfolio with genuine project media', () => {
     const { container } = render(<App />);
-    expect(screen.getByRole('heading', { name:/HI, I'M DHARANTEJ/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name:/HI, I'M DHARAN TEJ REDDY \.P/i })).toBeTruthy();
     expect(container.querySelector('.creator-hero video')).toBeNull();
     expect(container.querySelectorAll('.creator-sculpture .float-object')).toHaveLength(4);
     expect(container.querySelectorAll('.creator-about .float-object')).toHaveLength(4);
     expect(container.querySelectorAll('.creator-sticky-card .editorial-photo')).toHaveLength(0);
     expect(container.querySelectorAll('.creator-sticky-card [data-project-snapshot]')).toHaveLength(9);
     expect(Array.from(container.querySelectorAll('.creator-sticky-card')).map(item=>item.querySelector('[data-website-gallery]')?.getAttribute('data-website-gallery'))).toEqual(['raedius','arkhe','spool']);
+    expect(container.querySelector('[data-reactive-wave]')).not.toBeNull();
+    expect(container.querySelectorAll('.creator-hero [data-reactive-object]')).toHaveLength(4);
+    expect(container.querySelector('[data-creator-nav]')).not.toBeNull();
+    const nav=screen.getByRole('navigation',{name:'Portfolio main navigation'});
+    for(const href of ['/', '/projects', '/about', '/experience', '/contact']){
+      expect(nav.querySelector('a[href="'+href+'"]')).not.toBeNull();
+    }
+    expect(nav.querySelector('a[href="#creator-marquee"]')).not.toBeNull();
     expect(container.querySelector('.creator-marquee')).not.toBeNull();
     expect(container.querySelector('.creator-about')).not.toBeNull();
     expect(container.querySelector('.creator-services')).not.toBeNull();
@@ -49,6 +57,24 @@ describe('portfolio experience', () => {
     expect(container.querySelectorAll('.creator-marquee-tile').length).toBeGreaterThan(20);
     expect(container.querySelector('.creator-mobile-menu')).not.toBeNull();
     expect(container.textContent).not.toContain('Nextlevel Studio');
+  });
+
+  it('scrolls the second section horizontally via accessible buttons and keyboard',()=>{
+    const {container}=render(<App/>);
+    const rows=Array.from(container.querySelectorAll<HTMLElement>('[data-scrollable-gallery]'));
+    expect(rows).toHaveLength(2);
+    const first=rows[0].querySelector<HTMLElement>('.creator-marquee-viewport')!;
+    expect(first.getAttribute('tabindex')).toBe('0');
+    expect(first.getAttribute('role')).toBe('region');
+    Object.defineProperty(first,'clientWidth',{configurable:true,value:800});
+    Object.defineProperty(first,'scrollWidth',{configurable:true,value:5600});
+    first.scrollLeft=1900;
+    const previous=first.scrollLeft;
+    fireEvent.click(screen.getByRole('button',{name:'Scroll right gallery right'}));
+    expect(first.scrollLeft).toBeGreaterThan(previous);
+    const afterClick=first.scrollLeft;
+    fireEvent.keyDown(first,{key:'ArrowLeft'});
+    expect(first.scrollLeft).toBeLessThan(afterClick);
   });
 
   it('renders each project in exactly one of six editorial chapters', () => {

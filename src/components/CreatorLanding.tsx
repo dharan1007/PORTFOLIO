@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties, type PropsWithChildren, type PointerEvent as ReactPointerEvent, type MouseEvent as ReactMouseEvent, type KeyboardEvent as ReactKeyboardEvent, type WheelEvent as ReactWheelEvent } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type PropsWithChildren, type PointerEvent as ReactPointerEvent, type MouseEvent as ReactMouseEvent, type KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, MotionConfig, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { ArrowDownRight, ArrowUpRight, ArrowRight, MoveUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -167,7 +167,14 @@ function MarqueeRow({projects,direction}:{projects:Project[];direction:'left'|'r
    const raf=requestAnimationFrame(()=>{
      if(el.scrollWidth>el.clientWidth)el.scrollLeft=el.scrollWidth/3;
    });
-   return()=>cancelAnimationFrame(raf);
+   const onWheel=(e:WheelEvent)=>{
+     if(e.shiftKey && e.deltaY!==0){
+       e.preventDefault();
+       el.scrollLeft+=e.deltaY;
+     }
+   };
+   el.addEventListener('wheel',onWheel,{passive:false});
+   return()=>{cancelAnimationFrame(raf);el.removeEventListener('wheel',onWheel);};
  },[projects]);
  const handleScroll=()=>{
    const el=viewport.current;
@@ -212,12 +219,6 @@ function MarqueeRow({projects,direction}:{projects:Project[];direction:'left'|'r
    if(typeof el.scrollBy==='function')el.scrollBy({left:step*distance,behavior:reduced?'instant':'smooth'});
    else el.scrollLeft+=step*distance;
  };
- const wheel=(e:ReactWheelEvent<HTMLDivElement>)=>{
-   if(e.shiftKey){
-     e.preventDefault();
-     e.currentTarget.scrollLeft+=e.deltaY||e.deltaX;
-   }
- };
  const keys=(e:ReactKeyboardEvent<HTMLDivElement>)=>{
    if(e.target!==e.currentTarget)return;
    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
@@ -244,7 +245,7 @@ function MarqueeRow({projects,direction}:{projects:Project[];direction:'left'|'r
        onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={stopPointer}
        onPointerCancel={stopPointer} onPointerLeave={e=>{if(!e.currentTarget.hasPointerCapture?.(e.pointerId))stopPointer(e);}}
        onClickCapture={(e:ReactMouseEvent<HTMLDivElement>)=>{if(suppressClick.current){e.preventDefault();e.stopPropagation();suppressClick.current=false;}}}
-       onDragStart={e=>e.preventDefault()} onWheel={wheel} onKeyDown={keys} onScroll={handleScroll}>
+       onDragStart={e=>e.preventDefault()} onKeyDown={keys} onScroll={handleScroll}>
      <div className="creator-marquee-track">
        {Array.from({length:3},(_,copy)=>projects.map(project=><Link
          aria-label={'Explore '+project.name} to={'/projects/'+project.id} onPointerMove={glint}
@@ -326,6 +327,13 @@ function StickyProjectCard({project,index,total}:{project:Project;index:number;t
  if(!project.liveUrl)return null;
  return <div ref={ref} className="creator-card-scroll-slot">
    <motion.article className={'creator-sticky-card creator-sticky-'+project.id}
+      onPointerMove={e=>{
+        if(e.pointerType==='touch')return;
+        const rect=e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty('--card-hover-x',((e.clientX-rect.left)/Math.max(1,rect.width)*100)+'%');
+        e.currentTarget.style.setProperty('--card-hover-y',((e.clientY-rect.top)/Math.max(1,rect.height)*100)+'%');
+      }}
+      onPointerLeave={e=>{e.currentTarget.style.removeProperty('--card-hover-x');e.currentTarget.style.removeProperty('--card-hover-y');}}
       style={{top:96+index*26,scale:reduced?1:scale,'--project-tone':alpha} as CSSProperties}>
       <div className="creator-card-topline">
        <strong className="creator-card-number">0{index+1}</strong>
