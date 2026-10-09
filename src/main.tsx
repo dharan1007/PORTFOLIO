@@ -5,6 +5,7 @@ import '@fontsource-variable/jetbrains-mono';
 import './styles.css';
 import './cinematic.css';
 import './experience.css';
+import './media.css';
 import { App } from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

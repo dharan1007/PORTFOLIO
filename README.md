@@ -86,3 +86,7 @@ See `docs/superpowers/specs/2026-09-20-portfolio-react-vite-rebuild-design.md`.
 ## Implementation plan
 
 See `docs/superpowers/plans/2026-09-20-portfolio-react-vite-rebuild.md`.
+
+## Licensed media and genuine previews
+
+`src/data/media.ts` holds the source-of-truth catalogue of Pexels photography and Mixkit Free License videos, with creator and source-page credits. `EditorialImage` and `EditorialVideo` lazy-load source media with reliable photographic fallback and reduced-motion/data-saver behavior. Actual live-project screenshots remain separate in `ProjectPreview` and are requested from public `liveUrl` pages. For private projects, photography is expressly marked as illustration and not as a screenshot or proof of functionality. Media credits appear on the About page.

@@ -397,6 +397,15 @@ function AboutPage() {
         ['03 / INDEPENDENT WORK','RÆDIUS → ARKHE → BEYOND','Across the portfolio: RÆDIUS, ARKHE, Airadise, Codebase OS, SPOOL, FAULTLINE, LAYA, GRELION, Maleu Reel Studio, Zachitan and more.']
       ].map(([label,title,description])=><Reveal key={label}><article><span className="mono">{label}</span><h3>{title}</h3><p>{description}</p></article></Reveal>)}
     </section>
+    <section className="media-credits" id="media-credits">
+      <span className="mono">MEDIA / SOURCES & USAGE</span>
+      <div><h2>Real material. <em>Traceable sources.</em></h2>
+        <p>Illustrative photos and licensed b-roll are separate from the genuine project screenshots. Generic stock footage is never presented as a demo or product evidence. Product architecture and implementation records are available on their individual pages.</p>
+        <details><summary>VIEW VISUAL SOURCES ({licensedMediaCredits.length})</summary>
+          <div className="media-credit-grid">{licensedMediaCredits.map((credit,index)=><a key={index} href={credit.url} target="_blank" rel="noreferrer"><span className="mono">{credit.kind} / {credit.creator}</span><strong>{credit.title}</strong><span aria-hidden="true">↗</span></a>)}</div>
+        </details>
+      </div>
+    </section>
     <div className="about-next"><Link to="/experience">SEE THE TIMELINE ↗</Link><Link to="/projects">THE FULL WORK ↗</Link></div>
   </div>;
 }
