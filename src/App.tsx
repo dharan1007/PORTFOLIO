@@ -4,9 +4,7 @@ import {
 } from 'react-router-dom';
 import { CreatorLanding } from './components/CreatorLanding';
 import { ScrollNarrative } from './components/ScrollNarrative';
-import { EditorialImage, EditorialVideo } from './components/EditorialMedia';
-import { licensedMediaCredits, type EditorialKey } from './data/media';
-import { getDomain } from './data/domains';
+import { FloatObject } from './components/FloatObject';
 import { domains, groupedProjects } from './data/domains';
 import { Reveal } from './components/Reveal';
 import { ProjectPreview } from './components/ProjectPreview';
@@ -105,14 +103,16 @@ function Footer() {
 }
 
 function ProjectVisual({ project, compact = false }: { project: Project; compact?: boolean }) {
-  const field = getDomain(project) as EditorialKey;
-  return <div className={'project-visual project-visual-real ' + (compact ? 'project-visual-compact' : '')} style={{ '--accent': project.accent } as CSSProperties}>
-    <EditorialImage asset={field} className="project-illustration"/>
-    <div className="project-visual-gradient" aria-hidden="true"/>
+  return <div className={'project-visual project-visual-document ' + (compact ? 'project-visual-compact' : '')}
+      style={{ '--accent': project.accent } as CSSProperties}
+      role="img" aria-label={'Technical project profile for '+project.name+'; no publicly verified website'}>
+    <div className="document-constellation" aria-hidden="true"><i/><i/><i/><i/><i/></div>
     <span className="project-visual-code">{project.priority ? String(project.priority).padStart(2, '0') : project.year}</span>
     <strong>{project.name}</strong>
     <span>{project.category}</span>
-    <span className="illustration-disclosure">EDITORIAL PHOTOGRAPHY / NOT PRODUCT UI</span>
+    <div className="document-tech"><span className="mono">NO PUBLIC LIVE WEBSITE</span>
+      <p>{project.stack.length ? project.stack.slice(0, 4).join(' · ') : project.status}</p>
+    </div>
   </div>;
 }
 
@@ -143,7 +143,7 @@ function ProjectsPage() {
     <header className="catalogue-prologue">
       <div className="catalogue-hero-index mono"><span>INDEX / 2026</span><span>{String(total).padStart(2,'0')} WORKS — SIX WORLDS</span></div>
       <div className="catalogue-title-wrap"><div><span className="mono">AN EXPLORATION OF WHAT I BUILD</span><h1>NOT ONE<br/><em>KIND OF WORK.</em></h1><p>From products connecting people to systems that reason, verify and transform information. Explore the work by its purpose, not by a wall of thumbnails.</p></div>
-        <EditorialVideo asset="hero" className="catalogue-actual-video" priority/>
+        <div className="catalogue-actual-video catalogue-object"><FloatObject name="pointer"/></div>
       </div>
       <div className="catalogue-prologue-foot mono"><span>BEGIN WITH A WORLD ↓</span><span>EVERY PROJECT HAS ITS OWN CASE STUDY</span></div>
     </header>
@@ -157,7 +157,7 @@ function ProjectsPage() {
         <div className="domain-lead">
           <div className="domain-number" aria-hidden="true">{group.index}</div>
           <div className="domain-description"><h2>{group.title}<span>.</span></h2><p>{group.description}</p><blockquote>{group.statement}</blockquote></div>
-          <EditorialImage asset={group.id as EditorialKey} className="domain-photo" label/>
+          <div className="domain-photo domain-object"><FloatObject name={group.id === "connection" ? "smile" : group.id === "intelligence" ? "moon" : group.id === "engineering" ? "block" : group.id === "signals" ? "pointer" : group.id === "applied" ? "moon" : "block"}/></div>
         </div>
         <div className="chapter-curation">
           <div className="chapter-feature">
@@ -297,7 +297,7 @@ function AboutPage() {
       <span className="about-sideword" aria-hidden="true">DHR / 26</span>
       <h1>MADE OF<br/><em>CURIOSITY.</em></h1>
       <div className="about-opening-bottom"><p>I'm Poduvu Dharantej Reddy — a founder, product engineer and AI systems builder. I like the places where an idea has to become an actual working system.</p><span className="mono">SCROLL / THE WORKING PHILOSOPHY ↓</span></div>
-      <EditorialImage asset="about" className="about-real-image"/>
+      <FloatObject name="moon" className="about-real-image"/>
     </header>
     <section className="about-statement">
       <span className="mono">WHO I AM / WHAT I DO</span>
@@ -327,12 +327,10 @@ function AboutPage() {
       ].map(([label,title,description])=><Reveal key={label}><article><span className="mono">{label}</span><h3>{title}</h3><p>{description}</p></article></Reveal>)}
     </section>
     <section className="media-credits" id="media-credits">
-      <span className="mono">MEDIA / SOURCES & USAGE</span>
-      <div><h2>Real material. <em>Traceable sources.</em></h2>
-        <p>Illustrative photos and licensed b-roll are separate from the genuine project screenshots. Generic stock footage is never presented as a demo or product evidence. Product architecture and implementation records are available on their individual pages.</p>
-        <details><summary>VIEW VISUAL SOURCES ({licensedMediaCredits.length})</summary>
-          <div className="media-credit-grid">{licensedMediaCredits.map((credit,index)=><a key={index} href={credit.url} target="_blank" rel="noreferrer"><span className="mono">{credit.kind} / {credit.creator}</span><strong>{credit.title}</strong><span aria-hidden="true">↗</span></a>)}</div>
-        </details>
+      <span className="mono">VISUAL SYSTEM / PROVENANCE</span>
+      <div><h2>Three-dimensional. <em>Purposeful.</em></h2>
+        <p>Floating 3D reference elements come from the visual inspiration supplied for this redesign, with CC0 3dicons as fallback. Commercial reuse rights to the reference-site artwork should be confirmed or replaced with original commissioned renders.</p>
+        <p>Website screenshots are requested from each project's actual public URL. Projects without a published website display clearly labeled technical summaries, never an invented product preview. Fallback 3D icon library: <a href="https://github.com/realvjy/3dicons" target="_blank" rel="noreferrer">3dicons / CC0 ↗</a>.</p>
       </div>
     </section>
     <div className="about-next"><Link to="/experience">SEE THE TIMELINE ↗</Link><Link to="/projects">THE FULL WORK ↗</Link></div>
@@ -353,7 +351,7 @@ function ExperiencePage() {
       <div className="mono experience-overline"><span>04 / AN ONGOING TIMELINE</span><span>THE WORK IS THE STORY</span></div>
       <h1>THE PATH<br/><em>ISN'T LINEAR.</em></h1>
       <div className="experience-opening-bottom"><span className="mono">WORK — EDUCATION — COMPETITION</span><p>From engineering education and competitions to building products professionally and founding Aphelion. The journey is still being written.</p></div>
-      <EditorialImage asset="experience" className="experience-real-image"/>
+      <FloatObject name="block" className="experience-real-image"/>
     </header>
     <section className="experience-chronicle">
       <div className="chronicle-rail"><span className="mono">CHRONOLOGY / SELECTED MILESTONES</span><div className="chronicle-line" aria-hidden="true"/><strong>2023<span>→</span>26</strong><p>Each moment shaped a different part of the craft.</p></div>
@@ -373,7 +371,7 @@ function ContactPage() {
   return <div className="page contact-experience">
     <header className="contact-opening">
       <div className="contact-topline mono"><span>05 / GET IN TOUCH</span><span>FOR PRODUCTS, ENGINEERING & RESEARCH</span></div>
-      <EditorialImage asset="contact" className="contact-real-image"/>
+      <FloatObject name="pointer" className="contact-real-image"/>
       <span className="contact-mini mono">AN OPEN LINE BETWEEN AN IDEA AND ITS NEXT STEP</span>
       <h1>GOOD THINGS<br/>START WITH<br/><em>A CONVERSATION.</em></h1>
       <a className="contact-main-email" href="mailto:dharan.poduvu@gmail.com"><span>WRITE AN EMAIL</span><strong>dharan.poduvu@gmail.com</strong><span aria-hidden="true">↗</span></a>
