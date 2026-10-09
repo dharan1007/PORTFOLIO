@@ -199,14 +199,13 @@ function ServicesSection(){
 
 function StickyProjectCard({project,index,total}:{project:Project;index:number;total:number}){
  const ref=useRef<HTMLDivElement>(null);
+ const [interactive,setInteractive]=useState(false);
  const reduced=useReducedMotion();
  const {scrollYProgress}=useScroll({target:ref,offset:['start end','end start']});
  const targetScale=1-(total-1-index)*.03;
  const scale=useTransform(scrollYProgress,[0,.65,1],[1,1,targetScale]);
  const alpha=accentByProject[project.id]??'#bdcbd2';
- const primary=project.liveUrl;
- const illustration = project.id==='raedius'?'connection':project.id==='arkhe'?'intelligence':'engineering';
- const secondary = project.id==='raedius'?'company':project.id==='arkhe'?'research':'intelligence';
+ if(!project.liveUrl)return null;
  return <div ref={ref} className="creator-card-scroll-slot">
    <motion.article className={'creator-sticky-card creator-sticky-'+project.id}
       style={{top:96+index*26,scale:reduced?1:scale,'--project-tone':alpha} as CSSProperties}>
@@ -215,14 +214,31 @@ function StickyProjectCard({project,index,total}:{project:Project;index:number;t
        <div className="creator-card-title"><span>{project.category.toUpperCase()} / {project.year}</span><h3>{project.name}</h3></div>
        <Link className="creator-live-button" to={'/projects/'+project.id}>CASE STUDY <ArrowUpRight size={17}/></Link>
       </div>
-      <div className="creator-card-media">
+      <div className="creator-card-media" data-website-gallery={project.id}>
        <div className="creator-card-minor">
-         <div className="creator-card-image"><EditorialImage asset={illustration}/><span>FIELD / {project.category.toUpperCase()}</span></div>
-         <div className="creator-card-image"><EditorialImage asset={secondary}/><span>ENGINEERING / EDITORIAL MATERIAL</span></div>
+         <div className="creator-card-image creator-site-image">
+           <ProjectPreview project={project} view="detail" bare/>
+           <span>ACTUAL WEBSITE / DETAIL VIEW</span>
+         </div>
+         <div className="creator-card-image creator-site-image">
+           <ProjectPreview project={project} view="mobile" bare/>
+           <span>ACTUAL WEBSITE / NARROW CAPTURE</span>
+         </div>
        </div>
-       <div className="creator-card-major">
-          {primary?<ProjectPreview project={project} large/>: <EditorialImage asset="airadise" />}
-          <span className="creator-card-main-caption">{primary?'ACTUAL PUBLIC WEBSITE / READ-ONLY PREVIEW':'EDITORIAL IMAGE / NO PUBLIC WEB DEMO'}</span>
+       <div className="creator-card-major creator-site-image">
+          <ProjectPreview project={project} view="desktop" large bare/>
+          {interactive&&<div className="creator-embedded-view">
+            <iframe title={'Live website view - '+project.name} src={project.liveUrl}
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+              loading="lazy" referrerPolicy="no-referrer"/>
+          </div>}
+          <div className="creator-website-actions">
+            <button type="button" onClick={()=>setInteractive(open=>!open)} aria-pressed={interactive}>
+              {interactive?'SHOW SCREENSHOT':'TRY LIVE VIEW'}
+            </button>
+            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">OPEN WEBSITE <ArrowUpRight size={13}/></a>
+          </div>
+          <span className="creator-card-main-caption">{interactive?'LIVE WEBSITE / EMBEDDING MAY BE RESTRICTED':'ACTUAL WEBSITE / SCREENSHOT CAPTURE'}</span>
        </div>
       </div>
       <p className="creator-card-summary">{project.tagline}</p>
