@@ -88,7 +88,7 @@ export function FloatObject({name,className='',delay=0,hero=false}:{
     style={enabled?{x,y,rotateX,rotateY,transformPerspective:950}:undefined}
     onPointerLeave={resetOnLeave}>
     <div className="float-object-inner" style={{
-      '--float-delay':delay+'s',
+      '--float-delay':(-delay)+'s',
       '--float-time':(hero?4.5+delay:5.1+delay)+'s'
     } as CSSProperties}>
       {!sourceFailed?<img draggable={false} loading={hero?'eager':'lazy'} decoding="async"

@@ -93,7 +93,7 @@ html,body,#root{background:#090806}
 .creator-page.motion-on .gold-wave-atmosphere{animation:goldFogPulse 6.5s ease-in-out infinite}
 .creator-page.motion-on .float-object-inner{
   animation:goldFloatCycle var(--float-time,5s) ease-in-out infinite;
-  animation-delay:calc(-1 * var(--float-delay,0s));
+  animation-delay:var(--float-delay,0s);
   will-change:transform;
   transform-origin:center;
 }
