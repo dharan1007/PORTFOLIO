@@ -10,7 +10,7 @@ export function KineticField() {
     if(!canvas || !ctx) return;
     const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
     let width=1,height=1,dpr=1,raf=0,visible=true,documentVisible=!document.hidden;
-    let px=.65,py=.48,tx=.65,ty=.48,frames=0;
+    let px=.65,py=.48,tx=.65,ty=.48,frames=0,lastPaint=0;
     const tau=Math.PI*2;
     const measure=()=>{
       const bounds=canvas.getBoundingClientRect();
@@ -35,15 +35,17 @@ export function KineticField() {
       ctx.save();ctx.translate(cx,cy);
       const pitch=.65+Math.sin(t*.72)*.09;
       // Fine curved trajectories describe a moving architectural volume.
-      for(let ring=0;ring<31;ring++){
-        const q=ring/30;
+      const ringCount=width<640?18:31;
+      const ringSteps=width<640?64:96;
+      for(let ring=0;ring<ringCount;ring++){
+        const q=ring/(ringCount-1);
         const p=(q-.5)*2;
         const depth=Math.sqrt(Math.max(.02,1-p*p));
         const rr=r*(.33+depth*.70);
         const turn=t*.75+p*.42;
         ctx.beginPath();
-        for(let step=0;step<=96;step++){
-          const a=step/96*tau;
+        for(let step=0;step<=ringSteps;step++){
+          const a=step/ringSteps*tau;
           const twist=.24*Math.sin(a*3+t*2+p*1.5);
           const x=(Math.cos(a+turn)*rr + p*r*.40 + Math.sin(a*2+t+p)*r*.045);
           const y=(Math.sin(a+turn)*rr*pitch*.73 + Math.sin(a+twist+t*.2)*p*r*.32);
@@ -56,8 +58,9 @@ export function KineticField() {
         ctx.lineWidth=ring%5===0?1.2:.65;
         ctx.stroke();
       }
-      for(let strand=0;strand<16;strand++){
-        const a=strand/16*tau+t*.65;
+      const strandCount=width<640?10:16;
+      for(let strand=0;strand<strandCount;strand++){
+        const a=strand/strandCount*tau+t*.65;
         ctx.beginPath();
         for(let step=0;step<=52;step++){
           const p=-1+step/26, depth=Math.sqrt(Math.max(.02,1-p*p));
@@ -90,7 +93,7 @@ export function KineticField() {
     const tick=(time:number)=>{
       raf=0;
       px+=(tx-px)*.034;py+=(ty-py)*.034;
-      paint(time);
+      if(width>=640 || time-lastPaint>=30){paint(time);lastPaint=time;}
       if(visible&&documentVisible&&!reduced.matches)raf=requestAnimationFrame(tick);
     };
     const start=()=>{cancelAnimationFrame(raf);raf=0;if(visible&&documentVisible&&!reduced.matches)raf=requestAnimationFrame(tick);else paint(0);};
