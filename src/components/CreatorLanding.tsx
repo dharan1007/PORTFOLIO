@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties, type PropsWithChildren, type PointerEvent as ReactPointerEvent, type MouseEvent as ReactMouseEvent, type KeyboardEvent as ReactKeyboardEvent } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type PropsWithChildren, type PointerEvent as ReactPointerEvent, type MouseEvent as ReactMouseEvent, type KeyboardEvent as ReactKeyboardEvent, type WheelEvent as ReactWheelEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, MotionConfig, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { ArrowDownRight, ArrowUpRight, ArrowRight, MoveUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -154,26 +154,112 @@ function HeroSection(){
  </section>;
 }
 
-function MarqueeRow({projects,direction}: {projects:Project[],direction:'left'|'right'}){
- const track=useRef<HTMLDivElement>(null);
+function MarqueeRow({projects,direction}:{projects:Project[];direction:'left'|'right'}){
+ const viewport=useRef<HTMLDivElement>(null);
+ const drag=useRef({active:false,x:0,left:0,moved:false});
+ const suppressClick=useRef(false);
  const reduced=useReducedMotion();
- const {scrollYProgress}=useScroll({target:track,offset:['start end','end start']});
- const right=useTransform(scrollYProgress,[0,1],[-330,330]);
- const left=useTransform(scrollYProgress,[0,1],[330,-330]);
- return <div className="creator-marquee-viewport" ref={track}>
-  <motion.div className="creator-marquee-track" style={reduced?undefined:{x:direction==='right'?right:left}}>
-   {Array.from({length:3},(_,copy)=>projects.map((project,index)=><Link
-       aria-label={'Explore '+project.name} to={'/projects/'+project.id}
-       key={copy+'-'+project.id} className="creator-marquee-tile">
-        <ProjectPreview project={project}/>
-        <span className="creator-marquee-caption"><strong>{project.name}</strong><span>{project.category}<ArrowUpRight size={15}/></span></span>
-      </Link>))}
-  </motion.div>
+ const [progress,setProgress]=useState(.5);
+ const [isDragging,setIsDragging]=useState(false);
+ useEffect(()=>{
+   const el=viewport.current;
+   if(!el)return;
+   const raf=requestAnimationFrame(()=>{
+     if(el.scrollWidth>el.clientWidth)el.scrollLeft=el.scrollWidth/3;
+   });
+   return()=>cancelAnimationFrame(raf);
+ },[projects]);
+ const handleScroll=()=>{
+   const el=viewport.current;
+   if(!el)return;
+   const third=el.scrollWidth/3;
+   if(third>0){
+     if(el.scrollLeft < third*.3)el.scrollLeft+=third;
+     else if(el.scrollLeft > third*1.7)el.scrollLeft-=third;
+     setProgress(Math.min(1,Math.max(0,(el.scrollLeft-third+el.clientWidth*.5)/third)));
+   }
+ };
+ const onPointerDown=(e:ReactPointerEvent<HTMLDivElement>)=>{
+   if(e.pointerType!=='mouse'||e.button!==0)return;
+   drag.current={active:true,x:e.clientX,left:e.currentTarget.scrollLeft,moved:false};
+ };
+ const onPointerMove=(e:ReactPointerEvent<HTMLDivElement>)=>{
+   if(!drag.current.active)return;
+   const dx=e.clientX-drag.current.x;
+   if(!drag.current.moved&&Math.abs(dx)>6){
+     drag.current.moved=true;
+     setIsDragging(true);
+     e.currentTarget.setPointerCapture?.(e.pointerId);
+   }
+   if(drag.current.moved){
+     e.currentTarget.scrollLeft=drag.current.left-dx;
+     e.preventDefault();
+   }
+ };
+ const stopPointer=(e:ReactPointerEvent<HTMLDivElement>)=>{
+   if(drag.current.moved){
+     suppressClick.current=true;
+     window.setTimeout(()=>{suppressClick.current=false;},160);
+   }
+   drag.current.active=false;
+   setIsDragging(false);
+   if(e.currentTarget.hasPointerCapture?.(e.pointerId))e.currentTarget.releasePointerCapture?.(e.pointerId);
+ };
+ const scrollStep=(step:number)=>{
+   const el=viewport.current;
+   if(!el)return;
+   const distance=Math.min(560,Math.max(290,el.clientWidth*.68));
+   if(typeof el.scrollBy==='function')el.scrollBy({left:step*distance,behavior:reduced?'instant':'smooth'});
+   else el.scrollLeft+=step*distance;
+ };
+ const wheel=(e:ReactWheelEvent<HTMLDivElement>)=>{
+   if(e.shiftKey){
+     e.preventDefault();
+     e.currentTarget.scrollLeft+=e.deltaY||e.deltaX;
+   }
+ };
+ const keys=(e:ReactKeyboardEvent<HTMLDivElement>)=>{
+   if(e.target!==e.currentTarget)return;
+   if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+     e.preventDefault();scrollStep(e.key==='ArrowRight'?1:-1);
+   }
+ };
+ const glint=(e:ReactPointerEvent<HTMLAnchorElement>)=>{
+   if(e.pointerType==='touch')return;
+   const rect=e.currentTarget.getBoundingClientRect();
+   e.currentTarget.style.setProperty('--glint-x',((e.clientX-rect.left)/Math.max(1,rect.width)*100)+'%');
+   e.currentTarget.style.setProperty('--glint-y',((e.clientY-rect.top)/Math.max(1,rect.height)*100)+'%');
+ };
+ return <div className={'creator-marquee-row marquee-'+direction} data-scrollable-gallery={direction}>
+   <div className="creator-marquee-row-toolbar">
+     <span>{direction==='right'?'01 / ACTIVE PRODUCTS':'02 / MORE LIVE SURFACES'}</span>
+     <div className="creator-marquee-controls">
+       <span className="creator-gallery-hint">DRAG · SWIPE · SHIFT + WHEEL</span>
+       <button type="button" aria-label={'Scroll '+direction+' gallery left'} onClick={()=>scrollStep(-1)}><ChevronLeft size={20}/></button>
+       <button type="button" aria-label={'Scroll '+direction+' gallery right'} onClick={()=>scrollStep(1)}><ChevronRight size={20}/></button>
+     </div>
+   </div>
+   <div ref={viewport} className={'creator-marquee-viewport '+(isDragging?'is-dragging':'')}
+       tabIndex={0} role="region" aria-label={'Horizontally scrollable live website gallery, row '+(direction==='right'?'one':'two')}
+       onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={stopPointer}
+       onPointerCancel={stopPointer} onPointerLeave={e=>{if(!e.currentTarget.hasPointerCapture?.(e.pointerId))stopPointer(e);}}
+       onClickCapture={(e:ReactMouseEvent<HTMLDivElement>)=>{if(suppressClick.current){e.preventDefault();e.stopPropagation();suppressClick.current=false;}}}
+       onDragStart={e=>e.preventDefault()} onWheel={wheel} onKeyDown={keys} onScroll={handleScroll}>
+     <div className="creator-marquee-track">
+       {Array.from({length:3},(_,copy)=>projects.map(project=><Link
+         aria-label={'Explore '+project.name} to={'/projects/'+project.id} onPointerMove={glint}
+         key={copy+'-'+project.id} className="creator-marquee-tile">
+          <ProjectPreview project={project}/>
+          <span className="creator-marquee-caption"><strong>{project.name}</strong><span>{project.category}<ArrowUpRight size={15}/></span></span>
+        </Link>))}
+     </div>
+   </div>
+   <div className="creator-marquee-progress" aria-hidden="true"><span style={{transform:'scaleX('+progress+')'}}/></div>
  </div>;
 }
 function MarqueeSection(){
  return <section id="creator-marquee" className="creator-marquee" aria-label="Gallery of actual deployed projects">
-   <div className="creator-marquee-top"><span>SELECTED LIVE SURFACES / {String(gallery.length).padStart(2,'0')}</span><span>REAL PROJECTS — NOT DEMO TEMPLATE WORK</span></div>
+   <div className="creator-marquee-top"><span>02 / LIVE WORK — {String(gallery.length).padStart(2,'0')} PUBLIC WEBSITES</span><span>HORIZONTAL EXPLORATION / ACTUAL PROJECTS</span></div>
    <MarqueeRow projects={galleryOne} direction="right"/>
    <MarqueeRow projects={galleryTwo} direction="left"/>
    <div className="creator-marquee-bottom"><span>PRODUCTS</span><span>COMPUTATION</span><span>INFRASTRUCTURE</span><Link to="/projects">THE ENTIRE CATALOGUE <ArrowUpRight size={17}/></Link></div>
