@@ -70,7 +70,7 @@ describe('portfolio experience', () => {
     Object.defineProperty(first,'scrollWidth',{configurable:true,value:5600});
     first.scrollLeft=1900;
     const previous=first.scrollLeft;
-    fireEvent.click(screen.getByRole('button',{name:'Scroll right gallery right'}));
+    fireEvent.click(rows[0].querySelector<HTMLButtonElement>('button[aria-label="Scroll right gallery right"]')!);
     expect(first.scrollLeft).toBeGreaterThan(previous);
     const afterClick=first.scrollLeft;
     fireEvent.keyDown(first,{key:'ArrowLeft'});
