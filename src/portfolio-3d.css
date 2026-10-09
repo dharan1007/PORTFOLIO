@@ -1,0 +1,40 @@
+/* Unified three-dimensional portfolio objects and evidence-first unhosted cases */
+.project-visual-document{background:radial-gradient(ellipse at 75% 35%,color-mix(in srgb,var(--accent) 28%,#29222d),transparent 53%),linear-gradient(120deg,#121316,#22212a)!important;color:#f0e8e9!important;border:1px solid #766b75;isolation:isolate;min-height:325px;padding:28px}
+.project-visual-document:before{display:none!important}
+.project-visual-document .project-visual-code{color:#c4b3bb;z-index:2}
+.project-visual-document>strong{font-weight:330;letter-spacing:-.065em;max-width:90%;font-size:clamp(38px,4.4vw,74px);z-index:2;overflow-wrap:anywhere}
+.project-visual-document>span{z-index:2;color:#d3c5ce!important}
+.project-visual-document .document-tech{position:relative;z-index:3;padding-top:15px;margin-top:35px;border-top:1px solid #746e78;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+.project-visual-document .document-tech .mono{color:#baa9b7;font-size:9px}
+.project-visual-document .document-tech p{font-size:12px;color:#d1d0d4;line-height:1.4;max-width:350px;margin:0}
+.document-constellation{position:absolute;z-index:0;right:8%;top:12%;width:52%;aspect-ratio:1;pointer-events:none}
+.document-constellation i{display:block;position:absolute;inset:0;border:1px solid #b0b5df55;border-radius:50%;transform:rotateY(60deg) rotateX(23deg);box-shadow:0 0 45px #d4c9fa13}
+.document-constellation i:nth-child(2){inset:15%;transform:rotateX(60deg) rotateY(22deg)}
+.document-constellation i:nth-child(3){inset:28%;transform:rotateY(65deg)}
+.document-constellation i:nth-child(4){inset:38%;transform:rotateX(60deg)}
+.document-constellation i:nth-child(5){inset:46%;background:#d8d6e6a3;box-shadow:0 0 45px #dacbe75e}
+.catalogue-object{background:radial-gradient(circle,#77709533 5%,transparent 71%);border:0;box-shadow:none}
+.catalogue-object .float-object{height:100%;width:100%;display:grid;place-items:center}
+.catalogue-object .float-object img{height:100%;width:100%;object-fit:contain;filter:drop-shadow(0 25px 39px #b298db55)}
+.domain-object{background:radial-gradient(circle at 48% 45%,#d5cee5 0%,#bcb0c0 32%,#73687a 100%);display:grid;place-items:center;overflow:hidden;border-radius:22px;border:1px solid #ffffff55}
+.domain-object .float-object{height:88%;width:88%;position:relative}
+.domain-object .float-object>img{object-fit:contain;filter:drop-shadow(0 20px 35px #30304066)}
+.domain-chapter:nth-child(even) .domain-object{background:radial-gradient(circle at center,#c1c9d6 0%,#8c9fb0 70%,#6e778c)}
+.about-experience .about-real-image,.experience-experience .experience-real-image,.contact-experience .contact-real-image{pointer-events:none;overflow:visible;mask-image:none;display:grid;place-items:center}
+.about-experience .about-real-image img,.experience-experience .experience-real-image img,.contact-experience .contact-real-image img{width:100%;height:100%;object-fit:contain!important;mix-blend-mode:normal;filter:drop-shadow(0 20px 35px #45444d4a)}
+.about-experience .about-real-image{opacity:.56!important}
+.experience-experience .experience-real-image{opacity:.49!important}
+.contact-experience .contact-real-image{opacity:.39!important}
+.media-credits a{text-decoration:underline;text-underline-offset:4px}
+.detailed-experience .project-detail-hero .project-visual-document{background:#17171b!important;min-height:480px;align-self:end}
+@media(max-width:850px){
+ .domain-object{height:330px;width:100%}
+ .project-visual-document{min-height:260px}
+}
+@media(max-width:559px){
+ .domain-object{height:235px}
+ .project-visual-document .document-tech{margin-top:20px}
+ .project-visual-document>strong{font-size:41px}
+ .catalogue-object{height:240px}
+ .about-experience .about-real-image,.experience-experience .experience-real-image,.contact-experience .contact-real-image{opacity:.26!important}
+}

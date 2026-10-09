@@ -33,7 +33,12 @@ describe('portfolio experience', () => {
   it('shows the five-section creator portfolio with genuine project media', () => {
     const { container } = render(<App />);
     expect(screen.getByRole('heading', { name:/HI, I'M DHARANTEJ/i })).toBeTruthy();
-    expect(container.querySelector('.creator-hero video')).not.toBeNull();
+    expect(container.querySelector('.creator-hero video')).toBeNull();
+    expect(container.querySelectorAll('.creator-sculpture .float-object')).toHaveLength(4);
+    expect(container.querySelectorAll('.creator-about .float-object')).toHaveLength(4);
+    expect(container.querySelectorAll('.creator-sticky-card .editorial-photo')).toHaveLength(0);
+    expect(container.querySelectorAll('.creator-sticky-card [data-project-snapshot]')).toHaveLength(9);
+    expect(Array.from(container.querySelectorAll('.creator-sticky-card')).map(item=>item.querySelector('[data-website-gallery]')?.getAttribute('data-website-gallery'))).toEqual(['raedius','arkhe','spool']);
     expect(container.querySelector('.creator-marquee')).not.toBeNull();
     expect(container.querySelector('.creator-about')).not.toBeNull();
     expect(container.querySelector('.creator-services')).not.toBeNull();
