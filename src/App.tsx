@@ -4,6 +4,9 @@ import {
 } from 'react-router-dom';
 import { CinematicHero } from './components/CinematicHero';
 import { ScrollNarrative } from './components/ScrollNarrative';
+import { EditorialImage, EditorialVideo } from './components/EditorialMedia';
+import { licensedMediaCredits, type EditorialKey } from './data/media';
+import { getDomain } from './data/domains';
 import { domains, groupedProjects } from './data/domains';
 import { Reveal } from './components/Reveal';
 import { ProjectPreview } from './components/ProjectPreview';
@@ -96,19 +99,21 @@ function Footer() {
     <footer className="footer">
       <span>Poduvu Dharantej Reddy</span>
       <span>Hyderabad, India</span>
-      <span>© 2026 / Built deliberately</span>
+      <span>© 2026 / <Link to="/about#media-credits">VISUAL CREDITS ↗</Link></span>
     </footer>
   );
 }
 
 function ProjectVisual({ project, compact = false }: { project: Project; compact?: boolean }) {
-  return (
-    <div className={'project-visual ' + (compact ? 'project-visual-compact' : '')} style={{ '--accent': project.accent } as CSSProperties}>
-      <span className="project-visual-code">{project.priority ? String(project.priority).padStart(2, '0') : project.year}</span>
-      <strong>{project.name}</strong>
-      <span>{project.category}</span>
-    </div>
-  );
+  const field = getDomain(project) as EditorialKey;
+  return <div className={'project-visual project-visual-real ' + (compact ? 'project-visual-compact' : '')} style={{ '--accent': project.accent } as CSSProperties}>
+    <EditorialImage asset={field} className="project-illustration"/>
+    <div className="project-visual-gradient" aria-hidden="true"/>
+    <span className="project-visual-code">{project.priority ? String(project.priority).padStart(2, '0') : project.year}</span>
+    <strong>{project.name}</strong>
+    <span>{project.category}</span>
+    <span className="illustration-disclosure">EDITORIAL PHOTOGRAPHY / NOT PRODUCT UI</span>
+  </div>;
 }
 
 function ProjectCard({ project, variant = 'normal' }: { project: Project; variant?: 'normal' | 'flagship' | 'compact' | 'research' }) {
@@ -154,7 +159,9 @@ function HomePage() {
               <Link to={'/projects/'+project.id} className={'feature-stage feature-stage-'+project.id}>
                 <div className="feature-stage-data"><span className="mono">CHAPTER / 0{index+1}</span><span className="mono">{project.category}</span></div>
                 <div className={'feature-artwork feature-artwork-'+project.id} aria-hidden="true">
-                  <div className="art-core"><span/><span/><span/><span/><span/></div>
+                  <div className="feature-real-media">
+   {project.liveUrl ? <ProjectPreview project={project} large/> : project.id === 'airadise' ? <EditorialVideo asset="airadise"/> : <EditorialImage asset="intelligence"/>}
+ </div>
                   <strong>{project.name}</strong>
                   <small>{String(index+1).padStart(2,'0')} — {project.year}</small>
                 </div>
@@ -167,7 +174,7 @@ function HomePage() {
       <section className="company-strata">
         <div className="strata-header"><span className="mono">04 / THE COMPANY</span><a href="https://www.aphelion.life/" target="_blank" rel="noreferrer">APHELION — OFFICIAL SITE ↗</a></div>
         <div className="strata-main">
-          <div><p className="mono">FOUNDER & BUILDER</p><h2>APHELION<span className="strata-period">.</span></h2><p>An interconnected product company working across experience, computation and platform infrastructure.</p></div>
+          <div><p className="mono">FOUNDER & BUILDER</p><h2>APHELION<span className="strata-period">.</span></h2><p>An interconnected product company working across experience, computation and platform infrastructure.</p><EditorialImage asset="company" className="company-photo" label/></div>
           <div className="strata-architecture" aria-label="Aphelion product layers">
             {[
               ['01','EXPERIENCE','Dvange · DAISH','Products people interact with'],
@@ -192,7 +199,7 @@ function HomePage() {
       </section>
       {researchHighlightProject && <section className="research-spotlight">
         <div className="research-eyebrow mono"><span>06 / RESEARCH SPOTLIGHT</span><span>THE QUESTION OF UNCERTAINTY</span></div>
-        <div><h2>What can the evidence <em>actually</em> tell us?</h2><div><p>{researchHighlightProject.summary}</p><Link to="/projects/zachitan">READ THE ZACHITAN CASE ↗</Link></div></div>
+        <div><h2>What can the evidence <em>actually</em> tell us?</h2><div><EditorialImage asset="research" className="research-photo" label/><p>{researchHighlightProject.summary}</p><Link to="/projects/zachitan">READ THE ZACHITAN CASE ↗</Link></div></div>
       </section>}
       <section className="home-finale"><span className="mono">07 / CONTINUE THE STORY</span><h2>Make something <em>that matters.</em></h2><div><Link to="/experience">THE JOURNEY ↗</Link><Link to="/contact">START A CONVERSATION ↗</Link></div></section>
     </>
@@ -207,7 +214,7 @@ function ProjectsPage() {
     <header className="catalogue-prologue">
       <div className="catalogue-hero-index mono"><span>INDEX / 2026</span><span>{String(total).padStart(2,'0')} WORKS — SIX WORLDS</span></div>
       <div className="catalogue-title-wrap"><div><span className="mono">AN EXPLORATION OF WHAT I BUILD</span><h1>NOT ONE<br/><em>KIND OF WORK.</em></h1><p>From products connecting people to systems that reason, verify and transform information. Explore the work by its purpose, not by a wall of thumbnails.</p></div>
-        <div className="catalogue-sculpture" aria-hidden="true"><span/><span/><span/><span/><span/><span/><i/></div>
+        <EditorialVideo asset="hero" className="catalogue-actual-video" priority/>
       </div>
       <div className="catalogue-prologue-foot mono"><span>BEGIN WITH A WORLD ↓</span><span>EVERY PROJECT HAS ITS OWN CASE STUDY</span></div>
     </header>
@@ -221,6 +228,7 @@ function ProjectsPage() {
         <div className="domain-lead">
           <div className="domain-number" aria-hidden="true">{group.index}</div>
           <div className="domain-description"><h2>{group.title}<span>.</span></h2><p>{group.description}</p><blockquote>{group.statement}</blockquote></div>
+          <EditorialImage asset={group.id as EditorialKey} className="domain-photo" label/>
         </div>
         <div className="chapter-curation">
           <div className="chapter-feature">
@@ -266,7 +274,7 @@ function ProjectDetailPage() {
             {project.sourceUrl && <a className="button button-ghost" href={project.sourceUrl} target="_blank" rel="noreferrer">Source ↗</a>}
           </div>
         </div>
-        <ProjectVisual project={project} />
+        {project.liveUrl ? <ProjectPreview project={project} large/> : <ProjectVisual project={project} />}
       </header>
       <section className="project-detail-body"><div className="detail-side-index mono"><span>CONTEXT</span><span>STRUCTURE</span><span>EVIDENCE</span><span>IMPLEMENTATION</span></div>
         <Reveal>
@@ -360,7 +368,7 @@ function AboutPage() {
       <span className="about-sideword" aria-hidden="true">DHR / 26</span>
       <h1>MADE OF<br/><em>CURIOSITY.</em></h1>
       <div className="about-opening-bottom"><p>I'm Poduvu Dharantej Reddy — a founder, product engineer and AI systems builder. I like the places where an idea has to become an actual working system.</p><span className="mono">SCROLL / THE WORKING PHILOSOPHY ↓</span></div>
-      <div className="about-orbit" aria-hidden="true"><span/><span/><span/></div>
+      <EditorialImage asset="about" className="about-real-image"/>
     </header>
     <section className="about-statement">
       <span className="mono">WHO I AM / WHAT I DO</span>
@@ -407,7 +415,7 @@ function ExperiencePage() {
       <div className="mono experience-overline"><span>04 / AN ONGOING TIMELINE</span><span>THE WORK IS THE STORY</span></div>
       <h1>THE PATH<br/><em>ISN'T LINEAR.</em></h1>
       <div className="experience-opening-bottom"><span className="mono">WORK — EDUCATION — COMPETITION</span><p>From engineering education and competitions to building products professionally and founding Aphelion. The journey is still being written.</p></div>
-      <div className="experience-trace" aria-hidden="true"><span/><span/><span/><span/></div>
+      <EditorialImage asset="experience" className="experience-real-image"/>
     </header>
     <section className="experience-chronicle">
       <div className="chronicle-rail"><span className="mono">CHRONOLOGY / SELECTED MILESTONES</span><div className="chronicle-line" aria-hidden="true"/><strong>2023<span>→</span>26</strong><p>Each moment shaped a different part of the craft.</p></div>
@@ -427,7 +435,7 @@ function ContactPage() {
   return <div className="page contact-experience">
     <header className="contact-opening">
       <div className="contact-topline mono"><span>05 / GET IN TOUCH</span><span>FOR PRODUCTS, ENGINEERING & RESEARCH</span></div>
-      <div className="contact-ring" aria-hidden="true"><span/><span/><span/><span/></div>
+      <EditorialImage asset="contact" className="contact-real-image"/>
       <span className="contact-mini mono">AN OPEN LINE BETWEEN AN IDEA AND ITS NEXT STEP</span>
       <h1>GOOD THINGS<br/>START WITH<br/><em>A CONVERSATION.</em></h1>
       <a className="contact-main-email" href="mailto:dharan.poduvu@gmail.com"><span>WRITE AN EMAIL</span><strong>dharan.poduvu@gmail.com</strong><span aria-hidden="true">↗</span></a>
