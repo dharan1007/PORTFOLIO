@@ -4,6 +4,7 @@ import { motion, MotionConfig, useMotionValue, useMotionValueEvent, useReducedMo
 import { ArrowDownRight, ArrowUpRight, ArrowRight, MoveUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FloatObject } from './FloatObject';
 import { ReactiveWave } from './ReactiveWave';
+import { PortfolioMotionContext } from './PortfolioMotion';
 import { ProjectPreview, hasDedicatedWebsite } from './ProjectPreview';
 import { orderedProjects, getProjectById, type Project } from '../data/projects';
 
@@ -386,14 +387,27 @@ function ProjectsSection(){
  </section>;
 }
 export function CreatorLanding(){
- return <MotionConfig reducedMotion="user">
-  <div className="creator-page">
-   <HeroNav/>
-   <HeroSection/>
-   <MarqueeSection/>
-   <AboutSection/>
-   <ServicesSection/>
-   <ProjectsSection/>
-  </div>
- </MotionConfig>;
+ const [motionEnabled,setMotionEnabled]=useState(()=>{
+   if(typeof window==='undefined'||typeof window.matchMedia!=='function')return true;
+   return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ });
+ return <PortfolioMotionContext.Provider value={motionEnabled}>
+   <MotionConfig reducedMotion={motionEnabled?'never':'always'}>
+     <div className={'creator-page '+(motionEnabled?'motion-on':'motion-off')} data-motion-enabled={String(motionEnabled)}>
+       <HeroNav/>
+       <button className="creator-motion-switch" type="button" data-motion-toggle
+          aria-label={motionEnabled?'Pause background wave and floating objects':'Enable animated gold waves and floating objects'}
+          aria-pressed={motionEnabled}
+          onClick={()=>setMotionEnabled(value=>!value)}>
+          <span className={'creator-motion-indicator '+(motionEnabled?'is-live':'')}/>
+          {motionEnabled?'MOTION ON':'ENABLE MOTION'}
+       </button>
+       <HeroSection/>
+       <MarqueeSection/>
+       <AboutSection/>
+       <ServicesSection/>
+       <ProjectsSection/>
+     </div>
+   </MotionConfig>
+ </PortfolioMotionContext.Provider>;
 }
