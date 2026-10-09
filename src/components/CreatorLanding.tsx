@@ -23,15 +23,15 @@ const galleryOne = gallery.filter((_,i)=>i%2===0);
 const galleryTwo = gallery.filter((_,i)=>i%2===1);
 
 /** Avoid needless viewport animation for visitors who prefer reduced motion. */
-function Fade({children,delay=0,y=30,x=0,className=''}:PropsWithChildren<{
- delay?:number;y?:number;x?:number;className?:string
+function Fade({children,delay=0,y=30,x=0,duration=.7,className=''}:PropsWithChildren<{
+ delay?:number;y?:number;x?:number;duration?:number;className?:string
 }>){
  const reduced=useReducedMotion();
  return <motion.div className={className}
    initial={reduced?false:{opacity:0,y,x}}
    whileInView={{opacity:1,y:0,x:0}}
    viewport={{once:true,amount:0,margin:'50px'}}
-   transition={{duration:reduced?0:.7,delay:reduced?0:delay,ease:[.25,.1,.25,1]}}>
+   transition={{duration:reduced?0:duration,delay:reduced?0:delay,ease:[.25,.1,.25,1]}}>
     {children}
  </motion.div>;
 }
@@ -96,7 +96,7 @@ function HeroNav(){
 function HeroSection(){
  return <section className="creator-hero" id="creator-home" aria-labelledby="creator-title">
    <Fade className="creator-hero-copy" delay={.15} y={40}>
-     <h1 id="creator-title" className="hero-heading creator-hero-heading"><span>HI, I'M</span><span>DHARANTEJ</span></h1>
+     <h1 id="creator-title" aria-label="Hi, I\u0027m Dharantej" className="hero-heading creator-hero-heading"><span>HI, I'M</span><span>DHARANTEJ</span></h1>
    </Fade>
    <Fade className="creator-hero-object" delay={.6}>
      <Magnet>
@@ -156,7 +156,7 @@ function AnimatedText({text}: {text:string}){
    {Array.from(text).map((ch,index)=>{
      const threshold=index/Math.max(1,text.length-1);
      return <span aria-hidden="true" className="creator-char" key={index}
-      style={{'--letter-offset':threshold} as CSSProperties}>{ch===' ' ? '\u00a0':ch}</span>;
+      style={{'--letter-offset':threshold} as CSSProperties}>{ch===' ' ? ' ':ch}</span>;
    })}
  </p>;
 }
