@@ -2,13 +2,13 @@ import { useEffect, useRef, useState, type CSSProperties, type PropsWithChildren
 import { Link } from 'react-router-dom';
 import { motion, MotionConfig, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { ArrowDownRight, ArrowUpRight, ArrowRight, MoveUpRight } from 'lucide-react';
-import { EditorialVideo, EditorialImage } from './EditorialMedia';
+import { FloatObject } from './FloatObject';
 import { ProjectPreview } from './ProjectPreview';
 import { orderedProjects, getProjectById, type Project } from '../data/projects';
 
-const featured = ['raedius', 'airadise', 'arkhe'] as const;
+const featured = ['raedius', 'arkhe', 'spool'] as const;
 const accentByProject: Record<string,string> = {
-  raedius:'#caa5b1', airadise:'#a7bcc4', arkhe:'#d6bca9'
+  raedius:'#caa5b1', arkhe:'#c4b5d0', spool:'#a7bcc4'
 };
 const skills = [
   ['01','Product engineering','Building usable products end to end: interactions, frontend, APIs, persistence, identity and systems integration.'],
@@ -100,10 +100,13 @@ function HeroSection(){
    </Fade>
    <Fade className="creator-hero-object" delay={.6}>
      <Magnet>
-       <div className="creator-portrait" aria-label="Close-up film of real electronics symbolizing engineering work">
-         <EditorialVideo asset="hero" priority/>
-         <span className="creator-portrait-chrome"><span className="creator-live-led"/>LIVE / ENGINEERING MATERIAL</span>
-         <span className="creator-portrait-corner">01—26</span>
+       <div className="creator-sculpture" aria-hidden="true">
+         <div className="creator-sculpture-halo"/>
+         <FloatObject name="moon" className="creator-sculpture-moon" hero delay={.1}/>
+         <FloatObject name="block" className="creator-sculpture-block" hero delay={.4}/>
+         <FloatObject name="pointer" className="creator-sculpture-pointer" hero delay={.8}/>
+         <FloatObject name="smile" className="creator-sculpture-smile" hero delay={1.2}/>
+         <span className="creator-sculpture-floor" aria-hidden="true"/>
        </div>
      </Magnet>
    </Fade>
@@ -164,10 +167,10 @@ function AnimatedText({text}: {text:string}){
 function AboutSection(){
  const description="I'm a product engineer and founder of Aphelion, working across interactive experiences, adaptive computation, developer tools and platform infrastructure. I enjoy connecting the design of an idea to the engineering that makes it work. The work starts with curiosity and ends with evidence.";
  return <section className="creator-about" id="creator-about">
-  <Fade className="creator-about-orbit creator-about-orbit-a" x={-80} y={0} delay={.1} duration={.9}><EditorialImage asset="intelligence"/></Fade>
-  <Fade className="creator-about-orbit creator-about-orbit-b" x={80} y={0} delay={.15}><EditorialImage asset="company"/></Fade>
-  <Fade className="creator-about-orbit creator-about-orbit-c" x={-80} y={0} delay={.25}><EditorialImage asset="engineering"/></Fade>
-  <Fade className="creator-about-orbit creator-about-orbit-d" x={80} y={0} delay={.3}><EditorialImage asset="laboratory"/></Fade>
+  <Fade className="creator-about-orbit creator-about-orbit-a" x={-80} y={0} delay={.1} duration={.9}><FloatObject name="moon"/></Fade>
+  <Fade className="creator-about-orbit creator-about-orbit-b" x={80} y={0} delay={.15}><FloatObject name="block"/></Fade>
+  <Fade className="creator-about-orbit creator-about-orbit-c" x={-80} y={0} delay={.25}><FloatObject name="smile"/></Fade>
+  <Fade className="creator-about-orbit creator-about-orbit-d" x={80} y={0} delay={.3}><FloatObject name="pointer"/></Fade>
   <div className="creator-about-content">
     <Fade y={40}><h2 className="hero-heading creator-section-title">ABOUT ME</h2></Fade>
     <AnimatedText text={description}/>
@@ -229,9 +232,9 @@ function StickyProjectCard({project,index,total}:{project:Project;index:number;t
 function ProjectsSection(){
  const items=featured.map(id=>getProjectById(id)).filter((project):project is Project=>Boolean(project));
  return <section className="creator-projects" id="creator-projects">
-   <div className="creator-section-tag creator-section-tag-dark"><span>05 / THE WORK</span><span>THREE FIRST CHAPTERS</span></div>
+   <div className="creator-section-tag creator-section-tag-dark"><span>05 / THE WORK</span><span>THREE DEPLOYED SYSTEMS</span></div>
    <Fade><h2 className="hero-heading creator-section-title creator-projects-title">PROJECT</h2></Fade>
-   <p className="creator-projects-intro">Three different problem spaces — human connection, autonomous execution and experimental computation. Each project has a technical case study, not just a visual preview.</p>
+   <p className="creator-projects-intro">Three deployed products across connection, computing and infrastructure. Every image in these cards is captured from the project website; open the original or explore its case study.</p>
    <div className="creator-sticky-deck">{items.map((project,index)=><StickyProjectCard key={project.id} project={project} index={index} total={items.length}/>)}</div>
    <div className="creator-projects-end">
      <div><span>NOT JUST THREE PROJECTS</span><strong>{String(orderedProjects().length).padStart(2,'0')}<small>DOCUMENTED SYSTEMS</small></strong></div>
