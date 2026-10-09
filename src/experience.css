@@ -468,3 +468,23 @@ body{overflow-x:hidden}
  .saga-step{opacity:1;transform:none}
  .saga-beam{stroke-dashoffset:0!important;transition:none}
 }
+
+/* Fix the actual knockout: transparent glyph pixels must reveal the scene,
+   not an opaque background on the wordmark's parent. Preserve black gutters. */
+.sculpture-hero .cinema-band{
+  background:linear-gradient(90deg,
+    #000 0,
+    #000 calc(50% - 640 * var(--scene-u)),
+    transparent calc(50% - 640 * var(--scene-u)),
+    transparent calc(50% + 640 * var(--scene-u)),
+    #000 calc(50% + 640 * var(--scene-u)),
+    #000 100%);
+}
+.sculpture-hero .cinema-band .cinema-wordmark{
+  position:relative;
+  z-index:1;
+}
+@media(max-width:559.98px){
+  .sculpture-hero .cinema-band{background:transparent;box-shadow:-14px 0 0 #000,14px 0 0 #000}
+  .sculpture-hero .cinema-band:before{display:none!important}
+}
