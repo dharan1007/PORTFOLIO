@@ -59,6 +59,24 @@ describe('portfolio experience', () => {
     expect(container.textContent).not.toContain('Nextlevel Studio');
   });
 
+  it('starts gold waves and 3D objects with controllable motion',()=>{
+    const {container}=render(<App/>);
+    const root=container.querySelector('.creator-page');
+    const wave=container.querySelector('[data-reactive-wave]');
+    expect(wave?.getAttribute('data-wave-palette')).toBe('black-gold-beige');
+    const startOn=root?.getAttribute('data-motion-enabled')==='true';
+    expect(wave?.getAttribute('data-wave-motion')).toBe(startOn?'on':'off');
+    const control=container.querySelector<HTMLButtonElement>('[data-motion-toggle]');
+    expect(control).not.toBeNull();
+    expect(control?.getAttribute('aria-pressed')).toBe(String(startOn));
+    fireEvent.click(control!);
+    expect(container.querySelector('.creator-page')?.getAttribute('data-motion-enabled')).toBe(String(!startOn));
+    expect(container.querySelector('[data-reactive-object]')?.getAttribute('data-float-motion')).toBe(!startOn?'on':'off');
+    expect(container.querySelector('[data-reactive-wave]')?.getAttribute('data-wave-motion')).toBe(!startOn?'on':'off');
+    fireEvent.click(control!);
+    expect(container.querySelector('.creator-page')?.getAttribute('data-motion-enabled')).toBe(String(startOn));
+  });
+
   it('scrolls the second section horizontally via accessible buttons and keyboard',()=>{
     const {container}=render(<App/>);
     const rows=Array.from(container.querySelectorAll<HTMLElement>('[data-scrollable-gallery]'));
