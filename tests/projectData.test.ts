@@ -10,6 +10,11 @@ describe('portfolio project data', () => {
     expect(researchHighlightProject?.id).toBe('zachitan');
   });
 
+  it('keeps the retired predecessor out of the active public catalogue', () => {
+    expect(orderedProjects().some((p) => p.id === 'maleu')).toBe(false);
+    expect(projects.some((p) => p.id === 'maleu' && /superseded/i.test(p.status))).toBe(true);
+  });
+
   it('never treats Anshap as a project', () => {
     expect(projects.some((p) => /anshap/i.test(p.name))).toBe(false);
   });

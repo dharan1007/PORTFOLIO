@@ -40,8 +40,8 @@ export const projects: readonly Project[] = [
     "visibility": "Private",
     "category": "Social systems",
     "status": "Phase 1",
-    "tagline": "A contract-first social network built as a modular monolith.",
-    "summary": "RÆDIUS is the current social-product system: identity, contextual profiles, graph, Circles, private Lists, Lines, Planes, Dots, audience-aware publishing, ranked Home, search and discovery, interactions, direct messages, moderation and offline continuity.",
+    "tagline": "An interactive connectivity platform that turns human connections into coordinated real-world outcomes.",
+    "summary": "RÆDIUS connects people through intent, Circles, requests, offers, contributions and audience-aware experiences that help them coordinate and achieve meaningful real-world outcomes. The mobile and web product links identity, contextual profiles, Lists, Lines, Planes, Dots, ranked discovery, matching, messaging, interactions, privacy controls, moderation and offline continuity through a shared modular architecture.",
     "verified": [
       "Phase 1 social kernel is documented in the repository",
       "Shared data access is routed through @raedius/data-client rather than direct Supabase imports from UI surfaces",
@@ -929,7 +929,7 @@ export const projects: readonly Project[] = [
 const rank = new Map(priorityProjectIds.map((id, index) => [id, index]));
 
 export function orderedProjects(input: readonly Project[] = projects): Project[] {
-  return [...input].sort((a, b) => {
+  return input.filter((project) => project.id !== "maleu").sort((a, b) => {
     const ar = rank.get(a.id as (typeof priorityProjectIds)[number]) ?? Number.MAX_SAFE_INTEGER;
     const br = rank.get(b.id as (typeof priorityProjectIds)[number]) ?? Number.MAX_SAFE_INTEGER;
     return ar - br || a.name.localeCompare(b.name);
@@ -937,7 +937,7 @@ export function orderedProjects(input: readonly Project[] = projects): Project[]
 }
 
 export function getProjectById(id: string): Project | null {
-  return projects.find((project) => project.id === id) ?? null;
+  return id === "maleu" ? null : projects.find((project) => project.id === id) ?? null;
 }
 
 export const researchHighlightProject = projects.find((project) => project.researchHighlight) ?? null;

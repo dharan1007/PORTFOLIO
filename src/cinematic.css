@@ -49,7 +49,6 @@ body,button,a{font-family:"Hanken Grotesk Variable",Arial,sans-serif}
 .cinema-bottom{position:absolute;z-index:4;left:var(--scene-left);width:var(--scene-w);bottom:calc(66 * var(--scene-u));display:grid;grid-template-columns:1fr 2.1fr .72fr;align-items:end;column-gap:calc(28 * var(--scene-u))}
 .cinema-aside{display:flex;flex-direction:column;gap:8px;padding-bottom:12px;color:rgba(255,250,243,.82)}
 .cinema-intro{text-align:left;min-width:0;animation:cinemaRise .95s var(--ease) .65s both}
-.cinema-eyebrow{margin:0 0:0} /* replaced by concrete rule below */
 .cinema-eyebrow{margin:0 0 16px;font-family:"JetBrains Mono Variable",monospace;font-size:10px;letter-spacing:.07em;color:#f1e7db}
 .cinema-intro h1{font-size:clamp(33px,4.4vw,65px);font-weight:290;line-height:.95;letter-spacing:-.048em;margin:0;text-wrap:balance}
 .cinema-intro h1 em{font-weight:290;font-style:normal;color:#f6e8d3}
