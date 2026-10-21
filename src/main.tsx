@@ -14,6 +14,7 @@ import './gold-motion.css';
 import './gold-site.css';
 import './hero-matrix.css';
 import './light-site.css';
+import './hierarchy-site.css';
 import { App } from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -97,6 +97,29 @@ describe('portfolio experience', () => {
     expect(first.scrollLeft).toBeLessThan(afterClick);
   });
 
+  it('autoplay becomes active for visible gallery rows and respects the motion toggle',()=>{
+    class GalleryObserver {
+      constructor(private readonly callback: IntersectionObserverCallback){}
+      observe(target:Element){
+        if(target.classList.contains('creator-marquee-viewport')){
+          this.callback([{isIntersecting:true,target} as IntersectionObserverEntry],this as unknown as IntersectionObserver);
+        }
+      }
+      unobserve(){}
+      disconnect(){}
+      takeRecords(){return [];}
+    }
+    vi.stubGlobal('IntersectionObserver',GalleryObserver);
+    const {container,unmount}=render(<App/>);
+    const rows=Array.from(container.querySelectorAll<HTMLElement>('[data-scrollable-gallery]'));
+    expect(rows.map(row=>row.getAttribute('data-scrollable-gallery'))).toEqual(['right','left']);
+    expect(rows.map(row=>row.getAttribute('data-autoscroll'))).toEqual(['true','true']);
+    const toggle=container.querySelector<HTMLButtonElement>('[data-motion-toggle]')!;
+    fireEvent.click(toggle);
+    expect(rows.map(row=>row.getAttribute('data-autoscroll'))).toEqual(['false','false']);
+    unmount();
+  });
+
   it('renders each project in exactly one of six editorial chapters', () => {
     window.history.replaceState({}, '', '/projects');
     const { container } = render(<App />);

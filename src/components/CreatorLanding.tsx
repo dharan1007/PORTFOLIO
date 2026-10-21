@@ -159,36 +159,92 @@ function MarqueeRow({projects,direction}:{projects:Project[];direction:'left'|'r
  const viewport=useRef<HTMLDivElement>(null);
  const drag=useRef({active:false,x:0,left:0,moved:false});
  const suppressClick=useRef(false);
+ const hovered=useRef(false);
+ const pauseUntil=useRef(0);
+ const lastProgress=useRef(.5);
  const reduced=useReducedMotion();
+ const motionEnabled=usePortfolioMotion();
+ const [inView,setInView]=useState(false);
  const [progress,setProgress]=useState(.5);
  const [isDragging,setIsDragging]=useState(false);
+ const autoScrollEnabled=motionEnabled && !reduced && inView && projects.length>1;
+ const pauseFor=(duration=3500)=>{
+   pauseUntil.current=performance.now()+duration;
+ };
+ const normalizePosition=(el:HTMLDivElement)=>{
+   const segment=el.scrollWidth/3;
+   if(segment<=0 || el.scrollWidth<=el.clientWidth)return;
+   // The middle copy is the accessible one. Crossing either seam swaps
+   // identically sized copies, so the user never sees an edge or a jump.
+   if(el.scrollLeft<=segment*.5)el.scrollLeft+=segment;
+   else if(el.scrollLeft>=segment*1.5)el.scrollLeft-=segment;
+   const next=Math.min(1,Math.max(0,(el.scrollLeft-segment*.5)/segment));
+   if(Math.abs(next-lastProgress.current)>.012){
+     lastProgress.current=next;
+     setProgress(next);
+   }
+ };
  useEffect(()=>{
    const el=viewport.current;
    if(!el)return;
-   const raf=requestAnimationFrame(()=>{
-     if(el.scrollWidth>el.clientWidth)el.scrollLeft=el.scrollWidth/3;
-   });
+   const position=()=>{if(el.scrollWidth>el.clientWidth)el.scrollLeft=el.scrollWidth/3;};
+   const initial=requestAnimationFrame(position);
    const onWheel=(e:WheelEvent)=>{
-     if(e.shiftKey && e.deltaY!==0){
+     if(e.shiftKey&&e.deltaY!==0){
        e.preventDefault();
+       pauseUntil.current=performance.now()+3500;
        el.scrollLeft+=e.deltaY;
      }
    };
    el.addEventListener('wheel',onWheel,{passive:false});
-   return()=>{cancelAnimationFrame(raf);el.removeEventListener('wheel',onWheel);};
+   window.addEventListener('resize',position,{passive:true});
+   return()=>{
+     cancelAnimationFrame(initial);
+     el.removeEventListener('wheel',onWheel);
+     window.removeEventListener('resize',position);
+   };
  },[projects]);
- const handleScroll=()=>{
+ useEffect(()=>{
    const el=viewport.current;
    if(!el)return;
-   const third=el.scrollWidth/3;
-   if(third>0){
-     if(el.scrollLeft < third*.3)el.scrollLeft+=third;
-     else if(el.scrollLeft > third*1.7)el.scrollLeft-=third;
-     setProgress(Math.min(1,Math.max(0,(el.scrollLeft-third+el.clientWidth*.5)/third)));
+   if(typeof IntersectionObserver==='undefined'){
+     setInView(true);
+     return;
    }
+   const observer=new IntersectionObserver(entries=>{
+     setInView(entries.some(entry=>entry.isIntersecting));
+   },{threshold:.06});
+   observer.observe(el);
+   return()=>observer.disconnect();
+ },[]);
+ useEffect(()=>{
+   const el=viewport.current;
+   if(!el||!autoScrollEnabled)return;
+   let raf=0;
+   let previous=0;
+   const sign=direction==='right'?1:-1;
+   const frame=(now:number)=>{
+     if(!previous)previous=now;
+     const dt=Math.min(64,Math.max(0,now-previous));
+     previous=now;
+     if(!hovered.current && !drag.current.active &&
+       now>=pauseUntil.current && document.visibilityState!=='hidden' &&
+       el.scrollWidth>el.clientWidth){
+       el.scrollLeft+=sign*dt*.044; // 44px/sec; independent of refresh rate.
+       normalizePosition(el);
+     }
+     raf=requestAnimationFrame(frame);
+   };
+   raf=requestAnimationFrame(frame);
+   return()=>cancelAnimationFrame(raf);
+ },[autoScrollEnabled,direction]);
+ const handleScroll=()=>{
+   const el=viewport.current;
+   if(el)normalizePosition(el);
  };
  const onPointerDown=(e:ReactPointerEvent<HTMLDivElement>)=>{
    if(e.pointerType!=='mouse'||e.button!==0)return;
+   pauseFor();
    drag.current={active:true,x:e.clientX,left:e.currentTarget.scrollLeft,moved:false};
  };
  const onPointerMove=(e:ReactPointerEvent<HTMLDivElement>)=>{
@@ -208,6 +264,7 @@ function MarqueeRow({projects,direction}:{projects:Project[];direction:'left'|'r
    if(drag.current.moved){
      suppressClick.current=true;
      window.setTimeout(()=>{suppressClick.current=false;},160);
+     pauseFor();
    }
    drag.current.active=false;
    setIsDragging(false);
@@ -216,14 +273,17 @@ function MarqueeRow({projects,direction}:{projects:Project[];direction:'left'|'r
  const scrollStep=(step:number)=>{
    const el=viewport.current;
    if(!el)return;
-   const distance=Math.min(560,Math.max(290,el.clientWidth*.68));
-   if(typeof el.scrollBy==='function')el.scrollBy({left:step*distance,behavior:reduced?'instant':'smooth'});
+   pauseFor();
+   const distance=Math.min(570,Math.max(290,el.clientWidth*.68));
+   if(typeof el.scrollBy==='function')el.scrollBy({left:step*distance,behavior:reduced?'auto':'smooth'});
    else el.scrollLeft+=step*distance;
+   normalizePosition(el);
  };
  const keys=(e:ReactKeyboardEvent<HTMLDivElement>)=>{
    if(e.target!==e.currentTarget)return;
    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
-     e.preventDefault();scrollStep(e.key==='ArrowRight'?1:-1);
+     e.preventDefault();
+     scrollStep(e.key==='ArrowRight'?1:-1);
    }
  };
  const glint=(e:ReactPointerEvent<HTMLAnchorElement>)=>{
@@ -232,24 +292,30 @@ function MarqueeRow({projects,direction}:{projects:Project[];direction:'left'|'r
    e.currentTarget.style.setProperty('--glint-x',((e.clientX-rect.left)/Math.max(1,rect.width)*100)+'%');
    e.currentTarget.style.setProperty('--glint-y',((e.clientY-rect.top)/Math.max(1,rect.height)*100)+'%');
  };
- return <div className={'creator-marquee-row marquee-'+direction} data-scrollable-gallery={direction}>
+ return <div className={'creator-marquee-row marquee-'+direction} data-scrollable-gallery={direction} data-autoscroll={String(autoScrollEnabled)}>
    <div className="creator-marquee-row-toolbar">
-     <span>{direction==='right'?'01 / ACTIVE PRODUCTS':'02 / MORE LIVE SURFACES'}</span>
+     <span>{direction==='right'?'01 / FEATURED WORK':'02 / MORE PROJECTS'}</span>
      <div className="creator-marquee-controls">
-       <span className="creator-gallery-hint">DRAG · SWIPE · SHIFT + WHEEL</span>
+       <span className="creator-gallery-hint">{reduced?'USE ARROWS TO EXPLORE':'AUTO PLAY · DRAG · SWIPE'}</span>
        <button type="button" aria-label={'Scroll '+direction+' gallery left'} onClick={()=>scrollStep(-1)}><ChevronLeft size={20}/></button>
        <button type="button" aria-label={'Scroll '+direction+' gallery right'} onClick={()=>scrollStep(1)}><ChevronRight size={20}/></button>
      </div>
    </div>
    <div ref={viewport} className={'creator-marquee-viewport '+(isDragging?'is-dragging':'')}
-       tabIndex={0} role="region" aria-label={'Horizontally scrollable live website gallery, row '+(direction==='right'?'one':'two')}
+       tabIndex={0} role="region" aria-label={'Horizontally scrollable work gallery, row '+(direction==='right'?'one':'two')}
+       onPointerEnter={()=>{hovered.current=true;}}
+       onPointerLeave={e=>{hovered.current=false;if(!e.currentTarget.hasPointerCapture?.(e.pointerId))stopPointer(e);}}
+       onFocusCapture={()=>{hovered.current=true;}}
+       onBlurCapture={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node))hovered.current=false;}}
+       onTouchStart={()=>pauseFor(4500)}
        onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={stopPointer}
-       onPointerCancel={stopPointer} onPointerLeave={e=>{if(!e.currentTarget.hasPointerCapture?.(e.pointerId))stopPointer(e);}}
+       onPointerCancel={stopPointer}
        onClickCapture={(e:ReactMouseEvent<HTMLDivElement>)=>{if(suppressClick.current){e.preventDefault();e.stopPropagation();suppressClick.current=false;}}}
        onDragStart={e=>e.preventDefault()} onKeyDown={keys} onScroll={handleScroll}>
      <div className="creator-marquee-track">
        {Array.from({length:3},(_,copy)=>projects.map(project=><Link
          aria-label={'Explore '+project.name} to={'/projects/'+project.id} onPointerMove={glint}
+         aria-hidden={copy!==1} tabIndex={copy===1?undefined:-1}
          key={copy+'-'+project.id} className="creator-marquee-tile">
           <ProjectPreview project={project}/>
           <span className="creator-marquee-caption"><strong>{project.name}</strong><span>{project.category}<ArrowUpRight size={15}/></span></span>
