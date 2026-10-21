@@ -376,3 +376,38 @@ html, body, #root, .page, .creator-page {
   .creator-page .creator-hero .creator-hero-heading,
   .creator-page .creator-hero .creator-hero-summary p { color:#000 !important; }
 }
+
+/* Secondary text and the SVG diagram inside the former dark saga. */
+.saga-visual-heading, .saga-bottom,
+.saga-center-copy .mono, .saga-intro p,
+.saga-step-number, .saga-step p, .saga-step-end,
+.saga-outro p { color:#514b42 !important; }
+.saga-center-copy { color:#1c1a16 !important; text-shadow:none !important; }
+.saga-beacon text { fill:#3a342d !important; }
+.saga-beacon .beacon-outer { stroke:rgba(125,91,47,.42) !important; }
+.saga-beacon .beacon-core { fill:#987044 !important; }
+.saga-beacon.is-active .beacon-core { fill:#8e621f !important; }
+.saga-beacon.is-active .beacon-outer { stroke:#8e621f !important; }
+.saga-guide { stroke:#c2b6a8 !important; }
+.saga-step, .saga-outro { border-color:var(--portfolio-rule) !important; }
+
+/* Media containers use white fallback paint without recolouring actual assets. */
+.creator-page .creator-portrait, .editorial-media,
+.project-visual-real, .detailed-experience .project-detail-hero>.live-preview {
+  background:#fff !important;
+  color:#1c1a16 !important;
+  border-color:#d8cbb7 !important;
+}
+.creator-page .creator-portrait:after {
+  background:linear-gradient(to bottom,rgba(255,255,255,.03),transparent 53%,rgba(255,255,255,.35)) !important;
+}
+.creator-page .creator-card-image:after,
+.creator-page .creator-card-major:after,
+.project-visual-gradient {
+  background:linear-gradient(to bottom,transparent 28%,rgba(255,255,255,.66)) !important;
+}
+.hero-media-note {
+  background:rgba(255,255,255,.90) !important;
+  color:#2d261c !important;
+  border-color:#d6c6ae !important;
+}
