@@ -21,13 +21,13 @@ export const priorityProjectIds = [
   "raedius",
   "airadise",
   "arkhe",
-  "codebase-os",
   "spool",
   "faultline",
+  "kata",
+  "pact",
   "laya",
   "daish",
   "grelon",
-  "maleu-reel-studio",
   "nexus",
   "dot-os"
 ] as const;
@@ -84,7 +84,7 @@ export const projects: readonly Project[] = [
       "Repository repair",
       "Verification gates"
     ],
-    "liveUrl": "https://arkhe-live.vercel.app",
+    "liveUrl": "https://arkhe-web-sigma.vercel.app",
     "sourceUrl": null,
     "year": "2026",
     "priority": 3,
@@ -175,7 +175,7 @@ export const projects: readonly Project[] = [
     "liveUrl": null,
     "sourceUrl": "https://github.com/dharan1007/codebase--os",
     "year": "2026",
-    "priority": 4,
+    "priority": null,
     "researchHighlight": false,
     "accent": "#d7ff68"
   },
@@ -183,9 +183,9 @@ export const projects: readonly Project[] = [
     "id": "spool",
     "name": "SPOOL",
     "repo": "spool",
-    "visibility": "Private",
+    "visibility": "Public · MIT",
     "category": "Migration infrastructure",
-    "status": "v1.1.1",
+    "status": "v1.1.2",
     "tagline": "Migration correctness infrastructure: dirty data in, typed and verified data out.",
     "summary": "A local-first migration system with a browser studio and a bounded-memory local runner. The documented Gate B path binds source identity, target contracts, approvals, transactional batches, crash reconciliation, verification and a commit-bound receipt.",
     "verified": [
@@ -201,10 +201,10 @@ export const projects: readonly Project[] = [
       "WebMCP surface",
       "Verification receipts"
     ],
-    "liveUrl": "https://spool-webmcp.vercel.app/",
-    "sourceUrl": null,
+    "liveUrl": "https://spool-webmcp.vercel.app",
+    "sourceUrl": "https://github.com/dharan1007/spool",
     "year": "2026",
-    "priority": 5,
+    "priority": 4,
     "researchHighlight": false,
     "accent": "#49c7ff"
   },
@@ -212,9 +212,9 @@ export const projects: readonly Project[] = [
     "id": "pact",
     "name": "PACT",
     "repo": "pact",
-    "visibility": "Private",
+    "visibility": "Public · MIT",
     "category": "Agent integrity",
-    "status": "Active",
+    "status": "Experimental · Live",
     "tagline": "Release integrity and controlled transactions for consequential AI-agent actions.",
     "summary": "PACT implements CAPTURE, COMPARE, PROVE and CONTROL around production agent releases, plus a transaction engine that binds preview, approval, one-shot commit, canonical verification and receipt generation.",
     "verified": [
@@ -232,9 +232,9 @@ export const projects: readonly Project[] = [
       "Release integrity"
     ],
     "liveUrl": "https://pact-webmcp.vercel.app",
-    "sourceUrl": null,
+    "sourceUrl": "https://github.com/dharan1007/pact",
     "year": "2026",
-    "priority": null,
+    "priority": 7,
     "researchHighlight": false,
     "accent": "#ff7557"
   },
@@ -242,7 +242,7 @@ export const projects: readonly Project[] = [
     "id": "kata",
     "name": "KATA",
     "repo": "kata",
-    "visibility": "Private",
+    "visibility": "Public · MIT",
     "category": "Research tooling",
     "status": "Live",
     "tagline": "Teach a repeatable research workflow once, then expose it through deterministic tools.",
@@ -261,10 +261,10 @@ export const projects: readonly Project[] = [
       "HTTPS API",
       "CLI"
     ],
-    "liveUrl": "https://kata-webmcp.vercel.app/",
-    "sourceUrl": null,
+    "liveUrl": "https://kata-webmcp.vercel.app",
+    "sourceUrl": "https://github.com/dharan1007/kata",
     "year": "2026",
-    "priority": null,
+    "priority": 6,
     "researchHighlight": false,
     "accent": "#f0d04b"
   },
@@ -272,7 +272,7 @@ export const projects: readonly Project[] = [
     "id": "faultline",
     "name": "FAULTLINE",
     "repo": "faultline",
-    "visibility": "Private",
+    "visibility": "Public · MIT",
     "category": "Browser debugging",
     "status": "Live",
     "tagline": "Reduce a real browser failure without changing what is failing.",
@@ -290,10 +290,10 @@ export const projects: readonly Project[] = [
       "Deterministic oracle",
       "CI integration"
     ],
-    "liveUrl": "https://faultline-webmcp.vercel.app/",
-    "sourceUrl": null,
+    "liveUrl": "https://faultline-webmcp.vercel.app",
+    "sourceUrl": "https://github.com/dharan1007/faultline",
     "year": "2026",
-    "priority": 6,
+    "priority": 5,
     "researchHighlight": false,
     "accent": "#ff5c5c"
   },
@@ -380,7 +380,7 @@ export const projects: readonly Project[] = [
     "liveUrl": "https://www.daish.in",
     "sourceUrl": null,
     "year": "2026",
-    "priority": 8,
+    "priority": 9,
     "researchHighlight": false,
     "accent": "#76e16b"
   },
@@ -587,7 +587,7 @@ export const projects: readonly Project[] = [
     "liveUrl": null,
     "sourceUrl": null,
     "year": "2026",
-    "priority": 7,
+    "priority": 8,
     "researchHighlight": false,
     "accent": "#7ec4ff"
   },
@@ -611,7 +611,7 @@ export const projects: readonly Project[] = [
       "Recursive intelligence",
       "Aphelion core computing"
     ],
-    "liveUrl": "https://www.aphelion.life/",
+    "liveUrl": "https://www.aphelion.life",
     "sourceUrl": null,
     "year": "2026",
     "priority": 11,
@@ -767,7 +767,7 @@ export const projects: readonly Project[] = [
     "liveUrl": null,
     "sourceUrl": null,
     "year": "2026",
-    "priority": 10,
+    "priority": null,
     "researchHighlight": false,
     "accent": "#c1908f"
   },
@@ -788,7 +788,7 @@ export const projects: readonly Project[] = [
     "liveUrl": null,
     "sourceUrl": null,
     "year": "2026",
-    "priority": 9,
+    "priority": 10,
     "researchHighlight": false,
     "accent": "#9bb59b"
   },
@@ -812,7 +812,7 @@ export const projects: readonly Project[] = [
       "Nexus integration",
       "Aphelion ecosystem"
     ],
-    "liveUrl": "https://www.aphelion.life/",
+    "liveUrl": "https://www.aphelion.life",
     "sourceUrl": null,
     "year": "2026",
     "priority": 12,
