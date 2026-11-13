@@ -57,7 +57,7 @@ The catalogue is curated into six explicit, exhaustive categories with a feature
 ## Development
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
