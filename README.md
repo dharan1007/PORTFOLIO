@@ -2,7 +2,7 @@
 
 Personal portfolio of Poduvu Dharantej Reddy, built with React 19, Vite 8, TypeScript additions, Tailwind CSS v4, Motion, GSAP and Lenis.
 
-Live website: https://dharantejreddy.vercel.app/
+Live website: https://dharantejreddy.vercel.app
 
 ## Run locally
 
