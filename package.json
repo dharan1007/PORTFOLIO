@@ -7,30 +7,31 @@
     "dev": "vite",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-social-pages.mjs",
     "verify-build": "npm run test && npm run typecheck && npm run build"
   },
   "dependencies": {
-    "react": "latest",
-    "react-dom": "latest",
-    "react-router-dom": "latest",
     "@fontsource-variable/hanken-grotesk": "latest",
     "@fontsource-variable/jetbrains-mono": "latest",
     "framer-motion": "^12.38.0",
-    "lucide-react": "^0.468.0"
+    "lucide-react": "^0.468.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router-dom": "latest"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "latest",
     "@testing-library/react": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
+    "autoprefixer": "^10.4.20",
     "jsdom": "latest",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^3.4.17",
     "typescript": "latest",
     "vite": "latest",
-    "vitest": "latest",
-    "tailwindcss": "^3.4.17",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.5.0"
+    "vitest": "latest"
   }
 }
