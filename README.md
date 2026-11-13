@@ -24,7 +24,7 @@ The site is a static frontend. Core content is rendered from typed local data an
 - `/experience`
 - `/contact`
 
-Vercel rewrites direct route requests to the SPA entry point.
+Vercel serves route-specific social metadata for the RÆDIUS, Airadise and ARKHE case studies; the client app handles their interactive pages. Other direct route requests use the SPA rewrite.
 
 ## Project data
 
@@ -57,7 +57,7 @@ The catalogue is curated into six explicit, exhaustive categories with a feature
 ## Development
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
