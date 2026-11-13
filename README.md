@@ -1,104 +1,43 @@
-# Dharantej Reddy — Portfolio
+# Dharantej Reddy — cinematic portfolio
 
-Production portfolio for Dharantej Reddy, founder and sole builder/operator of Aphelion, product engineer and AI systems builder.
+Personal portfolio of Poduvu Dharantej Reddy, built with React 19, Vite 8, TypeScript additions, Tailwind CSS v4, Motion, GSAP and Lenis.
 
-## Stack
+Live website: https://dharantejreddy.vercel.app/
 
-- React
-- TypeScript
-- Vite
-- React Router
-- Cinematic knockout hero with responsive editorial typography and codec-safe visual fallback
-- CSS motion with reduced-motion fallbacks
-- Vitest
-- Vercel
+## Run locally
 
-The site is a static frontend. Core content is rendered from typed local data and does not depend on a CMS or backend.
-
-## Routes
-
-- `/`
-- `/projects`
-- `/projects/:projectId`
-- `/about`
-- `/experience`
-- `/contact`
-
-Vercel serves route-specific social metadata for the RÆDIUS, Airadise and ARKHE case studies; the client app handles their interactive pages. Other direct route requests use the SPA rewrite.
-
-## Project data
-
-The authoritative project catalogue is `src/data/projects.ts`. It contains explicit status, visibility, stack, live/source links, evidence statements and priority ordering. Private repositories never expose source URLs.
-
-Current priority order:
-
-1. RÆDIUS
-2. Airadise
-3. ARKHE
-4. Codebase OS
-5. SPOOL
-6. FAULTLINE
-7. LAYA
-8. DAISH
-9. GRELION
-10. Maleu Reel Studio
-11. Nexus
-12. Dot OS
-
-Zachitan is represented separately as the research highlight.
-
-## Hero design
-
-The homepage features an original procedural Canvas 2D kinetic sculpture behind knockout typography. It has no third-party film, remote asset or video codec dependency. A visibility-aware renderer pauses offscreen and under reduced motion. The direction-sensitive header hides on downward scroll and returns on upward scroll, route changes, keyboard focus and when the mobile menu is open.
-
-The catalogue is curated into six explicit, exhaustive categories with a feature project and supporting case-study links for each. Home sections connect through a sticky four-stage scroll narrative. About, Experience, Contact, and detailed case-study layouts use distinct structures while existing evidence, stack records and links remain accessible.
-
-
-## Development
-
-```bash
+```sh
 npm ci
 npm run dev
 ```
 
-## Verification
+Open http://127.0.0.1:4322/. Build production files with `npm run build`; `npm run preview` serves that build locally.
 
-```bash
-npm run test
-npm run typecheck
-npm run build
-npm run verify-build
-```
+## Current presentation
 
-`verify-build` is the Vercel build command, so a deployment cannot become READY unless unit tests, TypeScript and the production Vite build all succeed.
+- Hero: burgundy and white motion background, cursor-responsive DitherVeil and personal identity.
+- Projects: six real previews and descriptions in a horizontal rail driven by normal page scrolling, ordered RÆDIUS, Airadise, ARKHE, Dot OS, SPOOL and FAULTLINE.
+- Experience: documented Aphelion and Anshap work over the flower valley. A native MP4 remains beneath the isolated interactive renderer so delayed or failed WebGL does not leave a blank background.
+- Education: academic record, approximately 7.5/10 CGPA, specialization and achievements supplied by the owner.
+- Certifications: VHS shelf using original credential previews and documents.
+- Contact: original links, selectable inquiry topics and a moving bunny with colour-based background removal.
 
-## Content boundaries
+## Source map
 
-- Aphelion is presented as the company, not a repository/project.
-- Anshap Services Pvt Ltd appears only under Experience as internship work.
-- Project claims are intentionally bounded to what the portfolio data documents.
-- No raw CDN global is required for production-critical motion.
+- `src/CinematicApp.jsx` and `src/story.js`: page composition, navigation and chapter boundaries.
+- `src/ProjectsSection.jsx`: pinned horizontal project rail.
+- `src/ExperienceSection.jsx`, `public/experience-valley/index.html` and `public/assets/experience-valley-loop.mp4`: interactive valley, playback lifecycle and video fallback.
+- `src/EducationSection.jsx` and `src/education-data.js`: education presentation and facts.
+- `src/CertificationsSection.jsx`, `src/certificate-data.js` and `public/certificates/`: credentials and original documents.
+- `src/ContactSection.tsx` and `src/BunnyForeground.jsx`: contact content and video foreground.
+- `vercel.json`: Vite build and `dist` deployment output.
 
-## Design specification
+The repository contains historical design masters, screenshots and revision notes. Some describe superseded layouts. Older verification scripts also refer to earlier presentations; a successful production build is not a claim that every historical check passes.
 
-See `docs/superpowers/specs/2026-09-20-portfolio-react-vite-rebuild-design.md`.
+## Assets and optional licensed components
 
-## Implementation plan
+Asset provenance and reference notes are in `docs/ASSET-LEDGER.md`, `docs/EXPERIENCE-VALLEY.md`, `docs/CERTIFICATE-INVENTORY.md` and the local font license files. The owner supplied the valley reference and stated reuse permission; that permission was not independently verified. Do not treat the repository as a blanket license to reuse third-party assets or personal certificates.
 
-See `docs/superpowers/plans/2026-09-20-portfolio-react-vite-rebuild.md`.
+Optional React Bits Pro installation uses `REACTBITS_LICENSE_KEY` through the authenticated registries in `components.json`. `.env.example` contains no key. Keep credentials in an ignored local environment file; never expose them through client environment variables.
 
-## Licensed media and genuine previews
-
-`src/data/media.ts` holds the source-of-truth catalogue of Pexels photography and Mixkit Free License videos, with creator and source-page credits. `EditorialImage` and `EditorialVideo` lazy-load source media with reliable photographic fallback and reduced-motion/data-saver behavior. Actual live-project screenshots remain separate in `ProjectPreview` and are requested from public `liveUrl` pages. For private projects, photography is expressly marked as illustration and not as a screenshot or proof of functionality. Media credits appear on the About page.
-
-## Creator-style homepage (2026 refresh)
-The homepage now uses React + TypeScript, Framer Motion, Lucide React, Tailwind CSS 3 utilities, and the Kanit type family. The five editorial stages are Hero, live-project marquee, animated About, five-service light chapter, and sticky-stacked flagship work. The reference's fictional name, sample client work, portrait, and unrelated third-party motion-site GIFs are intentionally not shown as Dharantej's projects. The 32 real portfolio entries remain grouped on `/projects`, with their linked case studies and status/evidence data unchanged. The existing adaptive navigation is preserved on all non-home routes. Motion uses reduced-motion and lazy/paused video behavior.
-
-## Authentic project previews and 3D object presentation
-The homepage uses four user-supplied, transparent-background 3D-rendered assets plus CC0 3dicons fallbacks; prior decorative stock photographs/videos are not used in the creator homepage. Cards for RÆDIUS, ARKHE and SPOOL contain three screenshot requests per card, each constructed from the same project's `liveUrl`, and can optionally load the actual site in an iframe when the visitor requests it (some sites disallow framing). Links to live sites remain available. Unpublished projects retain technical case studies and are clearly labeled as lacking a public website, never represented using stock photos or invented screenshots. The screenshot service is an external availability dependency; error states do not fabricate a preview. The user-supplied reference artwork's redistribution/commercial rights are not independently verified: replace it with cleared originals if rights are unavailable.
-
-## Responsive interaction upgrade
-The homepage masthead displays **HI, I'M / DHARAN TEJ / REDDY .P** in high-contrast Kanit type, and the global homepage navigation links all five routed pages plus on-page Live Work and Services anchors. SVG wave ribbons animate and follow pointer parallax with springs. Each 3D object has independent pointer-responsive tilt, lift, glow and floating animation. Both image galleries use native accessible overflow-x scrolling, touch swipes, mouse dragging, Shift+wheel, arrows and keyboard. The gallery is never hidden behind a transform-only scrolling implementation. Reduced-motion preferences are honored.
-
-## Gold motion system (2026-10)
-The landing palette is black `#090806`, gold `#C9A05A`, champagne gold `#F5D998` and beige `#EEE2CC`. Gold SVG ribbon bundles use CSS-keyframe translation plus animated traveling highlights; the wave and independent transparent 3D objects move autonomously without scrolling or hovering. Pointer parallax is a separate spring effect. A visible **MOTION ON / ENABLE MOTION** switch is provided, initially honoring operating-system reduced-motion preference and permitting manual opt-in. A standalone stylesheet `src/gold-motion.css` overrides the prior purple and cool-grey creator palette. Assets continue to come from the supplied reference sources, with CC0 fallbacks. Actual website preview screenshots are unchanged.
+The Anshap certificate records 22 September–15 November 2025. The portfolio follows the original document rather than the conflicting date in an earlier design brief.

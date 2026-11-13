@@ -1,0 +1,13 @@
+.cinematic-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #fff;
+  pointer-events: none;
+}
+.cinematic-stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

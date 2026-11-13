@@ -1,0 +1,484 @@
+{
+  "projects": [
+    {
+      "id": "raedius",
+      "name": "R\u00c6DIUS",
+      "repo": "raedius",
+      "category": "Social systems",
+      "status": "Phase 1",
+      "tagline": "An interactive connectivity platform that turns human connections into coordinated real-world outcomes.",
+      "summary": "R\u00c6DIUS connects people through intent, Circles, requests, offers, contributions and audience-aware experiences that help them coordinate and achieve meaningful real-world outcomes. The mobile and web product links identity, contextual profiles, Lists, Lines, Planes, Dots, ranked discovery, matching, messaging, interactions, privacy controls, moderation and offline continuity through a shared modular architecture.",
+      "stack": [
+        "Node 22",
+        "pnpm",
+        "Expo / React Native",
+        "Next.js",
+        "Supabase",
+        "TypeScript"
+      ],
+      "liveUrl": "https://raedius.online"
+    },
+    {
+      "id": "arkhe",
+      "name": "ARKHE 4.6",
+      "repo": "arkhe",
+      "category": "AI runtime",
+      "status": "Research runtime",
+      "tagline": "A computational-organism AI runtime with a separate frontier-training and coding substrate.",
+      "summary": "ARKHE organizes runtime intelligence as cells, tissues, organs, systems, organism, environment and development/evolution, with packages for runtime operation, frontier-training infrastructure and repository coding/repair.",
+      "stack": [
+        "Python",
+        "CLI runtime",
+        "Training infrastructure",
+        "Repository repair",
+        "Verification gates"
+      ],
+      "liveUrl": "https://arkhe-web-sigma.vercel.app"
+    },
+    {
+      "id": "axiom",
+      "name": "Axiom / Airadise AI World",
+      "repo": "axiom",
+      "category": "AI simulation",
+      "status": "Active research",
+      "tagline": "Persistent AI beings operating inside a governed synthetic world.",
+      "summary": "A web-based AI-world simulation with explicit resources, survival constraints, synthesis rules, zones, economic scarcity, social and governance actions, a marketplace, skills and isolated task execution.",
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "Execution engine",
+        "Prompt engine",
+        "Shared world rules"
+      ],
+      "liveUrl": null
+    },
+    {
+      "id": "airadise",
+      "name": "Airadise",
+      "repo": "airadise",
+      "category": "Agent platform",
+      "status": "Active",
+      "tagline": "A local-first desktop agent and automation environment.",
+      "summary": "A Tauri desktop application plus reusable TypeScript packages for AI providers, prompts, execution, skills and shared runtime contracts. It includes persistent agents, workflows, local state, permissions, secure credentials, MCP integration, scheduling, multi-agent coordination and replay/evaluation infrastructure.",
+      "stack": [
+        "Tauri 2",
+        "React",
+        "Vite",
+        "TypeScript",
+        "SQLite",
+        "Stronghold",
+        "MCP"
+      ],
+      "liveUrl": null
+    },
+    {
+      "id": "codebase-os",
+      "name": "Codebase OS",
+      "repo": "codebase--os",
+      "category": "Developer infrastructure",
+      "status": "Production contract",
+      "tagline": "A local software-change runtime for AI-assisted engineering.",
+      "summary": "Codebase OS combines repository scanning, a persistent typed relationship graph, dependency-first planning, transactional file mutation, durable engineering memory, isolated command execution, independent verification and conflict-safe rollback.",
+      "stack": [
+        "TypeScript",
+        "Node.js",
+        "SQLite",
+        "AST analysis",
+        "Sandboxed commands"
+      ],
+      "liveUrl": null
+    },
+    {
+      "id": "spool",
+      "name": "SPOOL",
+      "repo": "spool",
+      "category": "Migration infrastructure",
+      "status": "v1.1.1",
+      "tagline": "Migration correctness infrastructure: dirty data in, typed and verified data out.",
+      "summary": "A local-first migration system with a browser studio and a bounded-memory local runner. The documented Gate B path binds source identity, target contracts, approvals, transactional batches, crash reconciliation, verification and a commit-bound receipt.",
+      "stack": [
+        "Node.js",
+        "CSV streaming",
+        "SQLite",
+        "WebMCP surface",
+        "Verification receipts"
+      ],
+      "liveUrl": "https://spool-webmcp.vercel.app/"
+    },
+    {
+      "id": "pact",
+      "name": "PACT",
+      "repo": "pact",
+      "category": "Agent integrity",
+      "status": "Active",
+      "tagline": "Release integrity and controlled transactions for consequential AI-agent actions.",
+      "summary": "PACT implements CAPTURE, COMPARE, PROVE and CONTROL around production agent releases, plus a transaction engine that binds preview, approval, one-shot commit, canonical verification and receipt generation.",
+      "stack": [
+        "Node.js",
+        "Vercel Functions",
+        "MCP",
+        "WebMCP",
+        "Durable state",
+        "Release integrity"
+      ],
+      "liveUrl": "https://pact-webmcp.vercel.app"
+    },
+    {
+      "id": "kata",
+      "name": "KATA",
+      "repo": "kata",
+      "category": "Research tooling",
+      "status": "Live",
+      "tagline": "Teach a repeatable research workflow once, then expose it through deterministic tools.",
+      "summary": "KATA combines live scholarly search, a durable browser workspace, demonstration-derived workflow programs, browser/API interoperability diagnostics and one semantic engine surfaced through HTTPS, MCP, WebMCP, model schemas and CLI.",
+      "stack": [
+        "JavaScript",
+        "OpenAlex",
+        "MCP",
+        "WebMCP",
+        "HTTPS API",
+        "CLI"
+      ],
+      "liveUrl": "https://kata-webmcp.vercel.app/"
+    },
+    {
+      "id": "faultline",
+      "name": "FAULTLINE",
+      "repo": "faultline",
+      "category": "Browser debugging",
+      "status": "Live",
+      "tagline": "Reduce a real browser failure without changing what is failing.",
+      "summary": "A local-first causal browser debugging workbench that captures an authorized Playwright page, independently reproduces the failure, removes candidate HTML/CSS/JavaScript units under a deterministic oracle and keeps only reductions that preserve the failure.",
+      "stack": [
+        "Playwright",
+        "Node.js",
+        "Browser capture",
+        "Deterministic oracle",
+        "CI integration"
+      ],
+      "liveUrl": "https://faultline-webmcp.vercel.app/"
+    },
+    {
+      "id": "stanius",
+      "name": "Stanius",
+      "repo": "stanius",
+      "category": "Quant research",
+      "status": "Research candidate",
+      "tagline": "A quantitative market-research workstation that keeps observations, models and evidence separate.",
+      "summary": "Stanius supports observed market history, technical state, relative-market analysis, calibrated uncertainty research, probabilistic future distributions and execution-aware validation. Its repository explicitly separates software readiness from evidence of predictive superiority.",
+      "stack": [
+        "Python",
+        "Market-data providers",
+        "Forecast validation",
+        "Evidence ledger",
+        "Vercel"
+      ],
+      "liveUrl": null,
+      "availability": "Public deployment currently unavailable"
+    },
+    {
+      "id": "zachitan",
+      "name": "Zachitan v4.1",
+      "repo": "zachitan-v4",
+      "category": "Market research",
+      "status": "Research beta",
+      "tagline": "A source-first multi-asset market research terminal.",
+      "summary": "Zachitan combines provider-backed market data, provenance, experimental empirical forecasts, walk-forward validation, world-state evidence, news clustering, filings research, watchlists and recurring-investment analysis.",
+      "stack": [
+        "Python",
+        "Market data",
+        "Empirical forecasting",
+        "Walk-forward validation",
+        "Research UI"
+      ],
+      "liveUrl": "https://zachitan.vercel.app"
+    },
+    {
+      "id": "daish",
+      "name": "DAISH",
+      "repo": "daish",
+      "category": "Public audio intelligence",
+      "status": "Beta \u00b7 75%",
+      "tagline": "AI-driven acoustic management for commercial spaces.",
+      "summary": "DAISH is Aphelion's public-audio intelligence product for commercial spaces. Patrons can request tracks through transient QR access while an autonomous AI DJ beat-matches requests, manages the venue's sonic-energy flow and integrates localized announcements.",
+      "stack": [
+        "NestJS",
+        "Next.js",
+        "PostgreSQL",
+        "Redis",
+        "Socket.IO",
+        "Spotify Web API"
+      ],
+      "liveUrl": "https://www.daish.in"
+    },
+    {
+      "id": "agri-ai",
+      "name": "Agri AI",
+      "repo": "agri-ai",
+      "category": "Applied AI",
+      "status": "Implemented platform",
+      "tagline": "Agricultural decision support across crop planning, disease inference and scheme discovery.",
+      "summary": "A multi-service agricultural assistant containing three independently deployable FastAPI services plus a Next.js web application, alongside model-training and local infrastructure assets.",
+      "stack": [
+        "FastAPI",
+        "Python",
+        "Next.js",
+        "ML inference",
+        "Training utilities"
+      ],
+      "liveUrl": null
+    },
+    {
+      "id": "trakiler",
+      "name": "FORM",
+      "repo": "trakiler",
+      "category": "Fitness tooling",
+      "status": "Live side project",
+      "tagline": "Private-first workout tracking and progression analytics.",
+      "summary": "FORM is a local-first browser training system for workout execution, repeatable programs, longitudinal progression, exercise intelligence and practical decision support, with optional cloud recovery.",
+      "stack": [
+        "Vanilla JavaScript",
+        "Local storage",
+        "Optional Supabase",
+        "GitHub Pages"
+      ],
+      "liveUrl": "https://dharan1007.github.io/trakiler/"
+    },
+    {
+      "id": "ritchs",
+      "name": "Ritchs",
+      "repo": "ritchs",
+      "category": "Marketplace",
+      "status": "Production-oriented implementation",
+      "tagline": "A multi-role tailoring marketplace spanning mobile, public web, admin and edge backend.",
+      "summary": "Ritchs is a monorepo with Expo mobile, Next.js public/admin surfaces and a Cloudflare Worker backend using D1, R2, KV, Queues and Durable Objects.",
+      "stack": [
+        "Expo",
+        "Next.js",
+        "Cloudflare Workers",
+        "D1",
+        "R2",
+        "KV",
+        "Queues",
+        "Durable Objects"
+      ],
+      "liveUrl": null
+    },
+    {
+      "id": "nexus",
+      "name": "Nexus",
+      "repo": "nexus",
+      "category": "Core computing",
+      "status": "Beta \u00b7 85%",
+      "tagline": "Aphelion's execution architecture for adaptive, recursive intelligence workloads.",
+      "summary": "Nexus is the execution foundation in Aphelion's core-computing layer. The public Aphelion architecture describes it as a new execution model for adaptive, recursive intelligence, designed around dynamic workloads rather than a conventional fixed execution path.",
+      "stack": [
+        "Execution architecture",
+        "Adaptive workloads",
+        "Recursive intelligence",
+        "Aphelion core computing"
+      ],
+      "liveUrl": "https://www.aphelion.life/",
+      "liveLabel": "Company site"
+    },
+    {
+      "id": "resume-system",
+      "name": "Resume Optimization System",
+      "repo": "7th-gear",
+      "category": "Career tooling",
+      "status": "Implemented CLI",
+      "tagline": "Resume parsing, job matching, ATS analysis, optimization and PDF generation.",
+      "summary": "A Python-based resume system that parses PDF/Word documents, analyzes job descriptions, computes multi-factor matches, performs ATS checks and generates professionally formatted resume PDFs.",
+      "stack": [
+        "Python",
+        "spaCy",
+        "PDF / DOCX parsing",
+        "ATS analysis",
+        "PDF generation"
+      ],
+      "liveUrl": null
+    },
+    {
+      "id": "nishtha",
+      "name": "Nishtha",
+      "repo": "nishtha",
+      "category": "Repository recovery",
+      "status": "Broken superproject metadata",
+      "tagline": "A frontend/backend Git superproject whose submodule remotes need recovery.",
+      "summary": "The current repository contains Gitlink pointers for frontend and backend components but no committed .gitmodules file, so the authoritative component sources cannot be truthfully reconstructed from this repository alone.",
+      "stack": [
+        "Git submodules / Gitlinks"
+      ],
+      "liveUrl": null
+    },
+    {
+      "id": "grelon",
+      "name": "GRELION",
+      "repo": "grelon",
+      "category": "Developer system",
+      "status": "Private / evolving",
+      "tagline": "A developer-system project kept high in the active build portfolio.",
+      "summary": "GRELION is a private developer-system project in the active portfolio. Its detailed architecture is not publicly documented, so the portfolio highlights its priority without fabricating implementation claims that are not supported by accessible evidence.",
+      "stack": [],
+      "liveUrl": null
+    },
+    {
+      "id": "dot-os",
+      "name": "Dot OS",
+      "repo": null,
+      "category": "Core computing",
+      "status": "In development \u00b7 20%",
+      "tagline": "The adaptive-intelligence operating layer in Aphelion's core-computing stack.",
+      "summary": "Dot OS is the adaptive-intelligence layer above Nexus in Aphelion's vertically integrated architecture. Aphelion's public product map positions Nexus as the execution foundation that informs Dot OS, with Dot OS supporting the higher platform, agentic and experience layers.",
+      "stack": [
+        "Adaptive intelligence",
+        "Core computing",
+        "Nexus integration",
+        "Aphelion ecosystem"
+      ],
+      "liveUrl": "https://dot-os.vercel.app"
+    }
+  ],
+  "repositories": [
+    {
+      "name": "nishtha",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/nishtha"
+    },
+    {
+      "name": "agri-ai",
+      "visibility": "public",
+      "url": "https://github.com/dharan1007/agri-ai"
+    },
+    {
+      "name": "PORTFOLIO",
+      "visibility": "public",
+      "url": "https://github.com/dharan1007/PORTFOLIO"
+    },
+    {
+      "name": "stanius",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/stanius"
+    },
+    {
+      "name": "7th-gear",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/7th-gear"
+    },
+    {
+      "name": "nexus",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/nexus"
+    },
+    {
+      "name": "daish",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/daish"
+    },
+    {
+      "name": "aphelion",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/aphelion"
+    },
+    {
+      "name": "axiom",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/axiom"
+    },
+    {
+      "name": "trakiler",
+      "visibility": "public",
+      "url": "https://github.com/dharan1007/trakiler"
+    },
+    {
+      "name": "airadise",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/airadise"
+    },
+    {
+      "name": "codebase--os",
+      "visibility": "public",
+      "url": "https://github.com/dharan1007/codebase--os"
+    },
+    {
+      "name": "ritchs",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/ritchs"
+    },
+    {
+      "name": "zachitan-v4",
+      "visibility": "public",
+      "url": "https://github.com/dharan1007/zachitan-v4"
+    },
+    {
+      "name": "grelon",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/grelon"
+    },
+    {
+      "name": "arkhe",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/arkhe"
+    },
+    {
+      "name": "pact",
+      "visibility": "public",
+      "url": "https://github.com/dharan1007/pact"
+    },
+    {
+      "name": "spool",
+      "visibility": "public",
+      "url": "https://github.com/dharan1007/spool"
+    },
+    {
+      "name": "kata",
+      "visibility": "public",
+      "url": "https://github.com/dharan1007/kata"
+    },
+    {
+      "name": "faultline",
+      "visibility": "public",
+      "url": "https://github.com/dharan1007/faultline"
+    },
+    {
+      "name": "raedius",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/raedius"
+    },
+    {
+      "name": "Laara",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/Laara"
+    },
+    {
+      "name": "cat150-local-teacher",
+      "visibility": "public",
+      "url": "https://github.com/dharan1007/cat150-local-teacher"
+    },
+    {
+      "name": "ageo",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/ageo"
+    },
+    {
+      "name": "internship-task-1",
+      "visibility": "public",
+      "url": "https://github.com/dharan1007/internship-task-1"
+    },
+    {
+      "name": "ibot-gas-",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/ibot-gas-"
+    },
+    {
+      "name": "megha-gas-connect-app-extra-screens",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/megha-gas-connect-app-extra-screens"
+    },
+    {
+      "name": "megha-gas-technician-app-",
+      "visibility": "private",
+      "url": "https://github.com/dharan1007/megha-gas-technician-app-"
+    }
+  ]
+}

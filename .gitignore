@@ -1,3 +1,16 @@
 node_modules/
 dist/
-.vercel/
+dist-ssr/
+*.local
+.DS_Store
+*.log
+.reference/
+
+.env
+.env.*
+!.env.example
+
+.playwright-cli/
+output/playwright/
+
+.vercel

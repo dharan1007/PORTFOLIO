@@ -1,0 +1,278 @@
+/* Full-bleed artwork is behind the entire composition; UI surfaces remain translucent. */
+html,
+body,
+.chapter-sidebar,
+.scene-caption,
+.archive-dialog,
+.archive-grid {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.chapter-sidebar::-webkit-scrollbar,
+.scene-caption::-webkit-scrollbar,
+.archive-dialog::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.film-header {
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(20px);
+  border-bottom-color: #ffffff77;
+}
+.chapter-sidebar {
+  background: rgba(255, 255, 255, 0.56);
+  backdrop-filter: blur(24px);
+  border-right-color: #ffffff88;
+}
+.tree-chapter > a.current {
+  background: #dceaf499;
+}
+.scene-caption {
+  background: rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(24px) saturate(1.15);
+  border: 1px solid #ffffffb8;
+  border-left: 2px solid #7d243788;
+  box-shadow: 0 12px 50px #22374e08;
+  border-radius: 4px;
+}
+.tech-pills li {
+  background: #dceaf4aa;
+}
+.tech-pills li:nth-child(3n + 2) {
+  background: #dfeaddaa;
+}
+.tech-pills li:nth-child(3n) {
+  background: #f6decaaa;
+}
+.film-bottom {
+  background: #ffffff40;
+  backdrop-filter: blur(8px);
+  padding: 9px 12px;
+  bottom: 20px;
+  border-radius: 3px;
+}
+.story-scroll {
+  margin-left: 0;
+}
+.portrait-field {
+  position: fixed;
+  z-index: 2;
+  right: -2vw;
+  bottom: -8vh;
+  top: 8vh;
+  width: 67vw;
+  transform-origin: 60% 55%;
+  pointer-events: auto;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    white 8%,
+    white 85%,
+    transparent
+  );
+}
+.cloud-portrait {
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+}
+.project-universe {
+  position: fixed;
+  inset: 78px -3vw 0 28vw;
+  z-index: 2;
+  pointer-events: auto;
+  transition: opacity 0.15s linear;
+}
+.project-universe .infinite-menu__canvas {
+  pointer-events: none;
+  touch-action: pan-y;
+}
+.project-universe .infinite-menu {
+  touch-action: pan-y;
+}
+.project-orbit-hint {
+  position: absolute;
+  bottom: 83px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font: 8px var(--mono);
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  color: var(--burgundy);
+}
+.education-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+.aurora-bars {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.aurora-bars__field {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+}
+.aurora-bars__track {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+.aurora-bars__bar {
+  height: 100%;
+  width: 100%;
+  border-radius: 999px 999px 0 0;
+  transform-origin: bottom;
+  opacity: 0.64;
+  will-change: transform;
+}
+.aurora-bars__wash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 110% 85% at 50% 100%,
+    transparent 32%,
+    #ffffffaa 100%
+  );
+}
+.aphelion-prism {
+  position: fixed;
+  inset: 10vh -5vw -5vh 24vw;
+  z-index: 2;
+  pointer-events: none;
+}
+.archive-dialog {
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(30px);
+}
+.archive-grid article {
+  background: rgba(255, 255, 255, 0.46);
+  backdrop-filter: blur(15px);
+  border: 1px solid #dce1e588;
+  border-radius: 3px;
+}
+.reading-picture .cloud-portrait {
+  min-height: 100%;
+}
+.reading-portrait .reading-picture {
+  background: transparent;
+}
+.reading-chapter {
+  background: rgba(255, 255, 255, 0.52);
+}
+@media (max-width: 1100px) {
+  .project-universe {
+    left: 27vw;
+  }
+  .portrait-field {
+    width: 73vw;
+    right: -8vw;
+  }
+}
+@media (max-width: 760px) {
+  .chapter-sidebar {
+    background: rgba(255, 255, 255, 0.7);
+  }
+  .scene-caption {
+    background: rgba(255, 255, 255, 0.56);
+    backdrop-filter: blur(20px);
+    bottom: 66px;
+  }
+  .portrait-field {
+    width: 112vw;
+    top: 10vh;
+    right: -12vw;
+    bottom: 9vh;
+  }
+  .project-universe {
+    inset: 110px -8vw 37vh;
+    min-height: 340px;
+  }
+  .project-orbit-hint {
+    display: none;
+  }
+  .aphelion-prism {
+    inset: 10vh -15vw 32vh -10vw;
+  }
+  .film-bottom {
+    left: 18px;
+    right: 18px;
+    padding: 7px 8px;
+    bottom: 18px;
+  }
+  .reading-content {
+    background: white;
+  }
+  .scene-caption[data-scene="about"] {
+    background: rgba(255, 255, 255, 0.47);
+  }
+}
+.aphelion-prism {
+  inset: 14vh 0 0 28vw;
+}
+.education-atmosphere {
+  mix-blend-mode: normal;
+}
+.aurora-bars__bar {
+  opacity: 0.82;
+}
+.aurora-bars__wash {
+  background: radial-gradient(
+    ellipse 100% 90% at 50% 100%,
+    transparent 38%,
+    #ffffff99 100%
+  );
+}
+@media (max-width: 760px) {
+  .aphelion-prism {
+    inset: 9vh -10vw 31vh -8vw;
+  }
+}
+.effect-unavailable {
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--burgundy);
+  background: rgba(255, 255, 255, 0.75);
+  padding: 15px;
+  border: 1px solid var(--line);
+  max-width: 320px;
+  margin: 15px;
+}
+.journey-html,
+.journey-html body {
+  overflow-x: clip;
+}
+
+.project-gradient-background{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;background:linear-gradient(135deg,#10060b,#76243d 46%,#21080f 80%)}
+.project-gradient-background>.gradient-waves-container{width:100%;height:100%;filter:blur(3px);transform:scale(1.03)}
+.project-gradient-background::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#11111b18,#09091245);pointer-events:none}
+
+.project-gradient-background{background:linear-gradient(135deg,#fff,#a52d4d 50%,#fff)}
+.project-gradient-background>.gradient-waves-container{filter:none}
+.project-gradient-background::after{background:none}
+
+.project-gradient-background{background:linear-gradient(115deg,#531026 0%,#8b1e3d 34%,#bd4765 50%,#74142f 67%,#571027 100%)}
+.project-gradient-background::before{content:"";position:absolute;inset:-30%;z-index:1;pointer-events:none;background:repeating-linear-gradient(118deg,transparent 0 8%,#ffffff08 9%,#ffffff38 9.2%,#ffffff08 9.6%,transparent 11%);filter:blur(16px);opacity:.72;animation:project-metal-glint 13s ease-in-out infinite alternate}
+.project-gradient-background::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,#ffffff16,transparent 52%),linear-gradient(110deg,transparent 28%,#fff2 44%,#fff0 58%);opacity:.8}
+@keyframes project-metal-glint{from{transform:translate3d(-3%,0,0)}to{transform:translate3d(3%,1%,0)}}
+
+.project-gradient-background{background:linear-gradient(135deg,#23050f 0%,#4b0c20 42%,#2a0612 100%)}
+.project-gradient-background::before{content:"";position:absolute;inset:-12%;z-index:1;pointer-events:none;background:repeating-linear-gradient(167deg,transparent 0 34px,#ffffff08 36px,#ffffff24 39px,#fff2 41px,#ffffff06 45px,transparent 53px);filter:blur(2px);opacity:.65;animation:project-metal-glint 7s ease-in-out infinite alternate}
+.project-gradient-background::after{background:radial-gradient(ellipse at 48% 38%,#e8cbd318,transparent 52%)}
+
+.project-gradient-background{background-color:#300713;background-image:radial-gradient(ellipse 54% 40% at 24% 34%,#76203a 0%,transparent 72%),radial-gradient(ellipse 48% 35% at 78% 66%,#65152e 0%,transparent 74%),radial-gradient(ellipse 24% 42% at 52% 48%,#98415a55 0%,transparent 75%),linear-gradient(145deg,#260610,#4b0d21 52%,#2b0713)}
+.project-gradient-background::before{inset:-8%;background:radial-gradient(ellipse at 18% 42%,transparent 31%,#d9a8b420 31.3%,transparent 32.2%),radial-gradient(ellipse at 77% 54%,transparent 38%,#f4dfe51b 38.3%,transparent 39.2%),radial-gradient(ellipse at 49% 12%,transparent 34%,#e5c4ce19 34.3%,transparent 35.2%),radial-gradient(ellipse at 52% 91%,transparent 42%,#f4dfe51a 42.3%,transparent 43.2%);filter:blur(4px);opacity:.9;animation:project-metal-glint 9s ease-in-out infinite alternate}
+.project-gradient-background::after{background:radial-gradient(ellipse 32% 42% at 20% 26%,#f6e8ec1b,transparent 72%),radial-gradient(ellipse 30% 40% at 82% 74%,#fff1 0%,transparent 75%)}
+
+.project-gradient-background{background:radial-gradient(ellipse 38% 62% at 50% 50%,#9a2344 0%,#65152f 48%,#300713 100%)}
+.project-gradient-background{display:none}

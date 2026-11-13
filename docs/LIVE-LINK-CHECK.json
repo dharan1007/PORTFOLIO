@@ -1,0 +1,66 @@
+{
+  "checked": "2026-11-11",
+  "method": "HTTP GET; no application actions",
+  "results": [
+    [
+      "https://arkhe-web-sigma.vercel.app",
+      200,
+      "https://arkhe-web-sigma.vercel.app"
+    ],
+    [
+      "https://dharan1007.github.io/trakiler/",
+      200,
+      "https://dharan1007.github.io/trakiler/"
+    ],
+    [
+      "https://dot-os.vercel.app",
+      200,
+      "https://dot-os.vercel.app"
+    ],
+    [
+      "https://faultline-webmcp.vercel.app/",
+      200,
+      "https://faultline-webmcp.vercel.app/"
+    ],
+    [
+      "https://kata-webmcp.vercel.app/",
+      200,
+      "https://kata-webmcp.vercel.app/"
+    ],
+    [
+      "https://pact-webmcp.vercel.app",
+      200,
+      "https://pact-webmcp.vercel.app"
+    ],
+    [
+      "https://raedius.online",
+      200,
+      "https://raedius.online"
+    ],
+    [
+      "https://spool-webmcp.vercel.app/",
+      200,
+      "https://spool-webmcp.vercel.app/"
+    ],
+    [
+      "https://stanius.vercel.app",
+      404,
+      "https://stanius.vercel.app"
+    ],
+    [
+      "https://www.aphelion.life/",
+      200,
+      "https://www.aphelion.life/"
+    ],
+    [
+      "https://www.daish.in",
+      200,
+      "https://www.daish.in"
+    ],
+    [
+      "https://zachitan.vercel.app",
+      200,
+      "https://zachitan.vercel.app"
+    ]
+  ]
+}

@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#dbe6ee" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%237d2437'/%3E%3C/svg%3E"
+    />
+    <title>Aphelion — Technology. With intent.</title>
+    <meta
+      name="description"
+      content="Aphelion builds across connection, intelligent execution and computing research. Explore RÆDIUS, Airadise, ARKHE and Dot OS."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=UnifrakturCook:wght@700&family=Instrument+Sans:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #22374e;
+        --sky: #dbe6ee;
+        --nav-gap: clamp(1.1rem, 2.2vw, 2.15rem);
+        --pad-x: clamp(1.25rem, 4vw, 3.6rem);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+        --poster: url("https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260908_122011_59c97465-4d23-4fdc-ac40-f6832f573e28.png&w=1920&q=85");
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--sky);
+        overflow-x: hidden;
+        font-family:
+          "Instrument Sans",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        cursor: pointer;
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid #7d2437;
+        outline-offset: 6px;
+      }
+      body.menu-open {
+        overflow: hidden;
+      }
+      .hero {
+        position: relative;
+        min-height: 100svh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        background: var(--sky);
+      }
+      .hero__media {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        transform: scale(1.08);
+        filter: blur(14px);
+        opacity: 0;
+        animation: mediaIn 1.9s var(--ease) 0.1s forwards;
+      }
+      .hero__media img,
+      .hero__media video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 62%;
+        display: block;
+      }
+      .hero__media img {
+        z-index: 1;
+      }
+      .hero__media video {
+        z-index: 2;
+        opacity: 0;
+        transition: opacity 1.2s ease;
+      }
+      .hero__media video.is-ready {
+        opacity: 1;
+      }
+      .hero__media::before {
+        content: "";
+        position: absolute;
+        inset: -8%;
+        z-index: 0;
+        display: none;
+        background: var(--poster) center 22% / cover no-repeat;
+        filter: blur(30px) saturate(104%);
+        transform: scale(1.05);
+      }
+      .hero__media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+        background:
+          linear-gradient(
+            to bottom,
+            #e2ecf38c 0%,
+            #e2ecf32e 34%,
+            #e2ecf300 58%
+          ),
+          radial-gradient(120% 70% at 50% 0%, #ffffff59, #ffffff00 60%);
+      }
+      .nav {
+        position: relative;
+        z-index: 60;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: clamp(1.1rem, 2.4vw, 1.9rem) var(--pad-x);
+      }
+      .logo {
+        font:
+          700 clamp(1.5rem, 2.4vw, 1.9rem) / 1 "UnifrakturCook",
+          serif;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+      }
+      .nav__links {
+        display: flex;
+        gap: var(--nav-gap);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .nav__links a {
+        font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+        letter-spacing: 0.005em;
+        padding: 0.15rem 0;
+        display: inline-block;
+        position: relative;
+      }
+      .nav__links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -2px;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s var(--ease);
+      }
+      .nav__links a:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+      .nav__right {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .btn-play {
+        display: inline-block;
+        background: #7d2437;
+        color: white;
+        border-radius: 6px;
+        padding: 0.72rem 1.15rem;
+        font-size: 0.95rem;
+        line-height: 1;
+        white-space: nowrap;
+        transition:
+          transform 0.45s var(--ease),
+          background-color 0.45s,
+          box-shadow 0.45s;
+      }
+      .btn-play:hover {
+        transform: translateY(-2px);
+        background: #92364a;
+        box-shadow: 0 10px 24px -12px #22374e66;
+      }
+      .btn-play:active {
+        transform: translateY(0);
+      }
+      .burger {
+        display: none;
+        width: 44px;
+        height: 44px;
+        margin-right: -8px;
+        position: relative;
+        z-index: 60;
+        border-radius: 8px;
+        flex: 0 0 auto;
+      }
+      .burger span {
+        position: absolute;
+        left: 11px;
+        width: 22px;
+        height: 1.6px;
+        background: var(--ink);
+        border-radius: 2px;
+        transition:
+          transform 0.55s var(--ease-in-out),
+          opacity 0.3s,
+          width 0.55s var(--ease-in-out);
+      }
+      .burger span:nth-child(1) {
+        top: 17px;
+      }
+      .burger span:nth-child(2) {
+        top: 22px;
+        width: 15px;
+      }
+      .burger span:nth-child(3) {
+        top: 27px;
+      }
+      .burger.is-active span:nth-child(1) {
+        transform: translateY(5px) rotate(45deg);
+      }
+      .burger.is-active span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+      .burger.is-active span:nth-child(3) {
+        transform: translateY(-5px) rotate(-45deg);
+      }
+      .hero__inner {
+        position: relative;
+        z-index: 10;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        padding: clamp(1.5rem, 5vh, 4.5rem) var(--pad-x) 0;
+        pointer-events: none;
+      }
+      .headline {
+        margin: 0;
+        font:
+          400 clamp(2.7rem, 6.3vw, 6.75rem) / 1.06 "Instrument Serif",
+          Georgia,
+          serif;
+        letter-spacing: -0.005em;
+        text-align: center;
+      }
+      .line {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-bottom: 0.06em;
+        margin-bottom: -0.06em;
+      }
+      .line > span {
+        display: block;
+        transform: translateY(110%);
+        opacity: 0;
+        animation: lineUp 1.25s var(--ease) forwards;
+      }
+      .line:nth-child(1) > span {
+        animation-delay: 0.55s;
+      }
+      .line:nth-child(2) > span {
+        animation-delay: 0.68s;
+      }
+      .rise {
+        opacity: 0;
+        transform: translateY(-14px);
+        animation: rise 0.95s var(--ease) forwards;
+      }
+      .d1 {
+        animation-delay: 0.18s;
+      }
+      .d2 {
+        animation-delay: 0.26s;
+      }
+      .d3 {
+        animation-delay: 0.32s;
+      }
+      .d4 {
+        animation-delay: 0.38s;
+      }
+      .d5 {
+        animation-delay: 0.44s;
+      }
+      .d6 {
+        animation-delay: 0.52s;
+      }
+      .menu {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 var(--pad-x);
+        background: #e9f0f6eb;
+        backdrop-filter: blur(22px) saturate(140%);
+        -webkit-backdrop-filter: blur(22px) saturate(140%);
+        clip-path: inset(0 0 100% 0);
+        visibility: hidden;
+        transition:
+          clip-path 0.85s var(--ease-in-out),
+          visibility 0s linear 0.85s;
+      }
+      .menu.is-open {
+        clip-path: inset(0);
+        visibility: visible;
+        transition:
+          clip-path 0.85s var(--ease-in-out),
+          visibility 0s;
+      }
+      .menu__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .menu__list li {
+        overflow: hidden;
+      }
+      .menu__list a {
+        font:
+          400 clamp(2.35rem, 12vw, 3.4rem) / 1.22 "Instrument Serif",
+          Georgia,
+          serif;
+        padding: 0.12em 0;
+        display: block;
+        transform: translateY(115%);
+        opacity: 0;
+        transition:
+          transform 0.8s var(--ease),
+          opacity 0.6s;
+      }
+      .menu.is-open .menu__list a {
+        transform: none;
+        opacity: 1;
+        transition-delay: calc(0.26s + var(--i) * 0.07s);
+      }
+      .menu__rule {
+        height: 1px;
+        background: #22374e29;
+        margin: 2.2rem 0 0;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.9s var(--ease);
+      }
+      .menu.is-open .menu__rule {
+        transform: none;
+        transition-delay: 0.5s;
+      }
+      .menu__foot {
+        margin-top: 2.2rem;
+        opacity: 0;
+        transform: translateY(22px);
+        transition:
+          transform 0.8s var(--ease),
+          opacity 0.6s;
+      }
+      .menu.is-open .menu__foot {
+        opacity: 1;
+        transform: none;
+        transition-delay: 0.56s;
+      }
+      .menu__foot .btn-play {
+        padding: 0.95rem 1.6rem;
+        font-size: 1rem;
+      }
+      .video-status {
+        position: absolute;
+        bottom: 1rem;
+        left: var(--pad-x);
+        z-index: 20;
+        padding: 10px 14px;
+        background: #e9f0f6d9;
+        border: 1px solid #ffffff88;
+        border-radius: 5px;
+        font-size: 12px;
+      }
+      .video-status[hidden] {
+        display: none;
+      }
+      .video-status button {
+        color: #7d2437;
+        text-decoration: underline;
+      }
+      .company-note span,
+      .company-note small {
+        display: block;
+      }
+      .company-note small {
+        font-size: 0.85em;
+        line-height: 1.6;
+      }
+      .company-note {
+        position: absolute;
+        bottom: 1.2rem;
+        right: var(--pad-x);
+        z-index: 10;
+        font-size: 11px;
+        background: #e9f0f655;
+        padding: 8px 12px;
+        border-radius: 3px;
+        backdrop-filter: blur(8px);
+      }
+      @keyframes mediaIn {
+        to {
+          transform: none;
+          filter: blur(0);
+          opacity: 1;
+        }
+      }
+      @keyframes rise {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes lineUp {
+        to {
+          transform: none;
+          opacity: 1;
+        }
+      }
+      @media (max-width: 900px) {
+        .nav__links,
+        .nav__right > .btn-play {
+          display: none;
+        }
+        .burger {
+          display: block;
+        }
+        .hero__media img,
+        .hero__media video {
+          object-position: center 60%;
+        }
+        .hero__inner {
+          align-items: flex-start;
+        }
+        .line {
+          white-space: normal;
+        }
+        .headline {
+          font-size: clamp(2.4rem, 6.4vw, 3.6rem);
+          max-width: 15ch;
+        }
+      }
+      @media (max-width: 900px) and (orientation: portrait) {
+        .hero__media::before {
+          display: block;
+        }
+        .hero__media img,
+        .hero__media video {
+          top: auto;
+          bottom: 0;
+          height: 64svh;
+          object-position: center 62%;
+          mask-image: linear-gradient(180deg, #0000 0%, #0009 9%, #000 20%);
+          -webkit-mask-image: linear-gradient(
+            180deg,
+            #0000 0%,
+            #0009 9%,
+            #000 20%
+          );
+        }
+      }
+      @media (max-width: 560px) {
+        .headline {
+          font-size: clamp(2.15rem, 9.4vw, 3.1rem);
+          line-height: 1.12;
+          max-width: 11ch;
+        }
+        .hero__inner {
+          padding-top: clamp(1.75rem, 7vh, 3rem);
+        }
+        .hero__media img,
+        .hero__media video {
+          object-position: center 58%;
+        }
+        .company-note {
+          font-size: 9px;
+          bottom: 1rem;
+          right: 1rem;
+          max-width: 60%;
+          text-align: right;
+        }
+      }
+      @media (max-width: 380px) {
+        .headline {
+          font-size: 2rem;
+        }
+      }
+      @media (max-height: 520px) and (orientation: landscape) {
+        .headline {
+          font-size: clamp(1.7rem, 5vw, 2.4rem);
+          max-width: 22ch;
+        }
+        .hero__inner {
+          padding-top: 0.75rem;
+        }
+        .menu__list a {
+          font-size: clamp(1.4rem, 5vw, 1.9rem);
+        }
+        .menu__rule {
+          margin-top: 1.2rem;
+        }
+        .menu__foot {
+          margin-top: 1.2rem;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-delay: 0ms !important;
+          transition-duration: 0.01ms !important;
+        }
+        .hero__media {
+          opacity: 1;
+          transform: none;
+          filter: none;
+        }
+        .line > span {
+          transform: none;
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero__media">
+        <img
+          id="heroPoster"
+          src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260908_122011_59c97465-4d23-4fdc-ac40-f6832f573e28.png&amp;w=1920&amp;q=85"
+          alt="A vintage turntable resting on a mossy rock in an alpine meadow at golden hour"
+        /><video
+          id="heroVideo"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          poster="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260908_122011_59c97465-4d23-4fdc-ac40-f6832f573e28.png&amp;w=1920&amp;q=85"
+          aria-hidden="true"
+        >
+          <source
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260908_125738_eb584080-9f98-489e-adb2-014760aa34da.mp4"
+            type="video/mp4"
+          />
+        </video>
+      </div>
+      <header class="nav">
+        <a
+          class="logo rise d1"
+          href="https://www.aphelion.life/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Aphelion — home"
+          >Aphelion</a
+        >
+        <nav aria-label="Primary">
+          <ul class="nav__links">
+            <li class="rise d2">
+              <a
+                href="https://www.aphelion.life/products"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Products</a
+              >
+            </li>
+            <li class="rise d3">
+              <a
+                href="https://www.aphelion.life/research"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Research</a
+              >
+            </li>
+            <li class="rise d4">
+              <a
+                href="https://www.aphelion.life/technology"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Technology</a
+              >
+            </li>
+            <li class="rise d5">
+              <a
+                href="https://www.aphelion.life/about"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Company</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div class="nav__right rise d6">
+          <a
+            class="btn-play"
+            href="https://www.aphelion.life/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Discover Aphelion</a
+          ><button
+            id="burger"
+            class="burger"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="menu"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </header>
+      <div class="hero__inner">
+        <h1 class="headline">
+          <span class="line"><span>Technology. With intent.</span></span
+          ><span class="line"><span>Built for the long term.</span></span>
+        </h1>
+      </div>
+      <div class="company-note">
+        <span>RÆDIUS · Airadise · ARKHE · Dot OS</span
+        ><small>Connection · Intelligent execution · Computing research</small>
+      </div>
+      <div class="video-status" id="videoStatus" hidden role="status">
+        Film paused. <button id="playFilm">Play film</button>
+      </div>
+    </section>
+    <div class="menu" id="menu" inert>
+      <nav aria-label="Mobile">
+        <ul class="menu__list">
+          <li style="--i: 0">
+            <a
+              href="https://www.aphelion.life/products"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Products</a
+            >
+          </li>
+          <li style="--i: 1">
+            <a
+              href="https://www.aphelion.life/research"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Research</a
+            >
+          </li>
+          <li style="--i: 2">
+            <a
+              href="https://www.aphelion.life/technology"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Technology</a
+            >
+          </li>
+          <li style="--i: 3">
+            <a
+              href="https://www.aphelion.life/about"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Company</a
+            >
+          </li>
+        </ul>
+      </nav>
+      <div class="menu__rule"></div>
+      <div class="menu__foot">
+        <a
+          class="btn-play"
+          href="https://www.aphelion.life/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Discover Aphelion</a
+        >
+      </div>
+    </div>
+    <script>
+      (() => {
+        const burger = document.getElementById("burger"),
+          menu = document.getElementById("menu"),
+          video = document.getElementById("heroVideo"),
+          poster = document.getElementById("heroPoster"),
+          status = document.getElementById("videoStatus");
+        let open = false;
+        const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        function setMenu(next) {
+          open = next;
+          menu.classList.toggle("is-open", open);
+          menu.inert = !open;
+          burger.classList.toggle("is-active", open);
+          document.body.classList.toggle("menu-open", open);
+          burger.setAttribute("aria-expanded", String(open));
+          burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+          if (open) menu.querySelector("a").focus();
+          else burger.focus();
+        }
+        burger.addEventListener("click", () => setMenu(!open));
+        menu.addEventListener("click", (e) => {
+          if (e.target.closest("a")) setMenu(false);
+        });
+        document.addEventListener("keydown", (e) => {
+          if (!open) return;
+          if (e.key === "Escape") {
+            e.preventDefault();
+            setMenu(false);
+          }
+          if (e.key === "Tab") {
+            const nodes = [burger, ...menu.querySelectorAll("a")],
+              first = nodes[0],
+              last = nodes[nodes.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        });
+        window.addEventListener("resize", () => {
+          if (open && innerWidth > 900) setMenu(false);
+        });
+        poster.addEventListener("error", () => {
+          poster.hidden = true;
+          poster.style.display = "none";
+        });
+        const reveal = () => {
+          video.classList.add("is-ready");
+          if (reduced) video.pause();
+        };
+        if (video.readyState >= 3) reveal();
+        else video.addEventListener("loadeddata", reveal, { once: true });
+        function kick() {
+          if (reduced) return;
+          const p = video.play();
+          if (p && p.catch)
+            p.catch(() => {
+              status.hidden = false;
+            });
+        }
+        video.addEventListener("playing", () => (status.hidden = true));
+        video.addEventListener("error", () => {
+          status.hidden = false;
+          status.firstChild.textContent = "The supplied film is unavailable. ";
+        });
+        document.getElementById("playFilm").addEventListener("click", () => {
+          const p = video.play();
+          p?.catch(() => {
+            status.hidden = false;
+          });
+        });
+        if (reduced) {
+          video.removeAttribute("autoplay");
+          video.pause();
+        } else {
+          kick();
+          window.addEventListener("touchstart", kick, {
+            once: true,
+            passive: true,
+          });
+          window.addEventListener("click", kick, { once: true });
+        }
+      })();
+    </script>
+  </body>
+</html>

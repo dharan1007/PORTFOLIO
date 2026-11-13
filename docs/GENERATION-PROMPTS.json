@@ -1,0 +1,127 @@
+{
+  "mode": "Built-in image_gen",
+  "heroSource": "User photo 1; photo 2 used only as identity support for the revised portrait",
+  "commonDirection": "White daylight, burgundy secondary, pastel blue, sage and peach, soft navy shadows; no logos, lettering, bogus UI or watermarks.",
+  "assets": [
+    {
+      "id": "01-portrait-v2",
+      "prompt": "Edit photo 1 as the target, photo 2 only supporting identity reference. Produce a clean transparent cutout portrait of the SAME man from photo 1. Remove phone and wristwatch completely. Lower the phone-holding forearm naturally to his side, with realistic anatomy. Button the white shirt two more buttons so only a modest open collar remains. Keep his actual facial proportions, hair, beard, skin tone and texture, gaze and physique unchanged, do not beautify or stylize his face. Photo 2 helps verify identity, do not add its cap or clothes. Remove plants, wall, mural and all background. Transparent alpha, no checkerboard, no text.",
+      "file": "public/assets/01-portrait-v2.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-ab81a909-4abd-4f12-a7e6-75f7de336cad.png"
+    },
+    {
+      "id": "02-gallery",
+      "prompt": "A wide bright white classical gallery interior, subtly curved plaster walls, soft pale blue sky through a central tall arch, white stone floor, empty center for a portrait overlay. Camera straight on, restrained classic old-money architecture. 16:9.",
+      "file": "public/assets/02-gallery.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-7e8d4613-9631-4142-8bc9-d15244e02b6c.png"
+    },
+    {
+      "id": "03-horizon",
+      "prompt": "A wide panoramic pale blue morning sky above a white stone terrace, restrained classical horizon, extremely spacious empty center, thin burgundy rail at edge. Soft atmospheric depth, 16:9.",
+      "file": "public/assets/03-horizon.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-b446c8c9-51cc-4d84-8706-845d37f38584.png"
+    },
+    {
+      "id": "04-ribbon",
+      "prompt": "One flowing burgundy silk ribbon in a loose elegant vertical S curve, detailed woven textile highlights, isolated on clean white, generous margins. No other objects.",
+      "file": "public/assets/04-ribbon.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-2ba47053-80bd-4b5a-963b-2015c65d92e6.png"
+    },
+    {
+      "id": "05-raedius",
+      "prompt": "Editorial conceptual sculpture of linked white porcelain loops with one burgundy loop, connection expressed through tactile interlocking pieces, on white pedestal. Pale blue background. Wide 3:2.",
+      "file": "public/assets/05-raedius.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-c7dd0eba-ede6-4e5d-85a1-48c0814f9904.png"
+    },
+    {
+      "id": "06-airadise",
+      "prompt": "A sculptural folded-paper flight form hovering above layered white paper on a pale blue tabletop, peach edge highlights. Elegant engineering still life, wide 3:2.",
+      "file": "public/assets/06-airadise.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-6c06b36d-d5f9-44cb-b03a-d56e433c679a.png"
+    },
+    {
+      "id": "07-arkhe",
+      "prompt": "A carefully branching sage green ceramic sculpture composed of connected cellular forms, pale porcelain nodes and subtle burgundy core, on bright white stone. Biology as conceptual art, no diagrams or labels. Wide 3:2.",
+      "file": "public/assets/07-arkhe.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-b2585e16-c855-44a0-9bfc-7ce159ea850c.png"
+    },
+    {
+      "id": "08-dot-os",
+      "prompt": "A stack of finely machined translucent pale blue glass and white ceramic platforms floating millimeters apart, architectural layered-computing conceptual sculpture, navy-tinted shadows, spacious wide 3:2.",
+      "file": "public/assets/08-dot-os.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-ff24ca9f-33c5-4fa5-9036-812c49dc205e.png"
+    },
+    {
+      "id": "09-spool",
+      "prompt": "A single burgundy thread spool on white stone with several threads resolving into perfectly aligned parallel strands, highly tactile macro editorial still life, pale green background, wide 3:2.",
+      "file": "public/assets/09-spool.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-32663e5b-6def-4a65-82b4-37aedfa3dcb4.png"
+    },
+    {
+      "id": "10-faultline",
+      "prompt": "A white ceramic architectural slab with one precise narrow burgundy-filled fracture, separated planes reveal the cause clearly, pale peach surface, high-key refined engineering still life, wide 3:2.",
+      "file": "public/assets/10-faultline.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-a3e86f2e-4da4-478a-9df8-1a4b466d153b.png"
+    },
+    {
+      "id": "11-studio",
+      "prompt": "A bright serene white creative working studio with a white desk, pale blue daylight, slender burgundy task lamp, fine plaster wall, carefully framed generous blank space on left. Wide 16:9.",
+      "file": "public/assets/11-studio.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-841e5a50-cc48-4901-a174-141ea357cab6.png"
+    },
+    {
+      "id": "12-desk",
+      "prompt": "Close editorial still life of blank white paper, a navy fountain pen and burgundy folder on a white desk. No lettering, blank surfaces, porcelain light, horizontal 3:2.",
+      "file": "public/assets/12-desk.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-317e555b-19b6-4c86-adb1-8e395acb005a.png"
+    },
+    {
+      "id": "13-library",
+      "prompt": "Bright airy classical library corridor with white shelving, unlettered pale blue and sage book spines, sunlit white plaster arch, no people, spacious center, cinematic 16:9.",
+      "file": "public/assets/13-library.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-46687444-50cb-4592-9833-2d8c96236387.png"
+    },
+    {
+      "id": "14-books",
+      "prompt": "Two finely bound unlettered burgundy and pale blue archival books, one open to completely blank paper pages, on white stone, high-key daylight editorial closeup. Horizontal 3:2.",
+      "file": "public/assets/14-books.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-d9407467-5447-4bf0-be3b-e487730cbb4f.png"
+    },
+    {
+      "id": "15-seal",
+      "prompt": "Close material study of a plain burgundy wax disc and fine white cotton paper, absolutely no emblem, seal impression, words, issuer, credentials, or certificates. Decorative tactile detail, 3:2.",
+      "file": "public/assets/15-seal.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-835d5753-c539-4c5d-aadb-993da4b45baf.png"
+    },
+    {
+      "id": "16-paper",
+      "prompt": "White cotton paper overlapping on a white architectural plinth, pale blue daylight and a subtle peach silk strip, entirely blank unmarked paper. Fine editorial photography horizontal 3:2.",
+      "file": "public/assets/16-paper.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-7509244c-39c6-45aa-b3fd-75f03db1577c.png"
+    },
+    {
+      "id": "17-correspondence",
+      "prompt": "White envelope, blank white note, pale sage branch and burgundy pen on a bright white desk, spacious composition for contact overlay. No text or logos. Wide 16:9.",
+      "file": "public/assets/17-correspondence.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-eeac823f-267e-420d-949c-9b0cc1891161.png"
+    },
+    {
+      "id": "18-drapery-left",
+      "prompt": "White sheer linen drapery hanging at left quarter of a bright architectural frame, rest white with pale blue daylight, subtle burgundy tie, refined classical curtain detail, no objects in center, portrait 3:4.",
+      "file": "public/assets/18-drapery-left.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-a61517c8-7838-42e5-8643-db317937636f.png"
+    },
+    {
+      "id": "19-drapery-right",
+      "prompt": "White sheer linen drapery hanging at right quarter of a bright architectural frame, rest white with pale blue daylight, subtle burgundy tie, refined classical curtain detail, no objects in center, portrait 3:4.",
+      "file": "public/assets/19-drapery-right.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-876880af-a7ec-4684-9f9a-d06dd921bb71.png"
+    },
+    {
+      "id": "20-aphelion",
+      "prompt": "Original elegant orbital sculpture: a white porcelain sphere encircled by one thin burgundy elliptical orbit, pale blue and peach material accents, sunlit white architectural setting, wide 16:9, negative space on left.",
+      "file": "public/assets/20-aphelion.webp",
+      "original": "C:\\Users\\dhara\\.codex\\generated_images\\01a1caf2-e65d-78c2-ad15-da1af1769b3b\\exec-74d15e6b-7213-4f60-b421-a2dce581a3f1.png"
+    }
+  ]
+}

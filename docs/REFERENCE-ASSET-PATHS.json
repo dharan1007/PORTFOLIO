@@ -1,0 +1,39 @@
+{
+  "svg": [
+    "/favicon.svg"
+  ],
+  "avif": [
+    "/projects/catalogue/img-1.avif",
+    "/projects/catalogue/img-2.avif",
+    "/projects/catalogue/img-3.avif",
+    "/projects/catalogue/img-4.avif",
+    "/projects/revelium-milkmaid/img-1.avif",
+    "/projects/revelium-milkmaid/img-2.avif",
+    "/projects/revelium-milkmaid/img-3.avif",
+    "/projects/revelium-milkmaid/img-4.avif",
+    "/projects/salesforce-ai-trust-map/img-1.avif",
+    "/projects/salesforce-ai-trust-map/img-2.avif",
+    "/projects/salesforce-ai-trust-map/img-3.avif",
+    "/projects/salesforce-ai-trust-map/img-4.avif",
+    "/projects/salesforce-ai-trust-map/img-5.avif",
+    "/projects/salesforce-ai-trust-map/img-6.avif",
+    "/projects/triar/img-1.avif",
+    "/projects/triar/img-2.avif",
+    "/projects/triar/img-3.avif",
+    "/projects/triar/img-4.avif",
+    "/projects/triar/img-5.avif"
+  ],
+  "glb": [
+    "/city-block.glb",
+    "/models/gallery-tile.glb",
+    "/models/robot-arm-tile.glb",
+    "/models/studio-corridor.glb"
+  ],
+  "vsplat": [
+    "/splats/about.vsplat",
+    "/splats/japan.vsplat"
+  ],
+  "ktx2": [
+    "/glitch-portrait-impostor.ktx2"
+  ]
+}

@@ -1,0 +1,15 @@
+.hero-poster-shell{position:relative;width:100%;height:100svh;min-height:100svh;background:#161616;overflow:hidden;isolation:isolate}.hero-poster-shell>iframe{position:relative;z-index:2;display:block;width:100%;height:100%;border:0;background:transparent}.hero-dither-field{position:absolute;z-index:0;inset:4% 14% 0;opacity:.6;pointer-events:none;mask-image:radial-gradient(ellipse 63% 69% at 50% 51%,#000 30%,#000b 65%,transparent 99%);-webkit-mask-image:radial-gradient(ellipse 63% 69% at 50% 51%,#000 30%,#000b 65%,transparent 99%)}.hero-dither-field>.dither-veil{height:100%;width:100%;background:transparent}.hero-dither-field canvas{display:block;width:100%;height:100%}@media(max-width:900px),(max-aspect-ratio:4/5){.hero-dither-field{inset:15% -10% 9%;opacity:.53;mask-image:radial-gradient(ellipse 57% 58% at 50% 49%,#000 25%,#000b 63%,transparent 99%);-webkit-mask-image:radial-gradient(ellipse 57% 58% at 50% 49%,#000 25%,#000b 63%,transparent 99%)}}@media(prefers-reduced-motion:reduce){.hero-dither-field{opacity:.5}}
+
+.hero-blinds-background{position:absolute;inset:0;z-index:-1;overflow:hidden;background:#f4f1ea}.hero-independent-blinds{position:absolute;inset:-20%;background:repeating-linear-gradient(100deg,#f4f1ea 0%,#dceaf4 5%,#c1bbc1 7%,#fff9 9%,#f4f1ea 12%);background-size:180% 100%;animation:hero-blinds-drift 16s linear infinite;opacity:.7}@keyframes hero-blinds-drift{to{background-position:180% 0}}.hero-poster-shell{background:transparent}.hero-dither-field{z-index:0}.hero-poster-shell>iframe{z-index:2}@media(prefers-reduced-motion:reduce){.hero-independent-blinds{animation:none}}
+
+.hero-blinds-background{z-index:0}.hero-blinds-background canvas{display:block;width:100%;height:100%}.hero-dither-field{z-index:1;opacity:1}.hero-poster-shell>iframe{z-index:2}
+
+.hero-blinds-background{background:#080507}.hero-dither-field{opacity:.9}
+
+.hero-dither-field{inset:12% 0 -8%;width:100%;mask-image:linear-gradient(to bottom,transparent 0%,#000 8%,#000 88%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 8%,#000 88%,transparent 100%)}
+@media(max-width:900px),(max-aspect-ratio:4/5){.hero-dither-field{inset:20% 0 -4%;width:100%}}
+
+.hero-dither-field{inset:0;width:100%;height:100%;opacity:1;mask-image:none;-webkit-mask-image:none}
+@media(max-width:900px),(max-aspect-ratio:4/5){.hero-dither-field{inset:0;width:100%;height:100%}}
+
+.hero-dither-field{inset:7% 0 -7%;height:100%}.hero-blinds-background{background:#781c38}

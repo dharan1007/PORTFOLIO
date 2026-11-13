@@ -1,0 +1,26 @@
+{
+  "cssSource": "https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&family=Caveat+Brush&family=Anton&display=swap",
+  "fonts": [
+    {
+      "family": "Anton",
+      "file": "anton-latin.woff2",
+      "source": "https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm3Kz-C8.woff2",
+      "bytes": 18612,
+      "license": "SIL Open Font License 1.1"
+    },
+    {
+      "family": "Caveat Brush",
+      "file": "caveat-brush-latin.woff2",
+      "source": "https://fonts.gstatic.com/s/caveatbrush/v12/EYq0maZfwr9S9-ETZc3fKXt8XLOS.woff2",
+      "bytes": 67460,
+      "license": "SIL Open Font License 1.1"
+    },
+    {
+      "family": "Inter Tight",
+      "file": "inter-tight-latin.woff2",
+      "source": "https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ag.woff2",
+      "bytes": 44872,
+      "license": "SIL Open Font License 1.1"
+    }
+  ]
+}

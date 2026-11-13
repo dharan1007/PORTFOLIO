@@ -1,0 +1,416 @@
+html body {
+  background: #e4eceb;
+}
+.journey {
+  --sidebar-space: 228px;
+}
+.journey.nav-collapsed {
+  --sidebar-space: 0px;
+}
+.chapter-sidebar {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s,
+    visibility 0.35s;
+}
+.nav-collapsed .chapter-sidebar {
+  transform: translateX(-100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.journey .scene-caption {
+  left: calc(var(--sidebar-space) + 4vw);
+  transition: left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.journey .film-bottom {
+  left: calc(var(--sidebar-space) + 4vw);
+  transition: left 0.35s;
+}
+.journey .reading-content {
+  margin-left: var(--sidebar-space);
+  background: transparent;
+  position: relative;
+  z-index: 3;
+  transition: margin-left 0.35s;
+}
+.journey .project-universe {
+  left: calc(var(--sidebar-space) + 10vw);
+  transition: left 0.35s;
+}
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+}
+.navigation-scrim {
+  display: none;
+}
+.ambient-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.3;
+  mix-blend-mode: multiply;
+}
+.ambient-bands {
+  position: absolute;
+  inset: -20%;
+  background: repeating-linear-gradient(
+    95deg,
+    #b9cedc55 0%,
+    #e6ceca77 8%,
+    #d6e4db55 15%,
+    #d2dfeb33 23%
+  );
+  background-size: 180% 100%;
+  transform: rotate(-3deg);
+  animation: ambientLight 24s ease-in-out infinite alternate;
+}
+.ambient-paused .ambient-bands {
+  animation-play-state: paused;
+}
+@keyframes ambientLight {
+  from {
+    background-position: 0% 50%;
+    transform: rotate(-3deg) scale(1.05);
+  }
+  to {
+    background-position: 100% 50%;
+    transform: rotate(3deg) scale(1.1);
+  }
+}
+.contact-shot {
+  pointer-events: auto;
+  position: relative;
+  min-height: 100svh;
+}
+.contact-film {
+  background: #ff0000;
+  color: white;
+  font-family: var(--font-manrope);
+  z-index: 5;
+  overflow: hidden;
+}
+.contact-film__content {
+  padding-top: 100px;
+  flex: 1;
+  padding-bottom: 80px;
+}
+.contact-film__inner {
+  max-width: 900px;
+}
+.contact-film__mark {
+  margin-bottom: 48px;
+  flex-shrink: 0;
+}
+.contact-film__mission {
+  font-size: 16px;
+  max-width: 400px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.contact-film__signature {
+  font-family: var(--font-marck);
+  font-size: 120px;
+  line-height: 1;
+  margin-bottom: 32px;
+}
+.contact-film__copy {
+  max-width: 400px;
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+.contact-film__copy p:first-child {
+  margin-bottom: 24px;
+}
+.contact-film__links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px 35px;
+  margin-top: 55px;
+  font-size: 13px;
+}
+.contact-film__links a {
+  overflow-wrap: anywhere;
+}
+.contact-film__links small {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+.contact-film a:focus-visible,
+.contact-film button:focus-visible {
+  outline-color: white;
+}
+.contact-film__media {
+  aspect-ratio: 16/9;
+}
+.contact-film__media video {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.contact-film__blend {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 100px;
+  background: linear-gradient(to bottom, #ff0000, transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+.contact-film__unavailable {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background: radial-gradient(ellipse at center, #f33, #ff0000 70%);
+  font-size: 12px;
+  padding: 30px;
+  text-align: center;
+}
+.contact-film__endnote {
+  font-family: var(--font-italiana);
+  font-size: clamp(30px, 5vw, 75px);
+  max-width: 600px;
+  line-height: 1.1;
+}
+.contact-film__unavailable button {
+  background: transparent;
+  color: white;
+  border: 1px solid #ffffff66;
+  padding: 9px 15px;
+}
+.contact-film__unavailable a {
+  border-bottom: 1px solid #ffffff88;
+}
+.journey[data-current="contact"] .film-header,
+.journey[data-current="contact"] .chapter-sidebar {
+  background: #ff000033;
+  color: white;
+  border-color: #ffffff33;
+}
+.journey[data-current="contact"] .wordmark,
+.journey[data-current="contact"] .tree-projects > button,
+.journey[data-current="contact"] .tree-projects > a.selected,
+.journey[data-current="contact"] .tree-chapter > a.current,
+.journey[data-current="contact"] .header-actions > a {
+  color: white;
+}
+.journey[data-current="contact"] .header-actions button {
+  background: #ff000033;
+  color: white;
+  border-color: #ffffff55;
+}
+.journey[data-current="contact"] .tree-chapter > a.current {
+  background: #ffffff22;
+}
+.aphelion-film-frame {
+  position: fixed;
+  inset: 78px 0 0;
+  z-index: 3;
+  background: #dbe6ee;
+  animation: aphelionSceneIn 0.8s ease both;
+}
+.aphelion-film-frame iframe,
+.reading-aphelion-shell iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #dbe6ee;
+}
+.reading-aphelion-shell {
+  height: 100svh;
+  position: relative;
+}
+.reading-contact-shell {
+  scroll-margin-top: 78px;
+}
+@keyframes aphelionSceneIn {
+  from {
+    opacity: 0;
+    transform: scale(1.025);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.journey[data-current="aphelion"] .film-bottom {
+  display: none;
+}
+@media (min-width: 768px) {
+  .contact-film__content {
+    padding-top: 400px;
+    padding-bottom: 100px;
+  }
+}
+@media (max-width: 1100px) and (min-width: 761px) {
+  .journey {
+    --sidebar-space: 195px;
+  }
+  .sidebar-toggle span {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .journey {
+    --sidebar-space: 0px;
+  }
+  .chapter-sidebar {
+    position: fixed;
+    top: 68px;
+    bottom: 0;
+    height: auto;
+    left: 0;
+    width: min(300px, 85vw);
+    padding: 28px 20px;
+    background: rgba(238, 244, 244, 0.92) !important;
+    z-index: 45;
+    overflow: auto;
+    color: #22374e !important;
+  }
+  .chapter-sidebar nav {
+    display: block;
+    padding: 0;
+    min-width: 0;
+  }
+  .chapter-sidebar .sidebar-label,
+  .chapter-sidebar .tree-root,
+  .chapter-sidebar .tree-projects,
+  .chapter-sidebar .sidebar-bottom {
+    display: block;
+  }
+  .tree-chapter > a {
+    font-size: 14px;
+    padding: 13px 9px;
+  }
+  .tree-projects > a,
+  .tree-projects > button {
+    font-size: 12px;
+    padding: 8px;
+  }
+  .tree-chapter small {
+    display: block;
+  }
+  .sidebar-label {
+    margin-bottom: 24px;
+  }
+  .sidebar-bottom {
+    margin-top: 30px;
+  }
+  .navigation-scrim {
+    display: block;
+    position: fixed;
+    inset: 68px 0 0;
+    z-index: 40;
+    background: #22374e33;
+    backdrop-filter: blur(6px);
+    border: 0;
+  }
+  .film-header {
+    z-index: 50;
+  }
+  .header-actions {
+    gap: 7px;
+  }
+  .sidebar-toggle span {
+    display: none;
+  }
+  .header-actions > a {
+    display: none;
+  }
+  .sidebar-toggle {
+    padding: 7px !important;
+    min-width: 34px;
+  }
+  .journey .scene-caption {
+    left: 18px;
+  }
+  .journey .film-bottom {
+    left: 18px;
+  }
+  .journey .project-universe {
+    left: -8vw;
+  }
+  .portrait-field {
+    top: 5vh;
+    bottom: 4vh;
+  }
+  .aphelion-film-frame {
+    inset: 68px 0 0;
+  }
+  .contact-film__signature {
+    font-size: 100px;
+  }
+  .contact-film__links {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .contact-film__media {
+    min-height: 300px;
+  }
+  .contact-film__content {
+    padding-top: 140px;
+  }
+  .contact-film__copy {
+    font-size: 15px;
+  }
+  .reading-contact-shell {
+    scroll-margin-top: 68px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-bands {
+    animation: none;
+  }
+  .chapter-sidebar,
+  .journey .scene-caption,
+  .journey .film-bottom {
+    transition: none;
+  }
+  .aphelion-film-frame {
+    animation: none;
+  }
+}
+.journey .story-scroll {
+  margin-left: 0;
+  width: 100%;
+}
+@media (max-width: 760px) {
+  .sidebar-toggle {
+    height: 44px;
+    min-width: 44px !important;
+  }
+  .journey[data-current="contact"] .chapter-sidebar a,
+  .journey[data-current="contact"] .chapter-sidebar button {
+    color: #22374e;
+  }
+  .journey[data-current="contact"] .chapter-sidebar a.current {
+    color: #7d2437;
+    background: #dceaf4aa;
+  }
+}
+.journey .aphelion-film-frame {
+  left: var(--sidebar-space);
+  transition: left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (max-width: 760px) {
+  .journey .aphelion-film-frame {
+    left: 0;
+  }
+}
